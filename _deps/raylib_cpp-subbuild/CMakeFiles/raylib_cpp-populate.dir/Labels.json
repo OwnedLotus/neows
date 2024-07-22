@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/CMakeFiles/raylib_cpp-populate"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/CMakeFiles/raylib_cpp-populate.rule"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/CMakeFiles/raylib_cpp-populate-complete.rule"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/raylib_cpp-populate-prefix/src/raylib_cpp-populate-stamp/raylib_cpp-populate-build.rule"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/raylib_cpp-populate-prefix/src/raylib_cpp-populate-stamp/raylib_cpp-populate-configure.rule"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/raylib_cpp-populate-prefix/src/raylib_cpp-populate-stamp/raylib_cpp-populate-download.rule"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/raylib_cpp-populate-prefix/src/raylib_cpp-populate-stamp/raylib_cpp-populate-install.rule"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/raylib_cpp-populate-prefix/src/raylib_cpp-populate-stamp/raylib_cpp-populate-mkdir.rule"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/raylib_cpp-populate-prefix/src/raylib_cpp-populate-stamp/raylib_cpp-populate-patch.rule"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/raylib_cpp-populate-prefix/src/raylib_cpp-populate-stamp/raylib_cpp-populate-test.rule"
+		},
+		{
+			"file" : "/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-subbuild/raylib_cpp-populate-prefix/src/raylib_cpp-populate-stamp/raylib_cpp-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"raylib_cpp-populate"
+		],
+		"name" : "raylib_cpp-populate"
+	}
+}
