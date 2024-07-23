@@ -1,4 +1,4 @@
-_dep/
+_deps/
 CMakeFiles/
 
 *.cmake
