@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/jonahr/Documents/Code/CCPP/neows_visualization/src -I/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/catch2-src/src/catch2/.. -I/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/catch2-build/generated-includes -I/home/jonahr/Documents/Code/CCPP/neows_visualization/_deps/raylib_cpp-src/include
+CXX_INCLUDES = -I/home/jonahr/Documents/Code/CCPP/neows_visualization/src
 
 CXX_FLAGS =  -Wall -Werror -std=gnu++23
 

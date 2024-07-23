@@ -30,14 +30,7 @@ endif()
 
 # pull in desired version of catch through cmake automatically, make it
 # available
-include(FetchContent)
-FetchContent_Declare(
-  Catch2
-  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG v3.5.2 # if you run into issues, try updating your editor or
-                 # downgrading to a lower version of catch v3
-)
-FetchContent_MakeAvailable(Catch2)
+find_package(Catch2 QUIET)
 
 set(CMAKE_CXX_STANDARD 23)
 

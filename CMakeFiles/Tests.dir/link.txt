@@ -1,1 +1,1 @@
-/usr/bin/c++  -Wall -Werror CMakeFiles/Tests.dir/tests/test.cpp.o -o Tests  _deps/catch2-build/src/libCatch2Main.a _deps/catch2-build/src/libCatch2.a
+/usr/bin/c++  -Wall -Werror CMakeFiles/Tests.dir/tests/test.cpp.o -o Tests  /usr/lib/libCatch2Main.a -lraylib_cpp /usr/lib/libCatch2.a

@@ -1,1 +1,1 @@
-/usr/bin/c++  -Wall -Werror CMakeFiles/Main.dir/src/main.cpp.o -o Main
+/usr/bin/c++  -Wall -Werror CMakeFiles/Main.dir/src/main.cpp.o -o Main  -lraylib_cpp

@@ -65,13 +65,10 @@ CMAKE_BINARY_DIR = /home/jonahr/Documents/Code/CCPP/neows_visualization
 # The main recursive "all" target.
 all: CMakeFiles/Main.dir/all
 all: CMakeFiles/Tests.dir/all
-all: _deps/raylib_cpp-build/all
-all: _deps/catch2-build/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: _deps/raylib_cpp-build/preinstall
-preinstall: _deps/catch2-build/preinstall
+preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
@@ -105,71 +102,7 @@ clean: CMakeFiles/ContinuousTest.dir/clean
 clean: CMakeFiles/ContinuousCoverage.dir/clean
 clean: CMakeFiles/ContinuousMemCheck.dir/clean
 clean: CMakeFiles/ContinuousSubmit.dir/clean
-clean: _deps/raylib_cpp-build/clean
-clean: _deps/catch2-build/clean
 .PHONY : clean
-
-#=============================================================================
-# Directory level rules for directory _deps/catch2-build
-
-# Recursive "all" directory target.
-_deps/catch2-build/all: _deps/catch2-build/src/all
-.PHONY : _deps/catch2-build/all
-
-# Recursive "preinstall" directory target.
-_deps/catch2-build/preinstall: _deps/catch2-build/src/preinstall
-.PHONY : _deps/catch2-build/preinstall
-
-# Recursive "clean" directory target.
-_deps/catch2-build/clean: _deps/catch2-build/src/clean
-.PHONY : _deps/catch2-build/clean
-
-#=============================================================================
-# Directory level rules for directory _deps/catch2-build/src
-
-# Recursive "all" directory target.
-_deps/catch2-build/src/all: _deps/catch2-build/src/CMakeFiles/Catch2.dir/all
-_deps/catch2-build/src/all: _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/all
-.PHONY : _deps/catch2-build/src/all
-
-# Recursive "preinstall" directory target.
-_deps/catch2-build/src/preinstall:
-.PHONY : _deps/catch2-build/src/preinstall
-
-# Recursive "clean" directory target.
-_deps/catch2-build/src/clean: _deps/catch2-build/src/CMakeFiles/Catch2.dir/clean
-_deps/catch2-build/src/clean: _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/clean
-.PHONY : _deps/catch2-build/src/clean
-
-#=============================================================================
-# Directory level rules for directory _deps/raylib_cpp-build
-
-# Recursive "all" directory target.
-_deps/raylib_cpp-build/all: _deps/raylib_cpp-build/include/all
-.PHONY : _deps/raylib_cpp-build/all
-
-# Recursive "preinstall" directory target.
-_deps/raylib_cpp-build/preinstall: _deps/raylib_cpp-build/include/preinstall
-.PHONY : _deps/raylib_cpp-build/preinstall
-
-# Recursive "clean" directory target.
-_deps/raylib_cpp-build/clean: _deps/raylib_cpp-build/include/clean
-.PHONY : _deps/raylib_cpp-build/clean
-
-#=============================================================================
-# Directory level rules for directory _deps/raylib_cpp-build/include
-
-# Recursive "all" directory target.
-_deps/raylib_cpp-build/include/all:
-.PHONY : _deps/raylib_cpp-build/include/all
-
-# Recursive "preinstall" directory target.
-_deps/raylib_cpp-build/include/preinstall:
-.PHONY : _deps/raylib_cpp-build/include/preinstall
-
-# Recursive "clean" directory target.
-_deps/raylib_cpp-build/include/clean:
-.PHONY : _deps/raylib_cpp-build/include/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/Main.dir
@@ -178,7 +111,7 @@ _deps/raylib_cpp-build/include/clean:
 CMakeFiles/Main.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Main.dir/build.make CMakeFiles/Main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles --progress-num=97,98 "Built target Main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles --progress-num=1,2 "Built target Main"
 .PHONY : CMakeFiles/Main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -201,16 +134,15 @@ CMakeFiles/Main.dir/clean:
 # Target rules for target CMakeFiles/Tests.dir
 
 # All Build rule for target.
-CMakeFiles/Tests.dir/all: _deps/catch2-build/src/CMakeFiles/Catch2.dir/all
-CMakeFiles/Tests.dir/all: _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/all
+CMakeFiles/Tests.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tests.dir/build.make CMakeFiles/Tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tests.dir/build.make CMakeFiles/Tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles --progress-num=99,100 "Built target Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles --progress-num=3,4 "Built target Tests"
 .PHONY : CMakeFiles/Tests.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles 98
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Tests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles 0
 .PHONY : CMakeFiles/Tests.dir/rule
@@ -951,58 +883,6 @@ ContinuousSubmit: CMakeFiles/ContinuousSubmit.dir/rule
 CMakeFiles/ContinuousSubmit.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousSubmit.dir/build.make CMakeFiles/ContinuousSubmit.dir/clean
 .PHONY : CMakeFiles/ContinuousSubmit.dir/clean
-
-#=============================================================================
-# Target rules for target _deps/catch2-build/src/CMakeFiles/Catch2.dir
-
-# All Build rule for target.
-_deps/catch2-build/src/CMakeFiles/Catch2.dir/all:
-	$(MAKE) $(MAKESILENT) -f _deps/catch2-build/src/CMakeFiles/Catch2.dir/build.make _deps/catch2-build/src/CMakeFiles/Catch2.dir/depend
-	$(MAKE) $(MAKESILENT) -f _deps/catch2-build/src/CMakeFiles/Catch2.dir/build.make _deps/catch2-build/src/CMakeFiles/Catch2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94 "Built target Catch2"
-.PHONY : _deps/catch2-build/src/CMakeFiles/Catch2.dir/all
-
-# Build rule for subdir invocation for target.
-_deps/catch2-build/src/CMakeFiles/Catch2.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles 94
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/catch2-build/src/CMakeFiles/Catch2.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles 0
-.PHONY : _deps/catch2-build/src/CMakeFiles/Catch2.dir/rule
-
-# Convenience name for target.
-Catch2: _deps/catch2-build/src/CMakeFiles/Catch2.dir/rule
-.PHONY : Catch2
-
-# clean rule for target.
-_deps/catch2-build/src/CMakeFiles/Catch2.dir/clean:
-	$(MAKE) $(MAKESILENT) -f _deps/catch2-build/src/CMakeFiles/Catch2.dir/build.make _deps/catch2-build/src/CMakeFiles/Catch2.dir/clean
-.PHONY : _deps/catch2-build/src/CMakeFiles/Catch2.dir/clean
-
-#=============================================================================
-# Target rules for target _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir
-
-# All Build rule for target.
-_deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/all: _deps/catch2-build/src/CMakeFiles/Catch2.dir/all
-	$(MAKE) $(MAKESILENT) -f _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/build.make _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/depend
-	$(MAKE) $(MAKESILENT) -f _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/build.make _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles --progress-num=95,96 "Built target Catch2WithMain"
-.PHONY : _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/all
-
-# Build rule for subdir invocation for target.
-_deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles 96
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jonahr/Documents/Code/CCPP/neows_visualization/CMakeFiles 0
-.PHONY : _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/rule
-
-# Convenience name for target.
-Catch2WithMain: _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/rule
-.PHONY : Catch2WithMain
-
-# clean rule for target.
-_deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/clean:
-	$(MAKE) $(MAKESILENT) -f _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/build.make _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/clean
-.PHONY : _deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

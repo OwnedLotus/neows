@@ -1,1 +1,8 @@
 _dep/
+
+*.cmake
+Main
+Tests
+CMakeCache.txt
+*.tcl
+Makefile
