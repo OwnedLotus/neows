@@ -1,4 +1,5 @@
 _dep/
+CMakeFiles/
 
 *.cmake
 Main
