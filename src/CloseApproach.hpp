@@ -1,5 +1,5 @@
-#include <string>
 #include <raymath>
+#include <string>
 
 struct CloseApproach {
   std::string close_approach_date;
@@ -17,8 +17,7 @@ struct CloseApproach {
 
   bool is_sentry_object;
 
-  CloseApproach()
-  {
+  CloseApproach() {
     close_approach_date = "";
     close_approach_date_full = "";
     epoch_date_close_approach = 0;
@@ -33,5 +32,4 @@ struct CloseApproach {
     orbiting_body = "";
     is_sentry_object = false;
   }
-
 };

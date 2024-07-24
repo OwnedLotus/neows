@@ -1,3 +1,4 @@
+#pragma once
 #include <tuple>
 
 class Diameter {
@@ -10,14 +11,8 @@ public:
   ~Diameter();
 
 private:
-  std::tuple kilometer_min_max;
-  std::tuple meter_min_max;
-  std::tuple miles_min_max;
-  std::tuple feet_min_max;
+  std::tuple<double, double> kilometer_min_max;
+  std::tuple<double, double> meter_min_max;
+  std::tuple<double, double> miles_min_max;
+  std::tuple<double, double> feet_min_max;
 };
-
-Diameter::Diameter() {
-}
-
-Diameter::~Diameter() {
-}
