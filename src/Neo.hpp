@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 class Neo {
 public:
@@ -12,6 +13,8 @@ public:
 
   // getters setters //
   void SetName(std::string n);
+  void SetLimitedName(std::string n);
+  void SetDesignation(std::string d);
   void SetLink(std::string l);
   void SetMagnitude(float m);
   void SetDiameter();
@@ -20,14 +23,21 @@ public:
   std::string GetID();
   std::string GetNeoID();
   std::string GetName();
+  std::string GetLimitedName();
+  std::string GetDesignation();
   std::string GetLink();
   float GetMagnitude();
   bool GetHazardous();
+
+  static std::vector<Neo> GetNeosDebug();
+  void DisplayNeo();
 
 private:
   std::string id;
   std::string neo_ref_id;
   std::string name;
+  std::string name_lim;
+  std::string designation;
   std::string link;
   float absolute_magnitude_h;
   bool is_hazardous;
