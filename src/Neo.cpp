@@ -1,5 +1,4 @@
 #include "Neo.hpp"
-#include "Diameter.hpp"
 #include <string>
 
 Neo::Neo(std::string _id, std::string _neo_id) {
@@ -20,5 +19,4 @@ std::string Neo::GetNeoID() { return neo_ref_id; }
 std::string Neo::GetName() { return name; }
 std::string Neo::GetLink() { return link; }
 float Neo::GetMagnitude() { return absolute_magnitude_h; }
-Diameter Neo::GetDiameter() { return diameter; }
 bool Neo::GetHazardous() { return is_hazardous; }

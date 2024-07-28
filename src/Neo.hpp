@@ -1,5 +1,4 @@
 #pragma once
-#include "Diameter.hpp"
 #include <string>
 
 class Neo {
@@ -23,7 +22,6 @@ public:
   std::string GetName();
   std::string GetLink();
   float GetMagnitude();
-  Diameter GetDiameter();
   bool GetHazardous();
 
 private:
@@ -32,6 +30,5 @@ private:
   std::string name;
   std::string link;
   float absolute_magnitude_h;
-  Diameter diameter;
   bool is_hazardous;
 };
