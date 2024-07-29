@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <utility>
 #include <vector>
 
 using json = nlohmann::json;
@@ -23,10 +24,30 @@ void Neo::SetMagnitude(float m) { absolute_magnitude_h = m; }
 void Neo::SetDiameter() {}
 void Neo::SetHazardous(bool h) { is_hazardous = h; }
 
-std::vector<Neo> Neo::GetNeosDebug() {
+std::string Neo::GetID() { return id; }
+std::string Neo::GetNeoID() { return neo_ref_id; }
+std::string Neo::GetName() { return name; }
+std::string Neo::GetLimitedName() { return name_lim; }
+std::string Neo::GetDesignation() { return designation; }
+std::string Neo::GetLink() { return link; }
+float Neo::GetMagnitude() { return absolute_magnitude_h; }
+bool Neo::GetHazardous() { return is_hazardous; }
+
+std::vector<Neo> Neo::GetNeosDebug(std::vector<Neo> &neos) {
   std::ifstream f("data/sample.json");
   json data = json::parse(f);
+  return InjestJsonData(data, neos);
+}
 
+void Neo::DisplayNeo() {
+  std::cout << "Id: " << this->GetID() << '\n';
+  std::cout << "Referenced Id: " << this->GetNeoID() << '\n';
+  std::cout << "Name: " << this->GetName() << '\n';
+  std::cout << "Limited Name: " << this->GetLimitedName() << '\n';
+  std::cout << "Link: " << this->GetLink() << '\n';
+}
+
+std::vector<Neo> Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
   json links = data["links"];
   json pages = data["page"];
   json neos_data = data["near_earth_objects"];
@@ -40,8 +61,6 @@ std::vector<Neo> Neo::GetNeosDebug() {
   int total_pages = pages["total_pages"];
   std::cout << "Total Pages: " << total_pages << '\n';
 
-  std::vector<Neo> neo_collection;
-
   for (int i = 0; i < json_size; i++) {
     json neo_data = neos_data[i];
     Neo n(neo_data["id"], neo_data["neo_reference_id"]);
@@ -50,26 +69,8 @@ std::vector<Neo> Neo::GetNeosDebug() {
     n.SetLimitedName(neo_data["name_limited"]);
     n.SetDesignation(neo_data["designation"]);
     n.SetLink(neo_data["nasa_jpl_url"]);
-
-    n.DisplayNeo();
-    neo_collection.push_back(n);
+    neos.push_back(n);
   }
-  return neo_collection;
-}
 
-void Neo::DisplayNeo() {
-  std::cout << "Id: " << this->GetID() << '\n';
-  std::cout << "Referenced Id: " << this->GetNeoID() << '\n';
-  std::cout << "Name: " << this->GetName() << '\n';
-  std::cout << "Limited Name: " << this->GetLimitedName() << '\n';
-  std::cout << "Link: " << this->GetLink() << '\n';
+  return neos;
 }
-
-std::string Neo::GetID() { return id; }
-std::string Neo::GetNeoID() { return neo_ref_id; }
-std::string Neo::GetName() { return name; }
-std::string Neo::GetLimitedName() { return name_lim; }
-std::string Neo::GetDesignation() { return designation; }
-std::string Neo::GetLink() { return link; }
-float Neo::GetMagnitude() { return absolute_magnitude_h; }
-bool Neo::GetHazardous() { return is_hazardous; }

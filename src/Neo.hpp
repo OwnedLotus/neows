@@ -1,6 +1,9 @@
 #pragma once
+#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
+
+using json = nlohmann::json;
 
 class Neo {
 public:
@@ -29,7 +32,8 @@ public:
   float GetMagnitude();
   bool GetHazardous();
 
-  static std::vector<Neo> GetNeosDebug();
+  static std::vector<Neo> GetNeosDebug(std::vector<Neo> &neos);
+  static std::vector<Neo> InjestJsonData(json data, std::vector<Neo> &neos);
   void DisplayNeo();
 
 private:
