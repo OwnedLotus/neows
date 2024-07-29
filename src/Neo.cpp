@@ -1,10 +1,8 @@
 #include "Neo.hpp"
-#include "httplib.h"
 #include "nlohmann/json.hpp"
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <utility>
 #include <vector>
 
 using json = nlohmann::json;
@@ -33,7 +31,9 @@ std::string Neo::GetLink() { return link; }
 float Neo::GetMagnitude() { return absolute_magnitude_h; }
 bool Neo::GetHazardous() { return is_hazardous; }
 
-std::vector<Neo> Neo::GetNeosDebug(std::vector<Neo> &neos) {
+std::vector<Neo> &Neo::GetNeos(std::vector<Neo> &neos) { return neos; }
+
+std::vector<Neo> &Neo::GetNeosDebug(std::vector<Neo> &neos) {
   std::ifstream f("data/sample.json");
   json data = json::parse(f);
   return InjestJsonData(data, neos);
@@ -45,9 +45,10 @@ void Neo::DisplayNeo() {
   std::cout << "Name: " << this->GetName() << '\n';
   std::cout << "Limited Name: " << this->GetLimitedName() << '\n';
   std::cout << "Link: " << this->GetLink() << '\n';
+  std::cout << '\n';
 }
 
-std::vector<Neo> Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
+std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
   json links = data["links"];
   json pages = data["page"];
   json neos_data = data["near_earth_objects"];
