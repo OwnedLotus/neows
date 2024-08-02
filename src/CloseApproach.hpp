@@ -1,4 +1,3 @@
-#include <raymath>
 #include <string>
 
 struct CloseApproach {

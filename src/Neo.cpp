@@ -31,6 +31,7 @@ std::string Neo::GetLink() { return link; }
 float Neo::GetMagnitude() { return absolute_magnitude_h; }
 bool Neo::GetHazardous() { return is_hazardous; }
 
+// implement httplib get query when I have obtained the key from
 std::vector<Neo> &Neo::GetNeos(std::vector<Neo> &neos) { return neos; }
 
 std::vector<Neo> &Neo::GetNeosDebug(std::vector<Neo> &neos) {
