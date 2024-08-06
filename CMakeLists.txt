@@ -32,10 +32,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 include_directories(src)
 
 add_executable(Main src/main.cpp src/Neo.cpp src/Neo.hpp src/Diameter.hpp
-                    src/CloseApproach.hpp)
+    src/CloseApproach.hpp src/NeosCurrier.hpp)
 
 add_executable(Tests tests/test.cpp src/Neo.cpp src/Neo.hpp src/Diameter.hpp
-                     src/CloseApproach.hpp)
+    src/CloseApproach.hpp src/NeosCurrier.hpp)
 
 target_link_libraries(Main PUBLIC raylib nlohmann_json)
 target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json)

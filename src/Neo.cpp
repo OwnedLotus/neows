@@ -2,6 +2,7 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 #include <iostream>
+#include <raylib.h>
 #include <string>
 #include <vector>
 
@@ -76,3 +77,7 @@ std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
 
   return neos;
 }
+
+// the render radius should be based on the diameter that is recieved from
+// the query from the api
+void Neo::RenderNeo(Vector2 position) { DrawCircleV(position, 15, BROWN); }

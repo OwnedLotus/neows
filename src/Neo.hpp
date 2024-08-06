@@ -1,5 +1,7 @@
 #pragma once
 #include <nlohmann/json.hpp>
+#include <raylib.h>
+#include <raymath.h>
 #include <string>
 #include <vector>
 
@@ -36,6 +38,8 @@ public:
   static std::vector<Neo> &GetNeosDebug(std::vector<Neo> &neos);
   static std::vector<Neo> &InjestJsonData(json data, std::vector<Neo> &neos);
   void DisplayNeo();
+
+  void RenderNeo(Vector2 position);
 
 private:
   std::string id;
