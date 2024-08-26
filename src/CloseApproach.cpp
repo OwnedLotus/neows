@@ -9,12 +9,12 @@ CloseApproach::CloseApproach(json close_approach_json) {
   this->close_approach_date_full = date["close_approach_date_full"];
   this->epoch_date_close_approach = date["epoch_date_close_approach"];
 
-  auto relative_velocity = close_approach_json["relative_velocity"];
+  auto relative_velocity = date["relative_velocity"];
   this->relative_vel_kps = relative_velocity["kilometers_per_second"];
   this->relative_vel_kph = relative_velocity["kilometers_per_hour"];
   this->relative_vel_mph = relative_velocity["miles_per_hour"];
 
-  auto miss_distance = close_approach_json["miss_distance"];
+  auto miss_distance = date["miss_distance"];
   this->miss_dist_astronomical = miss_distance["astronomical"];
   this->miss_dist_lunar = miss_distance["lunar"];
   this->miss_dist_kilometer = miss_distance["kilometers"];
