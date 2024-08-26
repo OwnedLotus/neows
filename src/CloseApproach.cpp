@@ -4,3 +4,5 @@
 using json = nlohmann::json;
 
 CloseApproach::CloseApproach(json close_approach_json) {}
+
+CloseApproach::~CloseApproach() {}

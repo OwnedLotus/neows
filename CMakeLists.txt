@@ -35,7 +35,7 @@ add_executable(Main src/main.cpp src/Neo.cpp src/Neo.hpp src/Diameter.hpp
     src/Diameter.cpp src/CloseApproach.hpp src/CloseApproach.cpp src/NeosCurrier.hpp)
 
 add_executable(Tests tests/test.cpp src/Neo.cpp src/Neo.hpp src/Diameter.hpp
-    src/Diameter.cpp src/CloseApproach.hpp src/NeosCurrier.hpp)
+    src/Diameter.cpp src/CloseApproach.hpp src/CloseApproach.cpp src/NeosCurrier.hpp)
 
 target_link_libraries(Main PUBLIC raylib nlohmann_json)
 target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json)

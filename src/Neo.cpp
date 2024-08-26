@@ -26,9 +26,19 @@ void Neo::SetHazardous(bool h) { is_hazardous = h; }
 void Neo::SetDiameter(json diameter_json) {
   if (this->diameter == nullptr) {
     this->diameter = new Diameter(diameter_json);
+  } else {
+    delete this->diameter;
+    this->diameter = new Diameter(diameter_json);
   }
 }
-void Neo::SetCloseApproach(json close_approach_json) {}
+void Neo::SetCloseApproach(json close_approach_json) {
+  if (this->close_approach == nullptr) {
+    this->close_approach = new CloseApproach(close_approach_json);
+  } else {
+    delete this->close_approach;
+    this->close_approach = new CloseApproach(close_approach_json);
+  }
+}
 
 std::string Neo::GetID() { return id; }
 std::string Neo::GetNeoID() { return neo_ref_id; }

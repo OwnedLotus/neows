@@ -13,6 +13,8 @@ public:
   Diameter &operator=(const Diameter &) = default;
   ~Diameter();
 
+  void DisplayDiameter();
+
 private:
   std::tuple<double, double> kilometer_min_max;
   std::tuple<double, double> meter_min_max;
