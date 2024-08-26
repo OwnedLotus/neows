@@ -1,9 +1,12 @@
 #pragma once
+#include <nlohmann/json.hpp>
 #include <tuple>
+
+using json = nlohmann::json;
 
 class Diameter {
 public:
-  Diameter();
+  Diameter(json diameter_json);
   Diameter(Diameter &&) = default;
   Diameter(const Diameter &) = default;
   Diameter &operator=(Diameter &&) = default;

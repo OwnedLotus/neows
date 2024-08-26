@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 
+#include "CloseApproach.hpp"
+#include "Diameter.hpp"
+
 using json = nlohmann::json;
 
 class Neo {
@@ -17,6 +20,7 @@ public:
   ~Neo();
 
   // getters setters //
+
   void SetName(std::string n);
   void SetLimitedName(std::string n);
   void SetDesignation(std::string d);
@@ -24,6 +28,8 @@ public:
   void SetMagnitude(float m);
   void SetDiameter();
   void SetHazardous(bool h);
+  void SetDiameter(json diameter_json);
+  void SetCloseApproach(json close_approach_json);
 
   std::string GetID();
   std::string GetNeoID();
@@ -33,6 +39,8 @@ public:
   std::string GetLink();
   float GetMagnitude();
   bool GetHazardous();
+  Diameter &GetDiameter();
+  CloseApproach &GetCloseApproach();
 
   static std::vector<Neo> &GetNeos(std::vector<Neo> &neos);
   static std::vector<Neo> &GetNeosDebug(std::vector<Neo> &neos);
@@ -50,4 +58,6 @@ private:
   std::string link;
   float absolute_magnitude_h;
   bool is_hazardous;
+  Diameter *diameter;
+  CloseApproach *close_approach;
 };

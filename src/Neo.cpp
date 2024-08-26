@@ -1,4 +1,5 @@
 #include "Neo.hpp"
+#include "Diameter.hpp"
 #include "nlohmann/json.hpp"
 #include <fstream>
 #include <iostream>
@@ -22,6 +23,12 @@ void Neo::SetLink(std::string l) { link = l; }
 void Neo::SetMagnitude(float m) { absolute_magnitude_h = m; }
 void Neo::SetDiameter() {}
 void Neo::SetHazardous(bool h) { is_hazardous = h; }
+void Neo::SetDiameter(json diameter_json) {
+  if (this->diameter == nullptr) {
+    this->diameter = new Diameter(diameter_json);
+  }
+}
+void Neo::SetCloseApproach(json close_approach_json) {}
 
 std::string Neo::GetID() { return id; }
 std::string Neo::GetNeoID() { return neo_ref_id; }
@@ -31,6 +38,8 @@ std::string Neo::GetDesignation() { return designation; }
 std::string Neo::GetLink() { return link; }
 float Neo::GetMagnitude() { return absolute_magnitude_h; }
 bool Neo::GetHazardous() { return is_hazardous; }
+Diameter &Neo::GetDiameter() { return *this->diameter; }
+CloseApproach &Neo::GetCloseApproach() { return *this->close_approach; }
 
 // implement httplib get query when I have obtained the key from
 std::vector<Neo> &Neo::GetNeos(std::vector<Neo> &neos) { return neos; }
@@ -72,6 +81,10 @@ std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
     n.SetLimitedName(neo_data["name_limited"]);
     n.SetDesignation(neo_data["designation"]);
     n.SetLink(neo_data["nasa_jpl_url"]);
+
+    n.SetDiameter(neo_data["estimated_diameter"]);
+    n.SetCloseApproach(neo_data["close_approach_data"]);
+
     neos.push_back(n);
   }
 
