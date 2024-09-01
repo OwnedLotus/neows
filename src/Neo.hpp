@@ -58,6 +58,6 @@ private:
   std::string link;
   float absolute_magnitude_h;
   bool is_hazardous;
-  Diameter *diameter;
-  CloseApproach *close_approach;
+  Diameter *diameter = nullptr;
+  // std::vector<CloseApproach *> close_approach;
 };
