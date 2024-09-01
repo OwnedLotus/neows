@@ -40,7 +40,6 @@ public:
   float GetMagnitude();
   bool GetHazardous();
   Diameter &GetDiameter();
-  std::vector<CloseApproach *> GetCloseApproach();
 
   static std::vector<Neo> &GetNeos(std::vector<Neo> &neos);
   static std::vector<Neo> &GetNeosDebug(std::vector<Neo> &neos);
