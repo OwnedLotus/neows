@@ -8,6 +8,8 @@ public:
   CloseApproach(json close_approach_json);
   ~CloseApproach();
 
+  void PrintCloseApproach();
+
 private:
   std::string close_approach_date;
   std::string close_approach_date_full;
@@ -21,6 +23,4 @@ private:
   std::string miss_dist_kilometer;
   std::string miss_dist_miles;
   std::string orbiting_body;
-
-  bool is_sentry_object;
 };

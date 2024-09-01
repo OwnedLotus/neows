@@ -11,6 +11,7 @@ int main() {
     neo.DisplayNeo();
   }
 
+  /*
   const int screenWidth = 800;
   const int screenHeigh = 450;
 
@@ -31,6 +32,6 @@ int main() {
   }
 
   CloseWindow();
-
+*/
   return 0;
 }

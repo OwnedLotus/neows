@@ -40,11 +40,13 @@ public:
   float GetMagnitude();
   bool GetHazardous();
   Diameter &GetDiameter();
-  CloseApproach &GetCloseApproach();
+  std::vector<CloseApproach *> GetCloseApproach();
 
   static std::vector<Neo> &GetNeos(std::vector<Neo> &neos);
   static std::vector<Neo> &GetNeosDebug(std::vector<Neo> &neos);
   static std::vector<Neo> &InjestJsonData(json data, std::vector<Neo> &neos);
+  void SplitStringData(std::vector<std::string> &parsed_data, json data,
+                       std::string delimiter);
   void DisplayNeo();
 
   void RenderNeo(Vector2 position);
@@ -59,5 +61,6 @@ private:
   float absolute_magnitude_h;
   bool is_hazardous;
   Diameter *diameter = nullptr;
-  // std::vector<CloseApproach *> close_approach;
+  std::vector<CloseApproach *> close_approach;
+  bool is_sentry_oject;
 };

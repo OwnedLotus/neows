@@ -3,6 +3,7 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 #include <iostream>
+#include <nlohmann/json_fwd.hpp>
 #include <raylib.h>
 #include <string>
 #include <vector>
@@ -32,14 +33,11 @@ void Neo::SetDiameter(json diameter_json) {
   }
 }
 void Neo::SetCloseApproach(json close_approach_json) {
-  /*
-    if (this->close_approach == nullptr) {
-      this->close_approach = new CloseApproach(close_approach_json);
-    } else {
-      delete this->close_approach;
-      this->close_approach = new CloseApproach(close_approach_json);
-    }
-    */
+  std::cout << "-----Next Asteroid-----" << '\n';
+  for (json::iterator it = close_approach_json.begin();
+       it != close_approach_json.end(); it++) {
+    // this->close_approach.push_back(new CloseApproach(*it));
+  }
 }
 
 std::string Neo::GetID() { return id; }
@@ -51,8 +49,7 @@ std::string Neo::GetLink() { return link; }
 float Neo::GetMagnitude() { return absolute_magnitude_h; }
 bool Neo::GetHazardous() { return is_hazardous; }
 Diameter &Neo::GetDiameter() { return *this->diameter; }
-// CloseApproach &Neo::GetCloseApproach() { return *this->diameter;} // return
-// *this->close_approach; }
+CloseApproach Neo::GetCloseApproach() { return this->close_approach; }
 
 // implement httplib get query when I have obtained the key from
 std::vector<Neo> &Neo::GetNeos(std::vector<Neo> &neos) { return neos; }
@@ -70,6 +67,14 @@ void Neo::DisplayNeo() {
   std::cout << "Limited Name: " << this->GetLimitedName() << '\n';
   std::cout << "Link: " << this->GetLink() << '\n';
   this->diameter->DisplayDiameter();
+
+  for (auto n : this->close_approach) {
+    n->PrintCloseApproach();
+  }
+
+  std::cout << "Sentry Object: " << (this->is_sentry_oject ? "True" : "False")
+            << '\n';
+
   std::cout << '\n';
 }
 
@@ -99,6 +104,8 @@ std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
     n.SetDiameter(neo_data["estimated_diameter"]);
     n.SetCloseApproach(neo_data["close_approach_data"]);
 
+    n.is_sentry_oject = neo_data["is_sentry_object"];
+
     neos.push_back(n);
   }
 
@@ -108,3 +115,6 @@ std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
 void Neo::RenderNeo(Vector2 position) { DrawCircleV(position, 15, BROWN); }
+
+void Neo::SplitStringData(std::vector<std::string> &parsed_data, json data,
+                          std::string delimiter) {}
