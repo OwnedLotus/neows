@@ -19,6 +19,10 @@ public:
   Neo &operator=(const Neo &) = default;
   ~Neo();
 
+  static std::vector<Neo> &GetNeos(std::vector<Neo> &neos);
+  static std::vector<Neo> &GetNeosDebug(std::vector<Neo> &neos);
+  static std::vector<Neo> &InjestJsonData(json data, std::vector<Neo> &neos);
+
   // getters setters //
 
   void SetName(std::string n);
@@ -42,9 +46,6 @@ public:
   Diameter &GetDiameter();
   std::vector<CloseApproach *> GetCloseApproach();
 
-  static std::vector<Neo> &GetNeos(std::vector<Neo> &neos);
-  static std::vector<Neo> &GetNeosDebug(std::vector<Neo> &neos);
-  static std::vector<Neo> &InjestJsonData(json data, std::vector<Neo> &neos);
   void SplitStringData(std::vector<std::string> &parsed_data, json data,
                        std::string delimiter);
   void DisplayNeo();
