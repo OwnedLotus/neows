@@ -44,7 +44,6 @@ public:
   float GetMagnitude();
   bool GetHazardous();
   Diameter &GetDiameter();
-  std::vector<CloseApproach *> GetCloseApproach();
 
   void SplitStringData(std::vector<std::string> &parsed_data, json data,
                        std::string delimiter);
