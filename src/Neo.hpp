@@ -7,6 +7,7 @@
 
 #include "CloseApproach.hpp"
 #include "Diameter.hpp"
+#include "raymath.h"
 
 using json = nlohmann::json;
 
@@ -48,10 +49,12 @@ public:
   void SplitStringData(std::vector<std::string> &parsed_data, json data,
                        std::string delimiter);
   void DisplayNeo();
-
-  void RenderNeo(Vector2 position);
+  void DrawNeo();
 
 private:
+  Vector2 position;
+  float render_radius;
+
   std::string id;
   std::string neo_ref_id;
   std::string name;

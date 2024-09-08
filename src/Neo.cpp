@@ -1,6 +1,8 @@
 #include "Neo.hpp"
 #include "Diameter.hpp"
 #include "nlohmann/json.hpp"
+#include "raylib.h"
+
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json_fwd.hpp>
@@ -22,7 +24,6 @@ void Neo::SetLimitedName(std::string n) { name_lim = n; }
 void Neo::SetDesignation(std::string d) { designation = d; }
 void Neo::SetLink(std::string l) { link = l; }
 void Neo::SetMagnitude(float m) { absolute_magnitude_h = m; }
-void Neo::SetDiameter() {}
 void Neo::SetHazardous(bool h) { is_hazardous = h; }
 void Neo::SetDiameter(json diameter_json) {
   if (this->diameter == nullptr) {
@@ -113,7 +114,7 @@ std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
 
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
-void Neo::RenderNeo(Vector2 position) { DrawCircleV(position, 15, BROWN); }
+void Neo::DrawNeo() { DrawCircleV(this->position, this->render_radius, BROWN); }
 
 void Neo::SplitStringData(std::vector<std::string> &parsed_data, json data,
                           std::string delimiter) {}
