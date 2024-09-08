@@ -15,7 +15,7 @@ find_package(nlohmann_json)
 # https://github.com/raysan5/raylib.git GIT_TAG 5.0 GIT_SHALLOW 1)
 # FetchContent_MakeAvailable(raylib) endif()
 
-find_package(httplib)
+find_package(restclient-cpp QUIET)
 
 # raylib
 find_package(raylib QUIET)
@@ -31,14 +31,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 
 include_directories(src)
 
-add_executable(Main src/main.cpp src/Neo.cpp src/Neo.hpp src/Diameter.hpp
-    src/Diameter.cpp src/CloseApproach.hpp src/CloseApproach.cpp src/NeosCurrier.hpp)
+add_executable(Main src/main.cpp src/Neo.cpp src/Neo.hpp src/Diameter.cpp
+                    src/CloseApproach.cpp)
 
-add_executable(Tests tests/test.cpp src/Neo.cpp src/Neo.hpp src/Diameter.hpp
-    src/Diameter.cpp src/CloseApproach.hpp src/CloseApproach.cpp src/NeosCurrier.hpp)
+add_executable(Tests tests/test.cpp src/Neo.cpp src/Diameter.cpp
+                     src/CloseApproach.cpp)
 
-target_link_libraries(Main PUBLIC raylib nlohmann_json)
-target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json)
+target_link_libraries(Main PUBLIC raylib nlohmann_json restclient-cpp)
+target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json
+                                    restclient-cpp)
 
 include(CTest)
 include(Catch)
