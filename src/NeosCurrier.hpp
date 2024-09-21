@@ -4,7 +4,7 @@
 
 class NeosCurrier {
 public:
-  NeosCurrier(bool isDebug = false);
+  NeosCurrier(bool isDebug);
   NeosCurrier(NeosCurrier &&) = default;
   NeosCurrier(const NeosCurrier &) = default;
   NeosCurrier &operator=(NeosCurrier &&) = default;
@@ -12,8 +12,9 @@ public:
   ~NeosCurrier();
 
   void DisplayNeos();
+  void RenderNeos();
 
 private:
-  std::vector<Neo> neos;
+  std::vector<Neo *> neos;
   bool debug;
 };

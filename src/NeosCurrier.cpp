@@ -1,6 +1,8 @@
+#include "raylib.h"
+#include <iostream>
+
 #include "NeosCurrier.hpp"
 #include "Neo.hpp"
-#include <vector>
 
 NeosCurrier::NeosCurrier(bool isDebug) {
   this->debug = isDebug;
@@ -13,6 +15,17 @@ NeosCurrier::NeosCurrier(bool isDebug) {
 
 void NeosCurrier::DisplayNeos() {
   for (auto neo : this->neos) {
-    neo.DisplayNeo();
+    neo->DisplayNeo();
+  }
+}
+
+void NeosCurrier::RenderNeos() {
+}
+
+NeosCurrier::~NeosCurrier() {
+  for (auto neo : this->neos) {
+    std::cout << "Deleted Neo: " << neo->GetID() << '\n';
+    delete neo;
+  
   }
 }
