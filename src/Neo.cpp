@@ -2,6 +2,7 @@
 #include "Diameter.hpp"
 #include "nlohmann/json.hpp"
 #include "raylib.h"
+#include "restclient-cpp/restclient.h"
 
 #include <fstream>
 #include <iostream>
@@ -34,7 +35,6 @@ void Neo::SetDiameter(json diameter_json) {
   }
 }
 void Neo::SetCloseApproach(json close_approach_json) {
-  std::cout << "-----Next Asteroid-----" << '\n';
   for (json::iterator it = close_approach_json.begin();
        it != close_approach_json.end(); it++) {
     // this->close_approach.push_back(new CloseApproach(*it));
@@ -52,7 +52,13 @@ bool Neo::GetHazardous() { return is_hazardous; }
 Diameter &Neo::GetDiameter() { return *this->diameter; }
 
 // implement httplib get query when I have obtained the key from
-std::vector<Neo> &Neo::GetNeos(std::vector<Neo> &neos) { return neos; }
+std::vector<Neo> &Neo::GetNeos(std::vector<Neo> &neos) { 
+  RestClient::Response r = RestClient::get("");
+  std::cout << r.code << '\n';
+  std::cout << r.body << '\n';
+  return neos;
+  
+}
 
 std::vector<Neo> &Neo::GetNeosDebug(std::vector<Neo> &neos) {
   std::ifstream f("data/sample.json");

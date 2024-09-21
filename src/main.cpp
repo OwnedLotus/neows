@@ -6,9 +6,10 @@
 int main() {
   std::vector<Neo> neos;
   Neo::GetNeosDebug(neos);
+  //Neo::GetNeos(neos);
 
   for (auto neo : neos) {
-    neo.DisplayNeo();
+    //neo.DisplayNeo();
   }
 
   const int screenWidth = 800;
