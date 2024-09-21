@@ -52,12 +52,13 @@ bool Neo::GetHazardous() { return is_hazardous; }
 Diameter &Neo::GetDiameter() { return *this->diameter; }
 
 // implement httplib get query when I have obtained the key from
-std::vector<Neo> &Neo::GetNeos(std::vector<Neo> &neos) { 
+std::vector<Neo> &Neo::GetNeos(std::vector<Neo> &neos) {
   RestClient::Response r = RestClient::get("");
   std::cout << r.code << '\n';
   std::cout << r.body << '\n';
-  return neos;
-  
+  json data = json::parse(r.body);
+
+  return InjestJsonData(data, neos);
 }
 
 std::vector<Neo> &Neo::GetNeosDebug(std::vector<Neo> &neos) {
@@ -88,8 +89,6 @@ std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
   json links = data["links"];
   json pages = data["page"];
   json neos_data = data["near_earth_objects"];
-
-  std::cout << links << '\n';
 
   int json_size = pages["size"];
   std::cout << "Size: " << json_size << '\n';
