@@ -20,9 +20,10 @@ public:
   Neo &operator=(const Neo &) = default;
   ~Neo();
 
-  static std::vector<Neo> &GetNeos(std::vector<Neo> &neos);
-  static std::vector<Neo> &GetNeosDebug(std::vector<Neo> &neos);
-  static std::vector<Neo> &InjestJsonData(json data, std::vector<Neo> &neos);
+  static std::vector<Neo *> &GetNeos(std::vector<Neo *> &neos);
+  static std::vector<Neo *> &GetNeosDebug(std::vector<Neo *> &neos);
+  static std::vector<Neo *> &InjestJsonData(json data,
+                                            std::vector<Neo *> &neos);
 
   // getters setters //
 
@@ -35,6 +36,8 @@ public:
   void SetHazardous(bool h);
   void SetDiameter(json diameter_json);
   void SetCloseApproach(json close_approach_json);
+  void SetRenderPosition(Vector3 position);
+  void SetRenderRadius(float r);
 
   std::string GetID();
   std::string GetNeoID();
@@ -45,14 +48,14 @@ public:
   float GetMagnitude();
   bool GetHazardous();
   Diameter &GetDiameter();
+  Vector3 GetRenderPosition();
+  float GetRenderRadius();
 
-  void SplitStringData(std::vector<std::string> &parsed_data, json data,
-                       std::string delimiter);
   void DisplayNeo();
   void DrawNeo();
 
 private:
-  Vector2 position;
+  Vector3 position;
   float render_radius;
 
   std::string id;

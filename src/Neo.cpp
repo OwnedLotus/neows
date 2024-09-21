@@ -18,14 +18,21 @@ Neo::Neo(std::string _id, std::string _neo_id) {
   neo_ref_id = _neo_id;
 }
 
-Neo::~Neo() {}
+Neo::~Neo() {
+  delete this->diameter;
+  for (auto approach : this->close_approach) {
+    delete approach;
+  }
+}
 
-void Neo::SetName(std::string n) { name = n; }
-void Neo::SetLimitedName(std::string n) { name_lim = n; }
-void Neo::SetDesignation(std::string d) { designation = d; }
-void Neo::SetLink(std::string l) { link = l; }
-void Neo::SetMagnitude(float m) { absolute_magnitude_h = m; }
-void Neo::SetHazardous(bool h) { is_hazardous = h; }
+void Neo::SetName(std::string n) { this->name = n; }
+void Neo::SetLimitedName(std::string n) { this->name_lim = n; }
+void Neo::SetDesignation(std::string d) { this->designation = d; }
+void Neo::SetLink(std::string l) { this->link = l; }
+void Neo::SetMagnitude(float m) { this->absolute_magnitude_h = m; }
+void Neo::SetHazardous(bool h) { this->is_hazardous = h; }
+void Neo::SetRenderPosition(Vector3 position) { this->position = position; }
+void Neo::SetRenderRadius(float r) { this->render_radius = r; }
 void Neo::SetDiameter(json diameter_json) {
   if (this->diameter == nullptr) {
     this->diameter = new Diameter(diameter_json);
@@ -37,7 +44,7 @@ void Neo::SetDiameter(json diameter_json) {
 void Neo::SetCloseApproach(json close_approach_json) {
   for (json::iterator it = close_approach_json.begin();
        it != close_approach_json.end(); it++) {
-    // this->close_approach.push_back(new CloseApproach(*it));
+    this->close_approach.push_back(new CloseApproach(*it));
   }
 }
 
@@ -52,16 +59,15 @@ bool Neo::GetHazardous() { return is_hazardous; }
 Diameter &Neo::GetDiameter() { return *this->diameter; }
 
 // implement httplib get query when I have obtained the key from
-std::vector<Neo> &Neo::GetNeos(std::vector<Neo> &neos) {
+std::vector<Neo *> &Neo::GetNeos(std::vector<Neo *> &neos) {
   RestClient::Response r = RestClient::get("");
   std::cout << r.code << '\n';
   std::cout << r.body << '\n';
-  json data = json::parse(r.body);
 
-  return InjestJsonData(data, neos);
+  return InjestJsonData(r.body, neos);
 }
 
-std::vector<Neo> &Neo::GetNeosDebug(std::vector<Neo> &neos) {
+std::vector<Neo *> &Neo::GetNeosDebug(std::vector<Neo *> &neos) {
   std::ifstream f("data/sample.json");
   json data = json::parse(f);
   return InjestJsonData(data, neos);
@@ -85,7 +91,7 @@ void Neo::DisplayNeo() {
   std::cout << '\n';
 }
 
-std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
+std::vector<Neo *> &Neo::InjestJsonData(json data, std::vector<Neo *> &neos) {
   json links = data["links"];
   json pages = data["page"];
   json neos_data = data["near_earth_objects"];
@@ -99,17 +105,17 @@ std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
 
   for (int i = 0; i < json_size; i++) {
     json neo_data = neos_data[i];
-    Neo n(neo_data["id"], neo_data["neo_reference_id"]);
+    Neo *n = new Neo(neo_data["id"], neo_data["neo_reference_id"]);
 
-    n.SetName(neo_data["name"]);
-    n.SetLimitedName(neo_data["name_limited"]);
-    n.SetDesignation(neo_data["designation"]);
-    n.SetLink(neo_data["nasa_jpl_url"]);
+    n->SetName(neo_data["name"]);
+    n->SetLimitedName(neo_data["name_limited"]);
+    n->SetDesignation(neo_data["designation"]);
+    n->SetLink(neo_data["nasa_jpl_url"]);
 
-    n.SetDiameter(neo_data["estimated_diameter"]);
-    n.SetCloseApproach(neo_data["close_approach_data"]);
+    n->SetDiameter(neo_data["estimated_diameter"]);
+    n->SetCloseApproach(neo_data["close_approach_data"]);
 
-    n.is_sentry_oject = neo_data["is_sentry_object"];
+    n->is_sentry_oject = neo_data["is_sentry_object"];
 
     neos.push_back(n);
   }
@@ -119,7 +125,4 @@ std::vector<Neo> &Neo::InjestJsonData(json data, std::vector<Neo> &neos) {
 
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
-void Neo::DrawNeo() { DrawCircleV(this->position, this->render_radius, BROWN); }
-
-void Neo::SplitStringData(std::vector<std::string> &parsed_data, json data,
-                          std::string delimiter) {}
+void Neo::DrawNeo() { DrawSphere(this->position, this->render_radius, BROWN); }
