@@ -1,16 +1,10 @@
-#include "Neo.hpp"
+#include "NeosCurrier.hpp"
 #include "raylib.h"
 #include <nlohmann/json.hpp>
-#include <vector>
 
 int main() {
-  std::vector<Neo> neos;
-  Neo::GetNeosDebug(neos);
-  //Neo::GetNeos(neos);
-
-  for (auto neo : neos) {
-    //neo.DisplayNeo();
-  }
+  auto currier = new NeosCurrier(true);
+  currier->DisplayNeos();
 
   const int screenWidth = 800;
   const int screenHeigh = 450;
@@ -62,6 +56,7 @@ int main() {
   }
 
   CloseWindow();
+  delete currier;
 
   return 0;
 }
