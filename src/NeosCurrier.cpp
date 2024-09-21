@@ -1,4 +1,3 @@
-#include "raylib.h"
 #include <iostream>
 
 #include "NeosCurrier.hpp"
@@ -20,6 +19,9 @@ void NeosCurrier::DisplayNeos() {
 }
 
 void NeosCurrier::RenderNeos() {
+  for (auto neo : this->neos) {
+    neo->DrawNeo();
+  }
 }
 
 NeosCurrier::~NeosCurrier() {
