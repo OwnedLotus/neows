@@ -28,6 +28,5 @@ NeosCurrier::~NeosCurrier() {
   for (auto neo : this->neos) {
     std::cout << "Deleted Neo: " << neo->GetID() << '\n';
     delete neo;
-  
   }
 }

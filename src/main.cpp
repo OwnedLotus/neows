@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "NeosCurrier.hpp"
 #include "raylib.h"
 #include <nlohmann/json.hpp>
@@ -8,8 +10,11 @@ int main() {
 
   const int screenWidth = 800;
   const int screenHeigh = 450;
-
   InitWindow(screenWidth, screenHeigh, "Neows");
+  
+  std::cout << "Loading Earth Model" << '\n';
+  Model earthModel = LoadModel("assets/low_poly_earth.glb");
+  std::cout << "Finished Loading Model" << '\n';
 
   Camera3D camera = { 0 };
   camera.position = (Vector3){ 10.0f, 10.0f, 10.0f }; // Camera position
@@ -36,7 +41,7 @@ int main() {
 
     BeginMode3D(camera);
 
-    DrawSphere(cube_position, 5.0, YELLOW);
+    DrawModel(earthModel, cube_position, 10.0, WHITE);
     //DrawCube(cube_position, 2.0f, 2.0f, 2.0f, RED);
     DrawCubeWires(cube_position, 20.0f, 20.0f, 20.0f, MAROON);
 
