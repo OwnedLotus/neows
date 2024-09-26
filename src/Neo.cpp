@@ -19,6 +19,7 @@ Neo::Neo(std::string _id, std::string _neo_id) {
 }
 
 Neo::~Neo() {
+  std::cout << "Deleted Neo: " << this->GetID() << '\n';
   delete this->diameter;
   for (auto approach : this->close_approach) {
     delete approach;
@@ -33,6 +34,7 @@ void Neo::SetMagnitude(float m) { this->absolute_magnitude_h = m; }
 void Neo::SetHazardous(bool h) { this->is_hazardous = h; }
 void Neo::SetRenderPosition(Vector3 position) { this->position = position; }
 void Neo::SetRenderRadius(float r) { this->render_radius = r; }
+
 void Neo::SetDiameter(json diameter_json) {
   if (this->diameter == nullptr) {
     this->diameter = new Diameter(diameter_json);
@@ -41,6 +43,7 @@ void Neo::SetDiameter(json diameter_json) {
     this->diameter = new Diameter(diameter_json);
   }
 }
+
 void Neo::SetCloseApproach(json close_approach_json) {
   for (json::iterator it = close_approach_json.begin();
        it != close_approach_json.end(); it++) {

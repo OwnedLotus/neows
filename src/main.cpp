@@ -6,15 +6,25 @@
 
 int main() {
   auto currier = new NeosCurrier(true);
-  currier->DisplayNeos();
+  //currier->DisplayNeos();
 
   const int screenWidth = 800;
   const int screenHeigh = 450;
   InitWindow(screenWidth, screenHeigh, "Neows");
-  
+
   std::cout << "Loading Earth Model" << '\n';
-  Model earthModel = LoadModel("assets/low_poly_earth.glb");
+  Model earthModel = LoadModel("assets/low_poly_earth.obj");
   std::cout << "Finished Loading Model" << '\n';
+
+  Material* earthMaterials = new Material;
+  int *two = new int(2);
+  
+  earthMaterials = LoadMaterials("assets/low_poly_earth.mtl", two);
+
+  std::cout << "Loading Materials" << '\n';
+  for (int i = 0; i < 2; i++) {
+  }
+
 
   Camera3D camera = { 0 };
   camera.position = (Vector3){ 10.0f, 10.0f, 10.0f }; // Camera position
