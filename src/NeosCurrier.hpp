@@ -1,10 +1,11 @@
 #pragma once
 #include "Neo.hpp"
+#include <raylib.h>
 #include <vector>
 
 class NeosCurrier {
 public:
-  NeosCurrier(bool isDebug);
+  NeosCurrier(bool isDebug, Vector3 initialPosition);
   NeosCurrier(NeosCurrier &&) = default;
   NeosCurrier(const NeosCurrier &) = default;
   NeosCurrier &operator=(NeosCurrier &&) = default;
@@ -13,8 +14,12 @@ public:
 
   void DisplayNeos();
   void RenderNeos();
+  void InitNeoPositions();
+  void UpdateNeosPosition(float deltaTime, float startTime);
+  Vector3 CalculateNewPosition(float phi, float theta);
 
 private:
   std::vector<Neo *> neos;
   bool debug;
+  int radius = 15;
 };
