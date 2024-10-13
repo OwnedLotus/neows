@@ -7,12 +7,12 @@
 
 #include "CloseApproach.hpp"
 #include "Diameter.hpp"
-#include "raymath.h"
 
 using json = nlohmann::json;
 
 class Neo {
 public:
+  Neo() { }
   Neo(std::string _id, std::string _neo_id);
   Neo(Neo &&) = default;
   Neo(const Neo &) = default;
@@ -24,7 +24,6 @@ public:
   static std::vector<Neo *> &GetNeosDebug(std::vector<Neo *> &neos);
   static std::vector<Neo *> &InjestJsonData(json data,
                                             std::vector<Neo *> &neos);
-
   // getters setters //
 
   void SetName(std::string n);

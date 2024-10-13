@@ -13,10 +13,9 @@ public:
   ~NeosCurrier();
 
   void DisplayNeos();
-  void RenderNeos();
-  void InitNeoPositions();
+  void DrawNeos();
   void UpdateNeosPosition(float deltaTime, float startTime);
-  Vector3 CalculateNewPosition(float phi, float theta);
+  std::vector<double> CalculateLineSpace(double start, double end, int num);
 
 private:
   std::vector<Neo *> neos;

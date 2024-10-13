@@ -14,21 +14,19 @@ int main(void) {
   const int screenHeigh = 450;
   InitWindow(screenWidth, screenHeigh, "Neows");
 
-  std::cout << "Loading Earth Model" << '\n';
-  Model earthModel = LoadModel("assets/low_poly_earth.glb");
-  std::cout << "Finished Loading Model" << '\n';
+  //std::cout << "Loading Earth Model" << '\n';
+  //Model earthModel = LoadModel("assets/low_poly_earth.glb");
+  //std::cout << "Finished Loading Model" << '\n';
 
   Camera3D camera = {0};
-  camera.position = (Vector3){10.0f, 10.0f, 10.0f}; // Camera position
+  camera.position = (Vector3){15.0f, 15.0f, 15.0f}; // Camera position
   camera.target = (Vector3){0.0f, 0.0f, 0.0f};      // Camera looking at point
   camera.up =
       (Vector3){0.0f, 1.0f, 0.0f}; // Camera up vector (rotation towards target)
   camera.fovy = 45.0f;             // Camera field-of-view Y
   camera.projection = CAMERA_PERSPECTIVE; // Camera projection type
-  Vector3 cube_position = {0.0, 0.0, 0.0};
+  Vector3 earth_position = {0.0, 0.0, 0.0};
   float startTime = GetTime();
-
-  currier->InitNeoPositions();
 
   DisableCursor();
 
@@ -39,9 +37,6 @@ int main(void) {
     UpdateCamera(&camera, CAMERA_FREE);
     currier->UpdateNeosPosition(GetFrameTime(), startTime);
 
-    if (IsKeyPressed('z'))
-      camera.target = (Vector3){0.0, 0.0, 0.0};
-
     // Draw Cycle
     BeginDrawing();
     ClearBackground(RAYWHITE);
@@ -49,10 +44,12 @@ int main(void) {
     BeginMode3D(camera);
 
     // DrawModel(earthModel, cube_position, 10.0, WHITE);
-    DrawSphere(cube_position, 10, GREEN);
+    DrawSphere(earth_position, 5, GREEN);
     //DrawSphere((Vector3){15, 0, 0}, 1, BROWN);
-    DrawCubeWires(cube_position, 20.0f, 20.0f, 20.0f, MAROON);
-    currier->RenderNeos();
+    DrawCubeWires(earth_position, 20.0f, 20.0f, 20.0f, MAROON);
+    currier->DrawNeos();
+
+    //DrawSphere((Vector3){-7,7,7}, 2.0, BROWN);
 
     DrawGrid(20, 1.0f);
 

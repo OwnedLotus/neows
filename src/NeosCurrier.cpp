@@ -1,7 +1,9 @@
 #include "NeosCurrier.hpp"
 #include "Neo.hpp"
 #include <cmath>
+#include <iostream>
 #include <raylib.h>
+#include <vector>
 
 NeosCurrier::NeosCurrier(bool isDebug, Vector3 initialPosition) {
   this->debug = isDebug;
@@ -20,43 +22,41 @@ void NeosCurrier::DisplayNeos() {
   }
 }
 
-void NeosCurrier::RenderNeos() {
+void NeosCurrier::DrawNeos() {
   for (auto neo : this->neos) {
     neo->DrawNeo();
   }
 }
 
-void NeosCurrier::InitNeoPositions() {
-  for (unsigned int i = 0; i < this->neos.size(); i++) {
-    float t = (float) i / this->neos.size();
-    float theta = t * 2 * PI;
-    float phi = PI / 4;
-
-    this->neos[i]->SetRenderPosition(CalculateNewPosition(phi, theta));
-  
-  }
-}
-
 void NeosCurrier::UpdateNeosPosition(float deltaTime, float startTime) {
-  float currentTime = GetTime();
-  float t = fmod((currentTime - startTime) / this->neos.size(), 1);
+  int num_objects = this->neos.size();
+  float z_coord = 0;
+  std::vector<double> angles = CalculateLineSpace(0, 2 * PI, num_objects);
+  //std::cout << num_objects << '\n';
 
-  for (unsigned int i = 0; i < this->neos.size(); i++) {
-    float theta = (t * 2.0f * PI) * 2 * PI;
-    float phi = PI / 4;
-
-    this->neos[i]->SetRenderPosition(CalculateNewPosition(phi, theta));
+  for (int i = 0; i < num_objects; i++) {
+    float x = radius * cos(angles[i]);
+    float y = radius * sin(angles[i]);
+    float z = z_coord;
+    //std::cout << "x: "<< x << " y: " << y << " z: " << z << '\n';
+   this->neos[i]->SetRenderPosition((Vector3){x,y,z}); 
   }
 }
 
-Vector3 NeosCurrier::CalculateNewPosition(float phi, float theta) {
-   Vector3 newPos = {
-      this->radius * sinf(phi) * cosf(theta),
-      this->radius * cosf(phi),
-      this->radius * sinf(phi) * sinf(theta)
-    };
+std::vector<double> NeosCurrier::CalculateLineSpace(double start, double end, int num) {
+  std::vector<double> linespace;
+  if (num == 0) return linespace;
+  if (num == 1) {
+    linespace.push_back(start);
+    return linespace;
+  }
 
-  return newPos;
+  double delta = (end - start) / (num - 1);
+  for (int i = 0; i < num; i++) {
+    linespace.push_back(start + delta * i);
+  }
+
+  return linespace;
 }
 
 NeosCurrier::~NeosCurrier() {
