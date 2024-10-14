@@ -1,6 +1,6 @@
+#include <iostream>
 #include "NeosCurrier.hpp"
 #include <cmath>
-#include <iostream>
 #include <raylib.h>
 
 #include <nlohmann/json.hpp>
@@ -43,9 +43,8 @@ int main(void) {
 
     BeginMode3D(camera);
 
-    // DrawModel(earthModel, cube_position, 10.0, WHITE);
+    //DrawModel(earthModel, earth_position, 10.0, WHITE);
     DrawSphere(earth_position, 5, GREEN);
-    //DrawSphere((Vector3){15, 0, 0}, 1, BROWN);
     DrawCubeWires(earth_position, 20.0f, 20.0f, 20.0f, MAROON);
     currier->DrawNeos();
 
@@ -67,7 +66,7 @@ int main(void) {
   }
 
   CloseWindow();
-  UnloadModel(earthModel);
+  //UnloadModel(earthModel);
 
   delete currier;
 
