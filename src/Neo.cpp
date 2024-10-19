@@ -2,7 +2,6 @@
 #include "Diameter.hpp"
 #include "nlohmann/json.hpp"
 #include "raylib.h"
-#include "restclient-cpp/restclient.h"
 
 #include <fstream>
 #include <iostream>
@@ -63,11 +62,7 @@ Diameter &Neo::GetDiameter() { return *this->diameter; }
 
 // implement httplib get query when I have obtained the key from
 std::vector<Neo *> &Neo::GetNeos(std::vector<Neo *> &neos) {
-  RestClient::Response r = RestClient::get("");
-  std::cout << r.code << '\n';
-  std::cout << r.body << '\n';
-
-  return InjestJsonData(r.body, neos);
+  return neos;
 }
 
 std::vector<Neo *> &Neo::GetNeosDebug(std::vector<Neo *> &neos) {
