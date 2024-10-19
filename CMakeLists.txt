@@ -1,28 +1,54 @@
 cmake_minimum_required(VERSION 3.30)
 project(neows_visualization)
 
-# nlohmann/json https://json.nlohmann.me/integration/cmake/#supporting-both
-# include(FetchContent) FetchContent_Declare( json URL
-# https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz)
-# FetchContent_MakeAvailable(json)
-find_package(nlohmann_json)
+set(JSON_VERSION 3.11.3)
+find_package(nlohmann_json QUIET)
+if(NOT nlohmann_json)
+  include(FetchContent)
+  FetchContent_Declare(
+    json
+    URL https://github.com/nlohmann/json/releases/download/v${JSON_VERSION}/json.tar.xz
+  )
+  FetchContent_MakeAvailable(json)
+endif()
 
-# https://github.com/RobLoach/raylib-cpp/blob/master/projects/CMake/CMakeLists.txt
-# reference material
-
-# raylib find_package(raylib QUIET) if(NOT raylib_FOUND) include(FetchContent)
-# FetchContent_Declare( raylib GIT_REPOSITORY
-# https://github.com/raysan5/raylib.git GIT_TAG 5.0 GIT_SHALLOW 1)
-# FetchContent_MakeAvailable(raylib) endif()
-
-find_package(restclient-cpp QUIET)
+set(CURL_VERSION 8.10.1)
+find_package(curl QUIET)
+if(NOT curl_FOUND)
+  include(FetchContent)
+  FetchContent_Declare(
+    curl
+    URL https://github.com/curl/curl/releases/download/curl-8_10_1/curl-${CURL_VERSION}.tar.gz
+  )
+  FetchContent_MakeAvailable(curl)
+endif()
 
 # raylib
-find_package(raylib QUIET)
+set(RAYLIB_VERSION 5.0)
+find_package(raylib ${RAYLIB_VERSION} QUIET)
+if(NOT raylib_FOUND)
+  include(FetchContent)
+  FetchContent_Declare(
+    raylib
+    DOWNLOAD_EXTRACT_TIMESTAMP OFF
+    URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+  )
+  FetchContent_GetProperties(raylib)
+  FetchContent_MakeAvailable(raylib)
+endif()
 
 # pull in desired version of catch through cmake automatically, make it
 # available
-find_package(Catch2 QUIET)
+set(CATCH2_VERSION 3.7.1)
+find_package(catch2 QUIET)
+if(NOT catch2_FOUND)
+  include(FetchContent)
+  FetchContent_Declare(
+    catch2
+    URL https://github.com/catchorg/Catch2/archive/refs/tags/v${CATCH2_VERSION}.tar.gz
+  )
+  FetchContent_MakeAvailable(catch2)
+endif()
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -37,9 +63,9 @@ add_executable(Main src/main.cpp src/Neo.cpp src/Diameter.cpp
 add_executable(Tests tests/test.cpp src/Neo.cpp src/Diameter.cpp
                      src/CloseApproach.cpp src/NeosCurrier.cpp)
 
-target_link_libraries(Main PUBLIC raylib nlohmann_json restclient-cpp)
+target_link_libraries(Main PUBLIC raylib nlohmann_json libcurl)
 target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json
-                                    restclient-cpp)
+                                    libcurl)
 
 include(CTest)
 include(Catch)
