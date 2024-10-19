@@ -51,7 +51,7 @@ public:
   float GetRenderRadius();
 
   void DisplayNeo();
-  void DrawNeo();
+  void Draw();
 
 private:
   Vector3 position;

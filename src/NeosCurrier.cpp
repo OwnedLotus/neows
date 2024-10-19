@@ -12,8 +12,6 @@ NeosCurrier::NeosCurrier(bool isDebug, Vector3 initialPosition) {
   } else {
     Neo::GetNeos(this->neos);
   }
-
-  this->neos[0]->SetRenderPosition(initialPosition);
 }
 
 void NeosCurrier::DisplayNeos() {
@@ -24,21 +22,20 @@ void NeosCurrier::DisplayNeos() {
 
 void NeosCurrier::DrawNeos() {
   for (auto neo : this->neos) {
-    neo->DrawNeo();
+    neo->Draw();
   }
 }
 
 void NeosCurrier::UpdateNeosPosition(float deltaTime, float startTime) {
   int num_objects = this->neos.size();
-  float z_coord = 0;
+  float y_coord = 0;
   std::vector<double> angles = CalculateLineSpace(0, 2 * PI, num_objects);
-  //std::cout << num_objects << '\n';
+  std::cout << deltaTime << '\n';
 
   for (int i = 0; i < num_objects; i++) {
     float x = radius * cos(angles[i]);
-    float y = radius * sin(angles[i]);
-    float z = z_coord;
-    //std::cout << "x: "<< x << " y: " << y << " z: " << z << '\n';
+    float z = radius * sin(angles[i]);
+    float y = y_coord;
    this->neos[i]->SetRenderPosition((Vector3){x,y,z}); 
   }
 }

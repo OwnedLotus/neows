@@ -31,7 +31,10 @@ void Neo::SetDesignation(std::string d) { this->designation = d; }
 void Neo::SetLink(std::string l) { this->link = l; }
 void Neo::SetMagnitude(float m) { this->absolute_magnitude_h = m; }
 void Neo::SetHazardous(bool h) { this->is_hazardous = h; }
-void Neo::SetRenderPosition(Vector3 position) { this->position = position; }
+void Neo::SetRenderPosition(Vector3 position) { 
+  this->position = position; 
+    std::cout << "x: "<< this->position.x << " y: " << this->position.y << " z: " << this->position.z << '\n';
+}
 void Neo::SetRenderRadius(float r) { this->render_radius = r; }
 
 void Neo::SetDiameter(json diameter_json) {
@@ -115,6 +118,8 @@ std::vector<Neo *> &Neo::InjestJsonData(json data, std::vector<Neo *> &neos) {
 
     n->is_sentry_oject = neo_data["is_sentry_object"];
 
+    n->render_radius = 1;
+
     neos.push_back(n);
   }
 
@@ -123,4 +128,4 @@ std::vector<Neo *> &Neo::InjestJsonData(json data, std::vector<Neo *> &neos) {
 
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
-void Neo::DrawNeo() { DrawSphere(this->position, this->render_radius, BROWN); }
+void Neo::Draw() { DrawSphere(this->position, this->render_radius, BROWN); }

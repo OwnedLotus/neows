@@ -49,6 +49,9 @@ int main(void) {
     currier->DrawNeos();
 
     //DrawSphere((Vector3){-7,7,7}, 2.0, BROWN);
+    DrawLine3D((Vector3) {0,0,0}, (Vector3) {0,0,20} , BLUE);
+    DrawLine3D((Vector3) {0,0,0}, (Vector3) {20,0,0} , RED);
+    DrawLine3D((Vector3) {0,0,0}, (Vector3) {0,20,0} , RED);
 
     DrawGrid(20, 1.0f);
 
