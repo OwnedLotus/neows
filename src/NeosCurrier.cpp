@@ -30,7 +30,6 @@ void NeosCurrier::UpdateNeosPosition(float deltaTime, float startTime) {
   int num_objects = this->neos.size();
   float y_coord = 0;
   std::vector<double> angles = CalculateLineSpace(0, 2 * PI, num_objects);
-  std::cout << deltaTime << '\n';
 
   for (int i = 0; i < num_objects; i++) {
     float x = radius * cos(angles[i]);

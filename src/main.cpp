@@ -8,7 +8,6 @@
 int main(void) {
   SetTraceLogLevel(LOG_DEBUG);
   auto currier = new NeosCurrier(true, (Vector3) {15, 0, 0});
-  // currier->DisplayNeos();
 
   const int screenWidth = 800;
   const int screenHeigh = 450;
@@ -45,18 +44,18 @@ int main(void) {
 
     //DrawModel(earthModel, earth_position, 10.0, WHITE);
     DrawSphere(earth_position, 5, GREEN);
-    DrawCubeWires(earth_position, 20.0f, 20.0f, 20.0f, MAROON);
+    //DrawCubeWires(earth_position, 20.0f, 20.0f, 20.0f, MAROON);
     currier->DrawNeos();
 
     //DrawSphere((Vector3){-7,7,7}, 2.0, BROWN);
-    DrawLine3D((Vector3) {0,0,0}, (Vector3) {0,0,20} , BLUE);
     DrawLine3D((Vector3) {0,0,0}, (Vector3) {20,0,0} , RED);
-    DrawLine3D((Vector3) {0,0,0}, (Vector3) {0,20,0} , RED);
+    DrawLine3D((Vector3) {0,0,0}, (Vector3) {0,20,0} , GREEN);
+    DrawLine3D((Vector3) {0,0,0}, (Vector3) {0,0,20} , BLUE);
 
-    DrawGrid(20, 1.0f);
+    //DrawGrid(20, 1.0f);
 
     EndMode3D();
-
+/*
     DrawRectangle(10, 10, 320, 93, Fade(SKYBLUE, 0.5f));
     DrawRectangleLines(10, 10, 320, 93, BLUE);
 
@@ -64,6 +63,7 @@ int main(void) {
     DrawText("- Mouse Wheel to Zoom in-out", 40, 40, 10, DARKGRAY);
     DrawText("- Mouse Wheel Pressed to Pan", 40, 60, 10, DARKGRAY);
     DrawText("- Z to zoom to (0, 0, 0)", 40, 80, 10, DARKGRAY);
+    */
 
     EndDrawing();
   }
