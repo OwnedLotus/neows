@@ -62,6 +62,7 @@ std::string Neo::GetLink() { return link; }
 float Neo::GetMagnitude() { return absolute_magnitude_h; }
 bool Neo::GetHazardous() { return is_hazardous; }
 Diameter &Neo::GetDiameter() { return *this->diameter; }
+Vector3 Neo::GetRenderPosition() {return this->position; }
 
 // implement httplib get query when I have obtained the key from
 std::vector<Neo *> &Neo::GetNeos(std::vector<Neo *> &neos) {

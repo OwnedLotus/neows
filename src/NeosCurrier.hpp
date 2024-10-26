@@ -14,7 +14,7 @@ public:
 
   void DisplayNeos();
   void DrawNeos();
-  void UpdateNeosPosition(float deltaTime, float startTime);
+  void UpdateNeosPosition(double time, float startTime);
   std::vector<double> CalculateLineSpace(double start, double end, int num);
 
 private:

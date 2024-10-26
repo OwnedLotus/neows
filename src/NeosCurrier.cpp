@@ -1,7 +1,6 @@
 #include "NeosCurrier.hpp"
 #include "Neo.hpp"
 #include <cmath>
-#include <iostream>
 #include <raylib.h>
 #include <vector>
 
@@ -26,7 +25,7 @@ void NeosCurrier::DrawNeos() {
   }
 }
 
-void NeosCurrier::UpdateNeosPosition(float deltaTime, float startTime) {
+void NeosCurrier::UpdateNeosPosition(double time, float startTime) {
   int num_objects = this->neos.size();
   float y_coord = 0;
   std::vector<double> angles = CalculateLineSpace(0, 2 * PI, num_objects);
@@ -34,7 +33,11 @@ void NeosCurrier::UpdateNeosPosition(float deltaTime, float startTime) {
   for (int i = 0; i < num_objects; i++) {
     float x = radius * cos(angles[i]);
     float z = radius * sin(angles[i]);
-    float y = y_coord;
+    float y = y_coord ;
+
+    x = x * cos(time) - z * sin(time);
+    z = x * sin(time) + z * cos(time);
+
    this->neos[i]->SetRenderPosition((Vector3){x,y,z}); 
   }
 }
