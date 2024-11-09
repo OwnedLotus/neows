@@ -1,5 +1,3 @@
-#include <iostream>
-#include "Neo.hpp"
 #include "NeosCurrier.hpp"
 #include <cmath>
 #include <raylib.h>
