@@ -33,17 +33,17 @@ void Neo::SetMagnitude(float m) { this->absolute_magnitude_h = m; }
 void Neo::SetHazardous(bool h) { this->is_hazardous = h; }
 void Neo::SetRenderPosition(Vector3 position) { 
   this->position = position; 
-    //std::cout << "x: "<< this->position.x << " y: " << this->position.y << " z: " << this->position.z << '\n';
 }
 void Neo::SetRenderRadius(float r) { this->render_radius = r; }
 
 void Neo::SetDiameter(json diameter_json) {
   if (this->diameter == nullptr) {
     this->diameter = new Diameter(diameter_json);
-  } else {
-    delete this->diameter;
-    this->diameter = new Diameter(diameter_json);
-  }
+    return;
+  } 
+
+  delete this->diameter;
+  this->diameter = new Diameter(diameter_json);
 }
 
 void Neo::SetCloseApproach(json close_approach_json) {
