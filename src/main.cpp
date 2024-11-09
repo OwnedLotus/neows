@@ -6,7 +6,6 @@
 #include <nlohmann/json.hpp>
 
 int main(void) {
-  SetTraceLogLevel(LOG_DEBUG);
   auto currier = new NeosCurrier(true, (Vector3) {15, 0, 0});
 
   const int screenWidth = 800;
