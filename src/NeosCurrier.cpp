@@ -38,7 +38,7 @@ void NeosCurrier::UpdateNeosPosition(double time, float startTime, double angleR
     // rotation
     x = x * cos(angles[i] + angleRadians * time) - z * sin(angles[i] + angleRadians * time);
     z = z * sin(angles[i] + angleRadians * time) + z * cos(angles[i] + angleRadians * time);
-    float y = sin(time ) * (z + x) / 2;
+    float y = sin(time) * (z + x) / 2;
 
     this->neos[i]->SetRenderPosition((Vector3){x,y,z}); 
   }
