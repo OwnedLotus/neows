@@ -6,13 +6,15 @@
 #include <vector>
 #include <iostream>
 
-NeosCurrier::NeosCurrier(bool isDebug, Vector3 initialPosition) {
+NeosCurrier::NeosCurrier(bool isDebug, Vector3 initialPosition, Model* model) {
   this->debug = isDebug;
   if (this->debug) {
     Neo::GetNeosDebug(this->neos);
   } else {
     Neo::GetNeos(this->neos);
   }
+
+  this->asteroid_model = model;
 }
 
 void NeosCurrier::DisplayNeos() {
@@ -23,7 +25,7 @@ void NeosCurrier::DisplayNeos() {
 
 void NeosCurrier::DrawNeos() {
   for (auto neo : this->neos) {
-    neo->Draw();
+    neo->Draw(this->asteroid_model);
   }
 }
 

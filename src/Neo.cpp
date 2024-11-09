@@ -129,4 +129,6 @@ std::vector<Neo *> &Neo::InjestJsonData(json data, std::vector<Neo *> &neos) {
 
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
-void Neo::Draw() { DrawSphere(this->position, this->render_radius, BROWN); }
+void Neo::Draw(Model* model) { 
+  DrawModel(*model, this->position, 1, BROWN);
+}

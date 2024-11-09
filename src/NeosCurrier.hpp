@@ -5,7 +5,7 @@
 
 class NeosCurrier {
 public:
-  NeosCurrier(bool isDebug, Vector3 initialPosition);
+  NeosCurrier(bool isDebug, Vector3 initialPosition, Model* model);
   NeosCurrier(NeosCurrier &&) = default;
   NeosCurrier(const NeosCurrier &) = default;
   NeosCurrier &operator=(NeosCurrier &&) = default;
@@ -24,4 +24,5 @@ private:
   std::vector<Neo *> neos;
   bool debug;
   int radius = 15;
+  Model* asteroid_model;
 };

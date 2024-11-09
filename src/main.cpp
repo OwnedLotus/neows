@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Neo.hpp"
 #include "NeosCurrier.hpp"
 #include <cmath>
 #include <raylib.h>
@@ -6,24 +7,23 @@
 #include <nlohmann/json.hpp>
 
 int main(void) {
-  auto currier = new NeosCurrier(true, (Vector3) {15, 0, 0});
 
   const int screenWidth = 800;
   const int screenHeigh = 450;
   InitWindow(screenWidth, screenHeigh, "NEOws Display");
-
-  //std::cout << "Loading Earth Model" << '\n';
-  //Model earthModel = LoadModel("assets/low_poly_earth.glb");
-  //std::cout << "Finished Loading Model" << '\n';
 
   Camera3D camera = {0};
   camera.position = (Vector3){15.0f, 15.0f, 15.0f}; // Camera position
   camera.target = (Vector3){0.0f, 0.0f, 0.0f};      // Camera looking at point
   camera.up = (Vector3){0.0f, 1.0f, 0.0f}; // Camera up vector (rotation towards target)
   camera.fovy = 45.0f;             // Camera field-of-view Y
-  camera.projection = CAMERA_FREE;
+  camera.projection = CAMERA_PERSPECTIVE;
   Vector3 earthPosition = {0.0, 0.0, 0.0};
   float startTime = GetTime();
+
+  Model asteroidModel = LoadModel("assets/Asteroid.glb");
+
+  auto currier = new NeosCurrier(true, (Vector3) {15, 0, 0}, &asteroidModel);
 
   DisableCursor();
 
@@ -40,7 +40,7 @@ int main(void) {
 
     BeginMode3D(camera);
 
-    //DrawModel(earthModel, earth_position, 10.0, WHITE);
+    //DrawModel(earthModel, earthPosition, 10.0, WHITE);
     DrawSphere(earthPosition, 5, GREEN);
     //DrawCubeWires(earth_position, 20.0f, 20.0f, 20.0f, MAROON);
     currier->DrawNeos();
@@ -68,6 +68,7 @@ int main(void) {
 
   CloseWindow();
   //UnloadModel(earthModel);
+  UnloadModel(asteroidModel);
 
   delete currier;
 
