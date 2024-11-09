@@ -34,11 +34,11 @@ int main(void) {
   while (!WindowShouldClose()) {
     // Update Cycle
     UpdateCamera(&camera, CAMERA_FREE);
-    currier->UpdateNeosPosition(GetTime(), startTime, 1);
+    currier->UpdateNeosPosition(GetTime(), startTime, 0.5);
 
     // Draw Cycle
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(BLACK);
 
     BeginMode3D(camera);
 
