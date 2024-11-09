@@ -28,10 +28,10 @@ void NeosCurrier::DrawNeos() {
 }
 
 void NeosCurrier::UpdateNeosPosition(double time, float startTime, double angleRadians) {
-  int num_objects = this->neos.size();
-  std::vector<double> angles = CalculateLineSpace(0, 2 * PI, num_objects);
+  int numObjects = this->neos.size();
+  std::vector<double> angles = CalculateLineSpace(0, 2 * PI, numObjects);
 
-  for (int i = 0; i < num_objects; i++) {
+  for (int i = 0; i < numObjects; i++) {
     float x = radius;
     float z = radius;
 
@@ -70,8 +70,7 @@ void NeosCurrier::DeleteSelectedNeo(std::string id) {
   Neo* neoToBeDeleted = nullptr;
 
   for (auto neo: this->neos) {
-    if(neo->GetID() == id)
-    {
+    if(neo->GetID() == id) {
       neoToBeDeleted = neo;
     }
   }
