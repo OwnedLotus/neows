@@ -11,7 +11,7 @@ int main(void) {
 
   const int screenWidth = 800;
   const int screenHeigh = 450;
-  InitWindow(screenWidth, screenHeigh, "Neows");
+  InitWindow(screenWidth, screenHeigh, "NEOws Display");
 
   //std::cout << "Loading Earth Model" << '\n';
   //Model earthModel = LoadModel("assets/low_poly_earth.glb");
@@ -20,10 +20,9 @@ int main(void) {
   Camera3D camera = {0};
   camera.position = (Vector3){15.0f, 15.0f, 15.0f}; // Camera position
   camera.target = (Vector3){0.0f, 0.0f, 0.0f};      // Camera looking at point
-  camera.up =
-      (Vector3){0.0f, 1.0f, 0.0f}; // Camera up vector (rotation towards target)
+  camera.up = (Vector3){0.0f, 1.0f, 0.0f}; // Camera up vector (rotation towards target)
   camera.fovy = 45.0f;             // Camera field-of-view Y
-  camera.projection = CAMERA_PERSPECTIVE; // Camera projection type
+  camera.projection = CAMERA_FREE;
   Vector3 earthPosition = {0.0, 0.0, 0.0};
   float startTime = GetTime();
 
