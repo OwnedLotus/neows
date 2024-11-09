@@ -12,9 +12,12 @@ public:
   NeosCurrier &operator=(const NeosCurrier &) = default;
   ~NeosCurrier();
 
+  void DeleteAllNeos();
+  void DeleteSelectedNeo(std::string id);
+
   void DisplayNeos();
   void DrawNeos();
-  void UpdateNeosPosition(double time, float startTime);
+  void UpdateNeosPosition(double time, float startTime, double angleRadians);
   std::vector<double> CalculateLineSpace(double start, double end, int num);
 
 private:

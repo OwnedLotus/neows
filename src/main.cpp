@@ -34,7 +34,7 @@ int main(void) {
   while (!WindowShouldClose()) {
     // Update Cycle
     UpdateCamera(&camera, CAMERA_FREE);
-    currier->UpdateNeosPosition(GetTime(), startTime);
+    currier->UpdateNeosPosition(GetTime(), startTime, 1);
 
     // Draw Cycle
     BeginDrawing();

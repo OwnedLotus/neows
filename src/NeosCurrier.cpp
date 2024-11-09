@@ -2,7 +2,9 @@
 #include "Neo.hpp"
 #include <cmath>
 #include <raylib.h>
+#include <tuple>
 #include <vector>
+#include <iostream>
 
 NeosCurrier::NeosCurrier(bool isDebug, Vector3 initialPosition) {
   this->debug = isDebug;
@@ -25,20 +27,21 @@ void NeosCurrier::DrawNeos() {
   }
 }
 
-void NeosCurrier::UpdateNeosPosition(double time, float startTime) {
+void NeosCurrier::UpdateNeosPosition(double time, float startTime, double angleRadians) {
   int num_objects = this->neos.size();
   float y_coord = 0;
   std::vector<double> angles = CalculateLineSpace(0, 2 * PI, num_objects);
 
   for (int i = 0; i < num_objects; i++) {
-    float x = radius * cos(angles[i]);
-    float z = radius * sin(angles[i]);
-    float y = y_coord ;
+    float x = radius;
+    float z = radius;
+    float y = y_coord;
 
-    x = x * cos(time) - z * sin(time);
-    z = x * sin(time) + z * cos(time);
+    // rotation
+    x = x * cos(angles[i] + angleRadians * time) - z * sin(angles[i] + angleRadians * time);
+    z = z * sin(angles[i] + angleRadians * time) + z * cos(angles[i] + angleRadians * time);
 
-   this->neos[i]->SetRenderPosition((Vector3){x,y,z}); 
+    this->neos[i]->SetRenderPosition((Vector3){x,y,z}); 
   }
 }
 
@@ -58,8 +61,31 @@ std::vector<double> NeosCurrier::CalculateLineSpace(double start, double end, in
   return linespace;
 }
 
-NeosCurrier::~NeosCurrier() {
+void NeosCurrier::DeleteAllNeos() {
   for (auto neo : this->neos) {
     delete neo;
   }
+}
+
+void NeosCurrier::DeleteSelectedNeo(std::string id) {
+  Neo* neoToBeDeleted = nullptr;
+
+  for (auto neo: this->neos) {
+    if(neo->GetID() == id)
+    {
+      neoToBeDeleted = neo;
+    }
+  }
+
+  if(neoToBeDeleted != nullptr) {
+    std::cout << "Neo: " << id << " Successfully Deleted" << "\n";
+    delete neoToBeDeleted;
+    return;
+  }
+
+    std::cout << "Failed to Delete Neo: " << id;
+}
+
+NeosCurrier::~NeosCurrier() {
+  this->DeleteAllNeos();
 }
