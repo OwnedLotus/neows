@@ -12,7 +12,7 @@ using json = nlohmann::json;
 
 class Neo {
 public:
-  Neo() { }
+  Neo() {}
   Neo(std::string _id, std::string _neo_id);
   Neo(Neo &&) = default;
   Neo(const Neo &) = default;
@@ -20,8 +20,12 @@ public:
   Neo &operator=(const Neo &) = default;
   ~Neo();
 
+  void TestHttp();
   static std::vector<Neo *> &GetNeos(std::vector<Neo *> &neos);
   static std::vector<Neo *> &GetNeosDebug(std::vector<Neo *> &neos);
+  static std::vector<Neo *> &GetNeosDebugOffline(std::vector<Neo *> &neos);
+  static std::vector<Neo *> &InjestJsonDataOffline(json data,
+                                                   std::vector<Neo *> &neos);
   static std::vector<Neo *> &InjestJsonData(json data,
                                             std::vector<Neo *> &neos);
   // getters setters //
@@ -51,12 +55,13 @@ public:
   float GetRenderRadius();
 
   void DisplayNeo();
-  void Draw(Model* model);
+  void Draw(Model *model);
 
 private:
   Vector3 position;
   float render_radius;
 
+  std::string date;
   std::string id;
   std::string neo_ref_id;
   std::string name;

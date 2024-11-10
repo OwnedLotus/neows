@@ -12,15 +12,15 @@ if(NOT nlohmann_json)
   FetchContent_MakeAvailable(json)
 endif()
 
-set(CURL_VERSION 8.10.1)
-find_package(curl QUIET)
-if(NOT curl_FOUND)
+set(CPP_HTTPLIB_VERSION 0.18.1)
+find_package(cpp-httplib ${CPP_HTTPLIB_VERSION} QUIET)
+if(NOT cpp-httplib_FOUND)
   include(FetchContent)
   FetchContent_Declare(
-    curl
-    URL https://github.com/curl/curl/releases/download/curl-8_10_1/curl-${CURL_VERSION}.tar.gz
+    cpp-httplib
+    URL https://github.com/yhirose/cpp-httplib/archive/refs/tags/v${CPP_HTTPLIB_VERSION}.tar.gz
   )
-  FetchContent_MakeAvailable(curl)
+  FetchContent_MakeAvailable(cpp-httplib)
 endif()
 
 # raylib
@@ -63,9 +63,9 @@ add_executable(Main src/main.cpp src/Neo.cpp src/Diameter.cpp
 add_executable(Tests tests/test.cpp src/Neo.cpp src/Diameter.cpp
                      src/CloseApproach.cpp src/NeosCurrier.cpp)
 
-target_link_libraries(Main PUBLIC raylib nlohmann_json libcurl)
+target_link_libraries(Main PUBLIC raylib nlohmann_json cpp-httplib)
 target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json
-                                    libcurl)
+                                    cpp-httplib)
 
 include(CTest)
 include(Catch)

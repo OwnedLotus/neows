@@ -21,6 +21,8 @@ public:
   std::vector<double> CalculateLineSpace(double start, double end, int num);
 
 private:
+  std::string links;
+  std::string pages;
   std::vector<Neo *> neos;
   bool debug;
   int radius = 15;
