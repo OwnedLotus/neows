@@ -34,6 +34,10 @@ void Neo::SetMagnitude(float m) { this->absolute_magnitude_h = m; }
 void Neo::SetHazardous(bool h) { this->is_hazardous = h; }
 void Neo::SetRenderPosition(Vector3 position) { this->position = position; }
 void Neo::SetRenderRadius(float r) { this->render_radius = r; }
+void Neo::SetDate(std::string date) { this->date = date; }
+void Neo::SetIsSentryObject(bool is_sentry) {
+  this->is_sentry_oject = is_sentry;
+}
 
 void Neo::SetDiameter(json diameter_json) {
   if (this->diameter == nullptr) {
@@ -61,7 +65,10 @@ std::string Neo::GetLink() { return link; }
 float Neo::GetMagnitude() { return absolute_magnitude_h; }
 bool Neo::GetHazardous() { return is_hazardous; }
 Diameter &Neo::GetDiameter() { return *this->diameter; }
+float Neo::GetRenderRadius() { return this->render_radius; }
 Vector3 Neo::GetRenderPosition() { return this->position; }
+bool Neo::GetIsSentryObject() { return this->is_sentry_oject; }
+std::string Neo::GetDate() { return this->date; }
 
 // implement httplib get query when I have obtained the key from
 std::vector<Neo *> &Neo::GetNeos(std::vector<Neo *> &neos) { return neos; }
@@ -69,7 +76,7 @@ std::vector<Neo *> &Neo::GetNeos(std::vector<Neo *> &neos) { return neos; }
 std::vector<Neo *> &Neo::GetNeosDebugOffline(std::vector<Neo *> &neos) {
   std::ifstream f("data/sample.json");
   json data = json::parse(f);
-  return InjestJsonData(data, neos);
+  return InjestJsonDataOffline(data, neos);
 }
 
 void Neo::DisplayNeo() {
@@ -116,11 +123,11 @@ std::vector<Neo *> &Neo::InjestJsonDataOffline(json data,
     n->SetDiameter(neo_data["estimated_diameter"]);
     n->SetCloseApproach(neo_data["close_approach_data"]);
 
-    n->is_sentry_oject = neo_data["is_sentry_object"];
+    n->SetIsSentryObject(neo_data["is_sentry_object"]);
 
-    n->render_radius = 1;
+    n->SetRenderRadius(1);
 
-    neos.push_back(n);
+    neos.emplace_back(n);
   }
 
   return neos;
@@ -150,9 +157,10 @@ std::vector<Neo *> &InjestJsonData(json data, std::vector<Neo *> &neos) {
     n->SetDiameter(neo_data["estimated_diameter"]);
     n->SetCloseApproach(neo_data["close_approach_data"]);
 
-    n->is_sentry_oject = neo_data["is_sentry_object"];
+    n->SetIsSentryObject(neo_data["is_sentry_object"]);
 
-    n->render_radius = 1;
+    // default radius
+    n->SetRenderRadius(1);
 
     neos.push_back(n);
   }

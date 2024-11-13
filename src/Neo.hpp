@@ -20,7 +20,6 @@ public:
   Neo &operator=(const Neo &) = default;
   ~Neo();
 
-  void TestHttp();
   static std::vector<Neo *> &GetNeos(std::vector<Neo *> &neos);
   static std::vector<Neo *> &GetNeosDebug(std::vector<Neo *> &neos);
   static std::vector<Neo *> &GetNeosDebugOffline(std::vector<Neo *> &neos);
@@ -41,6 +40,8 @@ public:
   void SetCloseApproach(json close_approach_json);
   void SetRenderPosition(Vector3 position);
   void SetRenderRadius(float r);
+  void SetIsSentryObject(bool is_sentry);
+  void SetDate(std::string date);
 
   std::string GetID();
   std::string GetNeoID();
@@ -53,6 +54,8 @@ public:
   Diameter &GetDiameter();
   Vector3 GetRenderPosition();
   float GetRenderRadius();
+  bool GetIsSentryObject();
+  std::string GetDate();
 
   void DisplayNeo();
   void Draw(Model *model);
