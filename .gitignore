@@ -7,4 +7,4 @@ Tests
 CMakeCache.txt
 *.tcl
 Makefile
-secrets.json
+.env
