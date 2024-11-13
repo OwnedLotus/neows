@@ -7,16 +7,8 @@
 #include <string>
 
 int main(void) {
-  std::string base_rul = "https://api.nasa.gov";
+  std::string base_url = "https://api.nasa.gov";
   std::string path = "/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY";
-  httplib::Client cli(base_rul);
-  auto res = cli.Get(path);
-  if (res && res->status == 200) {
-    std::cout << "Response: " << res->body << '\n';
-  } else {
-    std::cerr << "Failed to make request!" << '\n';
-  }
-
 
   const int screenWidth = 800;
   const int screenHeigh = 450;
@@ -33,7 +25,9 @@ int main(void) {
 
   Model asteroidModel = LoadModel("assets/Asteroid.glb");
 
-  auto currier = new NeosCurrier(true, (Vector3) {15, 0, 0}, &asteroidModel);
+  auto currier = new NeosCurrier(true, &asteroidModel);
+
+  currier->ReachAPI(base_url, path);
 
   DisableCursor();
 
