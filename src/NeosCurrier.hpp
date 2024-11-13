@@ -3,9 +3,11 @@
 #include <raylib.h>
 #include <vector>
 
+using json = nlohmann::json;
+
 class NeosCurrier {
 public:
-  NeosCurrier(bool isDebug, Vector3 initialPosition, Model* model);
+  NeosCurrier(bool isDebug, Model *model);
   NeosCurrier(NeosCurrier &&) = default;
   NeosCurrier(const NeosCurrier &) = default;
   NeosCurrier &operator=(NeosCurrier &&) = default;
@@ -15,16 +17,22 @@ public:
   void DeleteAllNeos();
   void DeleteSelectedNeo(std::string id);
 
+  void InjestJsonDataOffline(json data);
+  void InjestJsonData(json data);
+
   void DisplayNeos();
   void DrawNeos();
   void UpdateNeosPosition(double time, float startTime, double angleRadians);
   std::vector<double> CalculateLineSpace(double start, double end, int num);
+  void ReachAPI(std::string url, std::string req);
 
 private:
   std::string links;
   std::string pages;
   std::vector<Neo *> neos;
-  bool debug;
+  bool offline;
   int radius = 15;
-  Model* asteroid_model;
+  Model *asteroid_model;
+  int number_elements;
+  int number_pages;
 };
