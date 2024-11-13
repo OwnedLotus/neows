@@ -1,14 +1,23 @@
 #include "NeosCurrier.hpp"
 #include <cmath>
+#include <cstdlib>
+#include <fstream>
 #include <raylib.h>
 
 #include <nlohmann/json.hpp>
 #include <httplib.h>
 #include <string>
 
+void get_api_keys(std::string& k, std::string& v);
+
 int main(void) {
   std::string base_url = "https://api.nasa.gov";
   std::string path = "/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY";
+
+  std::string key;
+  std::string value;
+
+  get_api_keys(key, value);
 
   const int screenWidth = 800;
   const int screenHeigh = 450;
@@ -77,4 +86,16 @@ int main(void) {
   delete currier;
 
   return 0;
+}
+
+void get_api_keys(std::string& k, std::string& v) {
+  std::string outputstr;
+  std::ifstream env_file(".env");
+  if (env_file.is_open()) {
+    env_file >> outputstr;
+  }
+
+  std::string delimiter = "=";
+  k = outputstr.substr(0, outputstr.find(delimiter));
+  v = outputstr.substr(outputstr.find(delimiter) + 1, outputstr.length());
 }
