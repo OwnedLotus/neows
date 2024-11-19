@@ -57,6 +57,7 @@ int main(void) {
     DrawSphere(earthPosition, 5, GREEN);
     //DrawCubeWires(earth_position, 20.0f, 20.0f, 20.0f, MAROON);
     currier->DrawNeos();
+    currier->DrawSelectedNeoPointer();
 
     //DrawSphere((Vector3){-7,7,7}, 2.0, BROWN);
     DrawLine3D((Vector3) {0,0,0}, (Vector3) {20,0,0}, RED);

@@ -22,9 +22,13 @@ public:
 
   void DisplayNeos();
   void DrawNeos();
+  void DrawSelectedNeoPointer();
+  void DrawSelectedNeoInfo();
+
   void UpdateNeosPosition(double time, float startTime, double angleRadians);
   std::vector<double> CalculateLineSpace(double start, double end, int num);
   void ReachAPI(std::string url, std::string req);
+  void GetNeosDebugOffline();
 
 private:
   std::string links;
@@ -35,4 +39,5 @@ private:
   Model *asteroid_model;
   int number_elements;
   int number_pages;
+  Neo* selected_neo;
 };
