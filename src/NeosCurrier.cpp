@@ -80,7 +80,7 @@ std::vector<double> NeosCurrier::CalculateLineSpace(double start, double end,
     return linespace;
   }
 
-  double delta = (end - start) / (num - 1);
+  double delta = (end - start) / (num);
   for (int i = 0; i < num; i++) {
     linespace.emplace_back(start + delta * i);
   }
@@ -207,17 +207,19 @@ void NeosCurrier::ChangeFocusAsteroid() {
   // Move up the list
   if (IsKeyPressed(KEY_J)) {
     if (this->render_index == 0) {
-      this->render_index = this->neos.size() - 2;
+      this->render_index = this->neos.size() - 1;
     } else {
       this->render_index -= 1;
     }
+    std::cout << this->neos[this->render_index]->GetID() << '\n';
   }
   if (IsKeyPressed(KEY_K)) {
-    if (this->render_index == (int)this->neos.size() - 2) {
+    if (this->render_index == (int)this->neos.size() - 1) {
       this->render_index = 0;
     } else {
       this->render_index += 1;
     }
+    std::cout << this->neos[this->render_index]->GetID() << '\n';
   }
 }
 
