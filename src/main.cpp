@@ -31,12 +31,14 @@ int main(void) {
   camera.projection = CAMERA_PERSPECTIVE;
   Vector3 earthPosition = {0.0, 0.0, 0.0};
   float startTime = GetTime();
-
+  
+  std::cout << "start load asteroid" << '\n';
   Model asteroidModel = LoadModel("assets/Asteroid.glb");
 
   auto currier = new NeosCurrier(true, &asteroidModel);
 
-  currier->ReachAPI(base_url, path);
+  // Hanging loading of program
+  //currier->ReachAPI(base_url, path);
 
   DisableCursor();
 
