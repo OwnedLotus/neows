@@ -46,6 +46,7 @@ int main(void) {
     // Update Cycle
     UpdateCamera(&camera, CAMERA_FREE);
     currier->UpdateNeosPosition(GetTime(), startTime, 0.5);
+    currier->ChangeFocusAsteroid();
 
     // Draw Cycle
     BeginDrawing();

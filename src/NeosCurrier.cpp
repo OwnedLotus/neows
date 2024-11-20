@@ -35,27 +35,19 @@ void NeosCurrier::DrawNeos() {
 
 void NeosCurrier::DrawSelectedNeoPointer() {
   // Triangle above the position of the selected neo
-  Vector3 selected_neo_position = this->selected_neo->GetRenderPosition();
-  Vector3 arrow_position = (Vector3) {selected_neo_position.x, selected_neo_position.y + 10, selected_neo_position.z};
-  Vector3 arrow_bottom = (Vector3) {arrow_position.x, arrow_position.y - 3, arrow_position.z};
-  //Vector3 arrow_left = (Vector3) {arrow_position.x - 3, arrow_position.y, arrow_position.z};
-  //Vector3 arrow_right = (Vector3) {arrow_position.x + 3, arrow_position.y, arrow_position.z};
-
-  //Vector3 arrow_other_left = (Vector3) {arrow_position.x, arrow_position.y, arrow_position.z + 3};
-  //Vector3 arrow_other_right = (Vector3) {arrow_position.x, arrow_position.y, arrow_position.z - 3};
+  Vector3 selected_neo_position =
+      this->neos[this->render_index]->GetRenderPosition();
+  Vector3 arrow_position =
+      (Vector3){selected_neo_position.x, selected_neo_position.y + 10,
+                selected_neo_position.z};
+  Vector3 arrow_bottom =
+      (Vector3){arrow_position.x, arrow_position.y - 3, arrow_position.z};
 
   DrawCylinderEx(arrow_bottom, arrow_position, 0.0, 2.0, 100, RED);
-
-  //DrawTriangle3D(arrow_bottom, arrow_left, arrow_right, RED);
-  //DrawTriangle3D(arrow_bottom, arrow_other_left, arrow_other_right, RED);
 }
 
 void NeosCurrier::DrawSelectedNeoInfo() {
-  if (selected_neo == nullptr) {
-    return;
-  }
-
-  selected_neo->DrawNeoInfo();
+  this->neos[this->render_index]->DrawNeoInfo();
 }
 
 void NeosCurrier::UpdateNeosPosition(double time, float startTime,
@@ -147,7 +139,6 @@ void NeosCurrier::InjestJsonDataOffline(json data) {
 
     this->neos.emplace_back(n);
   }
-  this->selected_neo = this->neos[0];
 }
 
 void NeosCurrier::InjestJsonData(json data) {
@@ -210,6 +201,24 @@ void NeosCurrier::DeleteSelectedNeo(std::string id) {
 #ifdef DEBUG
   std::cout << "Failed to Delete Neo: " << id;
 #endif
+}
+
+void NeosCurrier::ChangeFocusAsteroid() {
+  // Move up the list
+  if (IsKeyPressed(KEY_J)) {
+    if (this->render_index == 0) {
+      this->render_index = this->neos.size() - 2;
+    } else {
+      this->render_index -= 1;
+    }
+  }
+  if (IsKeyPressed(KEY_K)) {
+    if (this->render_index == (int)this->neos.size() - 2) {
+      this->render_index = 0;
+    } else {
+      this->render_index += 1;
+    }
+  }
 }
 
 NeosCurrier::~NeosCurrier() { this->DeleteAllNeos(); }

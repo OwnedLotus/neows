@@ -30,6 +30,8 @@ public:
   void ReachAPI(std::string url, std::string req);
   void GetNeosDebugOffline();
 
+  void ChangeFocusAsteroid();
+
 private:
   std::string links;
   std::string pages;
@@ -39,5 +41,5 @@ private:
   Model *asteroid_model;
   int number_elements;
   int number_pages;
-  Neo* selected_neo;
+  int render_index = 0;
 };
