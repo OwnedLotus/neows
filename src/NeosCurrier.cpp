@@ -38,10 +38,16 @@ void NeosCurrier::DrawSelectedNeoPointer() {
   Vector3 selected_neo_position = this->selected_neo->GetRenderPosition();
   Vector3 arrow_position = (Vector3) {selected_neo_position.x, selected_neo_position.y + 10, selected_neo_position.z};
   Vector3 arrow_bottom = (Vector3) {arrow_position.x, arrow_position.y - 3, arrow_position.z};
-  Vector3 arrow_left = (Vector3) {arrow_position.x - 3, arrow_position.y, arrow_position.z};
-  Vector3 arrow_right = (Vector3) {arrow_position.x + 3, arrow_position.y, arrow_position.z};
+  //Vector3 arrow_left = (Vector3) {arrow_position.x - 3, arrow_position.y, arrow_position.z};
+  //Vector3 arrow_right = (Vector3) {arrow_position.x + 3, arrow_position.y, arrow_position.z};
 
-  DrawTriangle3D(arrow_bottom, arrow_left, arrow_right, RED);
+  //Vector3 arrow_other_left = (Vector3) {arrow_position.x, arrow_position.y, arrow_position.z + 3};
+  //Vector3 arrow_other_right = (Vector3) {arrow_position.x, arrow_position.y, arrow_position.z - 3};
+
+  DrawCylinderEx(arrow_bottom, arrow_position, 0.0, 2.0, 100, RED);
+
+  //DrawTriangle3D(arrow_bottom, arrow_left, arrow_right, RED);
+  //DrawTriangle3D(arrow_bottom, arrow_other_left, arrow_other_right, RED);
 }
 
 void NeosCurrier::DrawSelectedNeoInfo() {
