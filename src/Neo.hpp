@@ -30,6 +30,8 @@ public:
   // getters setters //
 
   void SetName(std::string n);
+  void SetNeoID(std::string id);
+  void SetID(std::string id);
   void SetLimitedName(std::string n);
   void SetDesignation(std::string d);
   void SetLink(std::string l);

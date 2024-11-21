@@ -1,5 +1,6 @@
 #pragma once
 #include "Neo.hpp"
+#include <memory>
 #include <raylib.h>
 #include <vector>
 
@@ -35,7 +36,7 @@ public:
 private:
   std::string links;
   std::string pages;
-  std::vector<Neo *> neos;
+  std::vector<std::shared_ptr<Neo>>neos;
   bool offline;
   int radius = 15;
   Model *asteroid_model;

@@ -3,6 +3,7 @@
 #include <cmath>
 #include <httplib.h>
 #include <iostream>
+#include <memory>
 #include <nlohmann/json_fwd.hpp>
 #include <raylib.h>
 #include <tuple>
@@ -15,7 +16,6 @@ NeosCurrier::NeosCurrier(bool isOffline, Model *model) {
   if (this->offline) {
     this->GetNeosDebugOffline();
   } else {
-    Neo::GetNeos(this->neos);
   }
 
   this->asteroid_model = model;
@@ -120,7 +120,9 @@ void NeosCurrier::InjestJsonDataOffline(json data) {
 
   for (int i = 0; i < json_size; i++) {
     json neo_data = neos_data[i];
-    Neo *n = new Neo(neo_data["id"], neo_data["neo_reference_id"]);
+    auto n = std::make_shared<Neo>();
+    n->SetID(neo_data["id"]);
+    n->SetNeoID(neo_data["neo_reference_id"]);
 
     std::string date_associated = "Unknown";
 
@@ -176,13 +178,12 @@ void NeosCurrier::InjestJsonData(json data) {
 }
 
 void NeosCurrier::DeleteAllNeos() {
-  for (auto neo : this->neos) {
-    delete neo;
-  }
+  this->neos.clear();
+  if(this->neos.size() == 0) std::cout << "success" << '\n';
 }
 
 void NeosCurrier::DeleteSelectedNeo(std::string id) {
-  Neo *neoToBeDeleted = nullptr;
+  std::shared_ptr<Neo> neoToBeDeleted = nullptr;
 
   for (auto neo : this->neos) {
     if (neo->GetID() == id) {
@@ -194,7 +195,7 @@ void NeosCurrier::DeleteSelectedNeo(std::string id) {
 #ifdef DEGUB
     std::cout << "Neo: " << id << " Successfully Deleted" << "\n";
 #endif
-    delete neoToBeDeleted;
+    neoToBeDeleted.reset();
     return;
   }
 
@@ -205,6 +206,8 @@ void NeosCurrier::DeleteSelectedNeo(std::string id) {
 
 void NeosCurrier::ChangeFocusAsteroid() {
   // Move up the list
+  if (this->neos.size() == 0) return;
+
   if (IsKeyPressed(KEY_J)) {
     if (this->render_index == 0) {
       this->render_index = this->neos.size() - 1;
@@ -220,6 +223,10 @@ void NeosCurrier::ChangeFocusAsteroid() {
       this->render_index += 1;
     }
     std::cout << this->neos[this->render_index]->GetID() << '\n';
+  }
+  if(IsKeyPressed(KEY_F)) {
+    std::cout << "Try Deleting" << '\n';
+    DeleteAllNeos();
   }
 }
 

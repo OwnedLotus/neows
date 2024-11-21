@@ -27,6 +27,8 @@ Neo::~Neo() {
 }
 
 void Neo::SetName(std::string n) { this->name = n; }
+void Neo::SetNeoID(std::string id) { this->neo_ref_id = id; }
+void Neo::SetID(std::string id) { this->id = id; }
 void Neo::SetLimitedName(std::string n) { this->name_lim = n; }
 void Neo::SetDesignation(std::string d) { this->designation = d; }
 void Neo::SetLink(std::string l) { this->link = l; }
