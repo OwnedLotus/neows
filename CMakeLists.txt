@@ -2,26 +2,27 @@ cmake_minimum_required(VERSION 3.30)
 project(neows_visualization)
 
 set(JSON_VERSION 3.11.3)
-find_package(nlohmann_json QUIET)
-if(NOT nlohmann_json)
+#find_package(nlohmann_json QUIET)
+#if(NOT nlohmann_json)
   include(FetchContent)
   FetchContent_Declare(
     json
     URL https://github.com/nlohmann/json/releases/download/v${JSON_VERSION}/json.tar.xz
   )
   FetchContent_MakeAvailable(json)
-endif()
+#endif()
 
 set(CPP_HTTPLIB_VERSION 0.18.1)
-find_package(cpp-httplib ${CPP_HTTPLIB_VERSION} QUIET)
-if(NOT cpp-httplib_FOUND)
+#find_package(cpp-httplib ${CPP_HTTPLIB_VERSION} QUIET)
+#if(NOT cpp-httplib_FOUND)
   include(FetchContent)
   FetchContent_Declare(
     cpp-httplib
-    URL https://github.com/yhirose/cpp-httplib/archive/refs/tags/v${CPP_HTTPLIB_VERSION}.tar.gz
+    GIT_REPOSITORY https://github.com/yhirose/cpp-httplib.git
+    GIT_TAG v${CPP_HTTPLIB_VERSION}
   )
   FetchContent_MakeAvailable(cpp-httplib)
-endif()
+#endif()
 
 # raylib
 set(RAYLIB_VERSION 5.0)
