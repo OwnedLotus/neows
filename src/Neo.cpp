@@ -175,4 +175,11 @@ std::vector<Neo *> &InjestJsonData(json data, std::vector<Neo *> &neos) {
 void Neo::Draw(Model *model) { DrawModel(*model, this->position, 1, BROWN); }
 void Neo::DrawNeoInfo() {
   //TODO!
+  DrawRectangle(10, 10, 320, 93, Fade(SKYBLUE, 0.5f));
+  DrawRectangleLines(10, 10, 320, 93, BLUE);
+
+  DrawText("Asteroid info", 20, 20, 10, BLACK);
+  DrawText("PlaceHolder", 40, 40, 10, DARKGRAY);
+  DrawText("PlaceHolder", 40, 60, 10, DARKGRAY);
+  DrawText("PlaceHolder", 40, 80, 10, DARKGRAY);
 }

@@ -70,6 +70,8 @@ int main(void) {
     //DrawGrid(20, 1.0f);
 
     EndMode3D();
+
+    currier->DrawSelectedNeoInfo();
 /*
     DrawRectangle(10, 10, 320, 93, Fade(SKYBLUE, 0.5f));
     DrawRectangleLines(10, 10, 320, 93, BLUE);
