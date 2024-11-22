@@ -174,7 +174,6 @@ std::vector<Neo *> &InjestJsonData(json data, std::vector<Neo *> &neos) {
 // the query from the api
 void Neo::Draw(Model *model) { DrawModel(*model, this->position, 1, BROWN); }
 void Neo::DrawNeoInfo() {
-  //TODO!
   DrawRectangle(10, 10, 320, 93, Fade(SKYBLUE, 0.5f));
   DrawRectangleLines(10, 10, 320, 93, BLUE);
 
