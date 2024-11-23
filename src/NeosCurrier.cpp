@@ -15,25 +15,22 @@ NeosCurrier::NeosCurrier(bool isOffline, Model *model) {
   this->offline = isOffline;
   if (this->offline) {
     this->GetNeosDebugOffline();
-  } else {
   }
-
   this->asteroid_model = model;
 }
 
 void NeosCurrier::DisplayNeos() {
-  for (auto neo : this->neos) {
+  for (auto neo : this->neos)
     neo->DisplayNeo();
-  }
 }
 
 void NeosCurrier::DrawNeos() {
-  for (auto neo : this->neos) {
+  for (auto neo : this->neos)
     neo->Draw(this->asteroid_model);
-  }
 }
 
 void NeosCurrier::DrawSelectedNeoPointer() {
+  if (this->state == AsteroidState::None) return;
   // Triangle above the position of the selected neo
   Vector3 selected_neo_position =
       this->neos[this->render_index]->GetRenderPosition();
@@ -47,6 +44,7 @@ void NeosCurrier::DrawSelectedNeoPointer() {
 }
 
 void NeosCurrier::DrawSelectedNeoInfo() {
+  if(this->state == AsteroidState::None) return;
   this->neos[this->render_index]->DrawNeoInfo();
 }
 
@@ -105,6 +103,7 @@ void NeosCurrier::GetNeosDebugOffline() {
 }
 
 void NeosCurrier::InjestJsonDataOffline(json data) {
+  this->state = AsteroidState::Active;
   json links = data["links"];
   json pages = data["page"];
   json neos_data = data["near_earth_objects"];
@@ -144,6 +143,7 @@ void NeosCurrier::InjestJsonDataOffline(json data) {
 }
 
 void NeosCurrier::InjestJsonData(json data) {
+  this->state = AsteroidState::Active;
   json links = data["links"];
   json pages = data["page"];
   json neos_data = data["near_earth_objects"];
@@ -178,8 +178,10 @@ void NeosCurrier::InjestJsonData(json data) {
 }
 
 void NeosCurrier::DeleteAllNeos() {
+  this->state = AsteroidState::None;
   this->neos.clear();
-  if(this->neos.size() == 0) std::cout << "success" << '\n';
+  if (this->neos.size() == 0)
+    std::cout << "success" << '\n';
 }
 
 void NeosCurrier::DeleteSelectedNeo(std::string id) {
@@ -199,6 +201,8 @@ void NeosCurrier::DeleteSelectedNeo(std::string id) {
     return;
   }
 
+  if (this->neos.size() == 0) this->state = AsteroidState::None;
+
 #ifdef DEBUG
   std::cout << "Failed to Delete Neo: " << id;
 #endif
@@ -206,15 +210,14 @@ void NeosCurrier::DeleteSelectedNeo(std::string id) {
 
 void NeosCurrier::ChangeFocusAsteroid() {
   // Move up the list
-  if (this->neos.size() == 0) return;
-
+  if (this->neos.size() == 0)
+    return;
   if (IsKeyPressed(KEY_J)) {
     if (this->render_index == 0) {
       this->render_index = this->neos.size() - 1;
     } else {
       this->render_index -= 1;
     }
-    std::cout << this->neos[this->render_index]->GetID() << '\n';
   }
   if (IsKeyPressed(KEY_K)) {
     if (this->render_index == (int)this->neos.size() - 1) {
@@ -222,9 +225,8 @@ void NeosCurrier::ChangeFocusAsteroid() {
     } else {
       this->render_index += 1;
     }
-    std::cout << this->neos[this->render_index]->GetID() << '\n';
   }
-  if(IsKeyPressed(KEY_F)) {
+  if (IsKeyPressed(KEY_F)) {
     std::cout << "Try Deleting" << '\n';
     DeleteAllNeos();
   }

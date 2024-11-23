@@ -6,6 +6,11 @@
 
 using json = nlohmann::json;
 
+enum AsteroidState {
+  Active,
+  None
+};
+
 class NeosCurrier {
 public:
   NeosCurrier(bool isDebug, Model *model);
@@ -43,4 +48,6 @@ private:
   int number_elements;
   int number_pages;
   int render_index = 0;
+  AsteroidState state = AsteroidState::None;
 };
+
