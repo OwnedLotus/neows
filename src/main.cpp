@@ -56,18 +56,15 @@ int main(void) {
 
     BeginMode3D(camera);
 
-    //DrawModel(earthModel, earthPosition, 10.0, WHITE);
     DrawSphere(earthPosition, 5, GREEN);
-    //DrawCubeWires(earth_position, 20.0f, 20.0f, 20.0f, MAROON);
     currier->DrawNeos();
     currier->DrawSelectedNeoPointer();
 
-    //DrawSphere((Vector3){-7,7,7}, 2.0, BROWN);
     DrawLine3D((Vector3) {0,0,0}, (Vector3) {20,0,0}, RED);
     DrawLine3D((Vector3) {0,0,0}, (Vector3) {0,20,0}, GREEN);
     DrawLine3D((Vector3) {0,0,0}, (Vector3) {0,0,20}, BLUE);
 
-    //DrawGrid(20, 1.0f);
+    DrawGrid(20, 1.0f);
 
     EndMode3D();
 
