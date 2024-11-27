@@ -12,19 +12,19 @@ void get_api_keys(std::string& k, std::string& v);
 
 int main(void) {
   std::string base_url = "https://api.nasa.gov";
-  std::string path = "/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY";
+  std::string path = "/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=";
 
   std::string key;
   std::string value;
 
   get_api_keys(key, value);
 
-  const int screenWidth = 800;
-  const int screenHeigh = 450;
+  const int screenWidth = 1280;
+  const int screenHeigh = 720;
   InitWindow(screenWidth, screenHeigh, "NEOws Display");
 
   Camera3D camera = {0};
-  camera.position = (Vector3){15.0f, 15.0f, 15.0f}; // Camera position
+  camera.position = (Vector3){20.0f, 20.0f, 20.0f}; // Camera position
   camera.target = (Vector3){0.0f, 0.0f, 0.0f};      // Camera looking at point
   camera.up = (Vector3){0.0f, 1.0f, 0.0f}; // Camera up vector (rotation towards target)
   camera.fovy = 45.0f;             // Camera field-of-view Y
@@ -37,9 +37,15 @@ int main(void) {
 
   auto currier = new NeosCurrier(true, &asteroidModel);
 
+  bool debug = true;
+  if (debug)
+    path += "DEMO_KEY";
+  else
+   path += value;
+
   // Hanging loading of program
   //currier->ReachAPI(base_url, path);
-
+  
   DisableCursor();
 
   SetTargetFPS(60);
