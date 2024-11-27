@@ -1,55 +1,32 @@
 cmake_minimum_required(VERSION 3.30)
 project(neows_visualization)
 
-set(JSON_VERSION 3.11.3)
-#find_package(nlohmann_json QUIET)
-#if(NOT nlohmann_json)
-  include(FetchContent)
-  FetchContent_Declare(
-    json
-    URL https://github.com/nlohmann/json/releases/download/v${JSON_VERSION}/json.tar.xz
-  )
-  FetchContent_MakeAvailable(json)
-#endif()
+include(FetchContent)
+FetchContent_Declare(
+        json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG v3.11.3
+)
 
-set(CPP_HTTPLIB_VERSION 0.18.1)
-#find_package(cpp-httplib ${CPP_HTTPLIB_VERSION} QUIET)
-#if(NOT cpp-httplib_FOUND)
-  include(FetchContent)
-  FetchContent_Declare(
+FetchContent_Declare(
     cpp-httplib
     GIT_REPOSITORY https://github.com/yhirose/cpp-httplib.git
-    GIT_TAG v${CPP_HTTPLIB_VERSION}
-  )
-  FetchContent_MakeAvailable(cpp-httplib)
-#endif()
+    GIT_TAG v0.18.1
+)
 
-# raylib
-set(RAYLIB_VERSION 5.0)
-find_package(raylib ${RAYLIB_VERSION} QUIET)
-if(NOT raylib_FOUND)
-  include(FetchContent)
-  FetchContent_Declare(
-    raylib
-    DOWNLOAD_EXTRACT_TIMESTAMP OFF
-    URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
-  )
-  FetchContent_GetProperties(raylib)
-  FetchContent_MakeAvailable(raylib)
-endif()
+FetchContent_Declare(
+        raylib
+        URL https://github.com/raysan5/raylib/archive/refs/tags/5.5.tar.gz
+)
 
-# pull in desired version of catch through cmake automatically, make it
-# available
-set(CATCH2_VERSION 3.7.1)
-find_package(catch2 QUIET)
-if(NOT catch2_FOUND)
-  include(FetchContent)
-  FetchContent_Declare(
-    catch2
-    URL https://github.com/catchorg/Catch2/archive/refs/tags/v${CATCH2_VERSION}.tar.gz
-  )
-  FetchContent_MakeAvailable(catch2)
-endif()
+FetchContent_Declare(
+        catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v3.7.1
+)
+
+
+FetchContent_MakeAvailable(catch2 raylib cpp-httplib json)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -64,9 +41,13 @@ add_executable(Main src/main.cpp src/Neo.cpp src/Diameter.cpp
 add_executable(Tests tests/test.cpp src/Neo.cpp src/Diameter.cpp
                      src/CloseApproach.cpp src/NeosCurrier.cpp)
 
-target_link_libraries(Main PUBLIC raylib nlohmann_json cpp-httplib)
+target_link_libraries(Main PUBLIC raylib nlohmann_json httplib)
 target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json
-                                    cpp-httplib)
+                                    httplib)
+
+
+set(GLFW_BUILD_WAYLAND ON CACHE BOOL "Build with Wayland support")
+set(GLFW_BUILD_X11 ON CACHE BOOL "Build with X11 support")
 
 include(CTest)
 include(Catch)
