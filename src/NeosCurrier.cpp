@@ -90,7 +90,7 @@ void NeosCurrier::ReachAPI(std::string url, std::string req) {
   httplib::Client cli(url);
   auto res = cli.Get(req);
   if (res && res->status == 200) {
-    // std::cout << "Response: " << res->body << '\n';
+    NeosCurrier::InjestJsonData(res->body);
   } else {
     std::cerr << "Failed to make request!" << '\n';
   }
@@ -145,19 +145,16 @@ void NeosCurrier::InjestJsonDataOffline(json data) {
 void NeosCurrier::InjestJsonData(json data) {
   this->state = AsteroidState::Active;
   json links = data["links"];
-  json pages = data["page"];
+  json element_count = data["element_count"];
   json neos_data = data["near_earth_objects"];
-
-  int json_size = pages["size"];
-  this->number_elements = pages["total_elements"];
-  number_pages = pages["total_pages"];
+  json date = neos_data["2015-09-08"];
 #ifdef DEBUG
   std::cout << "Size: " << json_size << '\n';
   std::cout << "Total Elements: " << elements << '\n';
   std::cout << "Total Pages: " << total_pages << '\n';
 #endif
 
-  for (int i = 0; i < json_size; i++) {
+  for (int i = 0; i < element_count; i++) {
     json neo_data = neos_data[i];
     Neo *n = new Neo(neo_data["id"], neo_data["neo_reference_id"]);
 

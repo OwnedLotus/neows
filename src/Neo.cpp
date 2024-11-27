@@ -1,9 +1,9 @@
 #include "Neo.hpp"
 #include "Diameter.hpp"
 #include "raylib.h"
+#include "httplib.h"
 
 #include <fstream>
-#include <httplib.h>
 #include <iostream>
 #include <nlohmann/json_fwd.hpp>
 #include <string>
