@@ -20,12 +20,12 @@ NeosCurrier::NeosCurrier(bool isOffline, Model *model) {
 }
 
 void NeosCurrier::DisplayNeos() {
-  for (auto neo : this->neos)
+  for (const auto &neo : this->neos)
     neo->DisplayNeo();
 }
 
 void NeosCurrier::DrawNeos() {
-  for (auto neo : this->neos)
+  for (const auto &neo: this->neos)
     neo->Draw(this->asteroid_model);
 }
 

@@ -32,7 +32,7 @@ int main(void) {
   Vector3 earthPosition = {0.0, 0.0, 0.0};
   float startTime = GetTime();
   
-  std::cout << "start load asteroid" << '\n';
+  // Some bug with loading the asteroid
   Model asteroidModel = LoadModel("assets/Asteroid.glb");
 
   auto currier = new NeosCurrier(true, &asteroidModel);

@@ -1,7 +1,7 @@
 #include "Neo.hpp"
 #include "Diameter.hpp"
-#include "raylib.h"
 #include "httplib.h"
+#include "raylib.h"
 
 #include <fstream>
 #include <iostream>
@@ -172,18 +172,24 @@ std::vector<Neo *> &InjestJsonData(json data, std::vector<Neo *> &neos) {
 
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
-void Neo::Draw(Model *model) { DrawModel(*model, this->position, 1, BROWN); }
+void Neo::Draw(Model *model) {
+  DrawSphere(this->position, this->render_radius, BROWN);
+  // It appears that there is some issue with rendering the asteroid model
+} // DrawModel(*model, this->position, 1, BROWN); }
 void Neo::DrawNeoInfo() {
 
   std::string kilo_max = std::to_string(std::get<1>(this->diameter->GetKilo()));
-  std::string meter_max = std::to_string(std::get<1>(this->diameter->GetMeter()));
-  std::string miles_max = std::to_string(std::get<1>(this->diameter->GetMiles()));
-  std::string feet_max = std::to_string(std::get<1>(this->diameter->GetFeet())); 
+  std::string meter_max =
+      std::to_string(std::get<1>(this->diameter->GetMeter()));
+  std::string miles_max =
+      std::to_string(std::get<1>(this->diameter->GetMiles()));
+  std::string feet_max = std::to_string(std::get<1>(this->diameter->GetFeet()));
 
   std::string ids = "Neo Id: " + this->id + " Ref Id: " + this->neo_ref_id;
   std::string size = "Size (km) " + kilo_max + " Size (m):" + meter_max;
-  std::string altSize = "Size (Mi) " + miles_max + " Size (ft): " + feet_max; 
-  std::string approach = "Approach Distance (Km) " + this->close_approach[0]->GetMissKilo();
+  std::string altSize = "Size (Mi) " + miles_max + " Size (ft): " + feet_max;
+  std::string approach =
+      "Approach Distance (Km) " + this->close_approach[0]->GetMissKilo();
 
   DrawRectangle(10, 10, 320, 93, Fade(SKYBLUE, 0.5f));
   DrawRectangleLines(10, 10, 320, 93, BLUE);
