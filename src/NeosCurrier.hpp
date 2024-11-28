@@ -1,15 +1,14 @@
 #pragma once
 #include "Neo.hpp"
+#include <cmath>
+#include <ctime>
 #include <memory>
 #include <raylib.h>
 #include <vector>
 
 using json = nlohmann::json;
 
-enum AsteroidState {
-  Active,
-  None
-};
+enum AsteroidState { Active, None };
 
 class NeosCurrier {
 public:
@@ -41,7 +40,8 @@ public:
 private:
   std::string links;
   std::string pages;
-  std::vector<std::shared_ptr<Neo>>neos;
+  std::tuple<std::time_t, std::time_t> timespan;
+  std::vector<std::shared_ptr<Neo>> neos;
   bool offline;
   int radius = 15;
   Model *asteroid_model;
@@ -50,4 +50,3 @@ private:
   int render_index = 0;
   AsteroidState state = AsteroidState::None;
 };
-

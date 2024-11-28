@@ -1,5 +1,6 @@
 #include "NeosCurrier.hpp"
 #include "Neo.hpp"
+#include <algorithm>
 #include <cmath>
 #include <httplib.h>
 #include <iostream>
@@ -25,12 +26,13 @@ void NeosCurrier::DisplayNeos() {
 }
 
 void NeosCurrier::DrawNeos() {
-  for (const auto &neo: this->neos)
+  for (const auto &neo : this->neos)
     neo->Draw(this->asteroid_model);
 }
 
 void NeosCurrier::DrawSelectedNeoPointer() {
-  if (this->state == AsteroidState::None) return;
+  if (this->state == AsteroidState::None)
+    return;
   // Triangle above the position of the selected neo
   Vector3 selected_neo_position =
       this->neos[this->render_index]->GetRenderPosition();
@@ -44,7 +46,8 @@ void NeosCurrier::DrawSelectedNeoPointer() {
 }
 
 void NeosCurrier::DrawSelectedNeoInfo() {
-  if(this->state == AsteroidState::None) return;
+  if (this->state == AsteroidState::None)
+    return;
   this->neos[this->render_index]->DrawNeoInfo();
 }
 
@@ -143,30 +146,27 @@ void NeosCurrier::InjestJsonDataOffline(json data) {
 }
 
 void NeosCurrier::InjestJsonData(json data) {
+  std::cout << data["links"] << '\n';
   this->state = AsteroidState::Active;
-  json links = data["links"];
-  json element_count = data["element_count"];
+  auto element_count = data["element_count"];
   json neos_data = data["near_earth_objects"];
-  json date = neos_data["2015-09-08"];
-#ifdef DEBUG
-  std::cout << "Size: " << json_size << '\n';
-  std::cout << "Total Elements: " << elements << '\n';
-  std::cout << "Total Pages: " << total_pages << '\n';
-#endif
 
   for (int i = 0; i < element_count; i++) {
     json neo_data = neos_data[i];
-    Neo *n = new Neo(neo_data["id"], neo_data["neo_reference_id"]);
+    json date = neos_data["2015-09-08"];
+    Neo *n = new Neo(date["id"], date["neo_reference_id"]);
 
-    n->SetName(neo_data["name"]);
-    n->SetLimitedName(neo_data["name_limited"]);
-    n->SetDesignation(neo_data["designation"]);
-    n->SetLink(neo_data["nasa_jpl_url"]);
+    n->SetName(date["name"]);
+    n->SetLimitedName(date["name_limited"]);
+    n->SetDesignation(date["designation"]);
+    n->SetLink(date["nasa_jpl_url"]);
+    n->SetMagnitude(date["absolute_magniture_h"]);
 
-    n->SetDiameter(neo_data["estimated_diameter"]);
-    n->SetCloseApproach(neo_data["close_approach_data"]);
+    n->SetHazardous(date["is_potentially_hazardous_asteroid"]);
+    n->SetDiameter(date["estimated_diameter"]);
+    n->SetCloseApproach(date["close_approach_data"]);
 
-    n->SetIsSentryObject(neo_data["is_sentry_object"]);
+    n->SetIsSentryObject(date["is_sentry_object"]);
     // default radius
     n->SetRenderRadius(1);
 
@@ -198,7 +198,8 @@ void NeosCurrier::DeleteSelectedNeo(std::string id) {
     return;
   }
 
-  if (this->neos.size() == 0) this->state = AsteroidState::None;
+  if (this->neos.size() == 0)
+    this->state = AsteroidState::None;
 
 #ifdef DEBUG
   std::cout << "Failed to Delete Neo: " << id;
