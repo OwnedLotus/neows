@@ -5,10 +5,10 @@ To build this project use cmake.
 To build on commandline as I do, use the command:
       cmake CMakeLists.txt && make
 
-then to run:
+Then to run:
       ./Main
 
-requires X11 currently for raylib
+Requires X11 currently for raylib
 
 Packages utilized in this projects are enumerated in the CMakeLists.txt file as well as hereafter:
 Raylib -- https://github.com/raysan5/raylib
