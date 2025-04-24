@@ -37,11 +37,11 @@ int main(void) {
 
   auto currier = new NeosCurrier(true, &asteroidModel);
 
-  bool debug = true;
-  if (debug)
+
+  #ifdef DEBUG
     path += "DEMO_KEY";
-  else
-   path += value;
+  #endif // DEBUG
+  path += value;
 
   // Hanging loading of program
   //currier->ReachAPI(base_url, path);
