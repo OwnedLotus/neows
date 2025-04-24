@@ -16,14 +16,11 @@ FetchContent_Declare(
   raylib URL https://github.com/raysan5/raylib/archive/refs/tags/5.5.tar.gz)
 
 FetchContent_Declare(
-  raygui URL https://github.com/raysan5/raygui/archive/refs/tags/4.0.tar.gz)
-
-FetchContent_Declare(
   catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
   GIT_TAG v3.7.1)
 
-FetchContent_MakeAvailable(catch2 raylib raygui cpp-httplib json)
+FetchContent_MakeAvailable(catch2 raylib cpp-httplib json)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -33,21 +30,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 include_directories(src)
 
 add_executable(Main src/main.cpp src/Neo.cpp src/Diameter.cpp
-                    src/CloseApproach.cpp src/NeosCurrier.cpp)
+                    src/CloseApproach.cpp src/NeosCurrier.cpp
+                    src/raygui.h)
 
 add_executable(Tests tests/test.cpp src/Neo.cpp src/Diameter.cpp
-                     src/CloseApproach.cpp src/NeosCurrier.cpp)
+                    src/CloseApproach.cpp src/NeosCurrier.cpp
+                    src/raygui.h)
 
-target_link_libraries(Main PUBLIC raylib raygui nlohmann_json httplib)
-target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib raygui nlohmann_json
+target_link_libraries(Main PUBLIC raylib nlohmann_json httplib)
+target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json
                                     httplib)
-
-set(GLFW_BUILD_WAYLAND
-    ON
-    CACHE BOOL "Build with Wayland support")
-set(GLFW_BUILD_X11
-    ON
-    CACHE BOOL "Build with X11 support")
 
 include(CTest)
 include(Catch)

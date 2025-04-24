@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <raylib.h>
+#include <raygui.h>
 
 #include <nlohmann/json.hpp>
 #include <httplib.h>
