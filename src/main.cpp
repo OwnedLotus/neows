@@ -1,9 +1,11 @@
-#include "NeosCurrier.hpp"
+#include "Neo/NeosCurrier.hpp"
+#include "utils/raygui.h"
+
 #include <cmath>
 #include <cstdlib>
 #include <fstream>
 #include <raylib.h>
-#include <raygui.h>
+
 
 #include <nlohmann/json.hpp>
 #include <httplib.h>
