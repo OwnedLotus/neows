@@ -1,6 +1,6 @@
 #include "MenuItem.hpp"
 
-class InputText : MenuItem {
+class InputText : public MenuItem {
 public:
 	void DisplayItem() override;
 
