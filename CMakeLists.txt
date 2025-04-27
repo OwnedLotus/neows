@@ -18,16 +18,11 @@ FetchContent_Declare(
   GIT_TAG master)
 
 FetchContent_Declare(
-  raygui
-  GIT_REPOSITORY https://github.com/raysan5/raygui.git
-  GIT_TAG master)
-
-FetchContent_Declare(
   catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
   GIT_TAG v3.7.1)
 
-FetchContent_MakeAvailable(catch2 raylib raygui cpp-httplib json)
+FetchContent_MakeAvailable(catch2 raylib cpp-httplib json)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -45,8 +40,8 @@ add_executable(Tests tests/test.cpp src/Neo/Neo.cpp src/Neo/Diameter.cpp
                     src/Neo/CloseApproach.cpp src/Neo/NeosCurrier.cpp
                     src/Menu/Menu.cpp)
 
-target_link_libraries(Main PUBLIC raylib raygui nlohmann_json httplib)
-target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib raygui nlohmann_json
+target_link_libraries(Main PUBLIC raylib nlohmann_json httplib)
+target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json
                                     httplib)
 
 include(CTest)

@@ -5,7 +5,9 @@
 #include <cstdlib>
 #include <fstream>
 #include <raylib.h>
-#include "raygui.h"
+#define RAYGUI_IMPLEMENTATION
+#include "utils/raygui.h"
+
 
 
 #include <nlohmann/json.hpp>
