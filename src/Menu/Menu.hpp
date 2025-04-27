@@ -1,13 +1,16 @@
-#include "MenuItem.hpp"
-#include <vector>
+#include <raylib.h>
 #include <string>
 
 class Menu {
-	Menu();
-	~Menu();
+private:
+  Rectangle apiInputBox;
 
-	std::vector<MenuItem> uiItems;
-	void UpdateMenu();
+public:
+  Menu();
+  Menu(Rectangle apiBox);
+  ~Menu();
 
-	std::string GetKey();
+  void UpdateMenu();
+  void DisplayMenu();
+  std::string GetApi();
 };
