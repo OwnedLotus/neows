@@ -1,10 +1,11 @@
 #include "Neo/NeosCurrier.hpp"
-#include "utils/raygui.h"
+#include "Menu/Menu.hpp"
 
 #include <cmath>
 #include <cstdlib>
 #include <fstream>
 #include <raylib.h>
+#include "raygui.h"
 
 
 #include <nlohmann/json.hpp>
@@ -12,10 +13,14 @@
 #include <string>
 
 void get_api_keys(std::string& k, std::string& v);
+Camera3D UpdateGame(Camera3D camera, NeosCurrier* currier, Menu menu, float startTime);
+void DrawGame(Camera3D camera, NeosCurrier* currier, Menu menu, Vector3 earthPosition);
 
 int main(void) {
-  std::string base_url = "https://api.nasa.gov";
-  std::string path = "/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=";
+  /*
+  char* base_url = "https://api.nasa.gov";
+  char* path = "/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=";
+  */
 
   std::string key;
   std::string value;
@@ -40,11 +45,14 @@ int main(void) {
 
   auto currier = new NeosCurrier(true, &asteroidModel);
 
+  Menu menu = Menu();
 
+  /*
   #ifdef DEBUG
     path += "DEMO_KEY";
   #endif // DEBUG
   path += value;
+  */
 
   // Hanging loading of program
   //currier->ReachAPI(base_url, path);
@@ -54,11 +62,28 @@ int main(void) {
   SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
-    // Update Cycle
-    UpdateCamera(&camera, CAMERA_FREE);
-    currier->UpdateNeosPosition(GetTime(), startTime, 0.5);
-    currier->ChangeFocusAsteroid();
+    camera = UpdateGame(camera, currier, menu, startTime);
+    DrawGame(camera, currier, menu, earthPosition);
+  }
 
+  CloseWindow();
+  //UnloadModel(earthModel);
+  UnloadModel(asteroidModel);
+
+  delete currier;
+
+  return 0;
+}
+
+Camera3D UpdateGame(Camera3D camera, NeosCurrier* currier, Menu menu, float startTime) {
+  // Update Cycle
+  UpdateCamera(&camera, CAMERA_FREE);
+  currier->UpdateNeosPosition(GetTime(), startTime, 0.5);
+  currier->ChangeFocusAsteroid();
+  return camera;
+}
+
+void DrawGame(Camera3D camera, NeosCurrier* currier, Menu menu, Vector3 earthPosition) {
     // Draw Cycle
     BeginDrawing();
     ClearBackground(BLACK);
@@ -80,15 +105,6 @@ int main(void) {
     currier->DrawSelectedNeoInfo();
 
     EndDrawing();
-  }
-
-  CloseWindow();
-  //UnloadModel(earthModel);
-  UnloadModel(asteroidModel);
-
-  delete currier;
-
-  return 0;
 }
 
 void get_api_keys(std::string& k, std::string& v) {
