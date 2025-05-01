@@ -1,15 +1,17 @@
-#include "Neo/NeosCurrier.hpp"
 #include "Menu/Menu.hpp"
-
+#include "Neo/NeosCurrier.hpp"
 
 #include <fstream>
 #include <raylib.h>
 
-
-#include <nlohmann/json.hpp>
 #include <httplib.h>
+#include <nlohmann/json.hpp>
 #include <string>
 
+Camera3D UpdateGame(Camera3D camera, NeosCurrier *currier, Menu menu,
+                    float startTime);
+void DrawGame(Camera3D camera, NeosCurrier *currier, Menu menu,
+              Vector3 earthPosition);
 void get_api_keys(std::string &k, std::string &v);
 
 int main(void) {
@@ -59,7 +61,7 @@ int main(void) {
   }
 
   CloseWindow();
-  //UnloadModel(earthModel);
+  // UnloadModel(earthModel);
   UnloadModel(asteroidModel);
 
   delete currier;
@@ -67,7 +69,8 @@ int main(void) {
   return 0;
 }
 
-Camera3D UpdateGame(Camera3D camera, NeosCurrier* currier, Menu menu, float startTime) {
+Camera3D UpdateGame(Camera3D camera, NeosCurrier *currier, Menu menu,
+                    float startTime) {
   // Update Cycle
   UpdateCamera(&camera, CAMERA_FREE);
   currier->UpdateNeosPosition(GetTime(), startTime, 0.5);
@@ -75,31 +78,32 @@ Camera3D UpdateGame(Camera3D camera, NeosCurrier* currier, Menu menu, float star
   return camera;
 }
 
-void DrawGame(Camera3D camera, NeosCurrier* currier, Menu menu, Vector3 earthPosition) {
-    // Draw Cycle
-    BeginDrawing();
-    ClearBackground(BLACK);
+void DrawGame(Camera3D camera, NeosCurrier *currier, Menu menu,
+              Vector3 earthPosition) {
+  // Draw Cycle
+  BeginDrawing();
+  ClearBackground(BLACK);
 
-    BeginMode3D(camera);
+  BeginMode3D(camera);
 
-    DrawSphere(earthPosition, 5, GREEN);
-    currier->DrawNeos();
-    currier->DrawSelectedNeoPointer();
+  DrawSphere(earthPosition, 5, GREEN);
+  currier->DrawNeos();
+  currier->DrawSelectedNeoPointer();
 
-    DrawLine3D((Vector3){0, 0, 0}, (Vector3){20, 0, 0}, RED);
-    DrawLine3D((Vector3){0, 0, 0}, (Vector3){0, 20, 0}, GREEN);
-    DrawLine3D((Vector3){0, 0, 0}, (Vector3){0, 0, 20}, BLUE);
+  DrawLine3D((Vector3){0, 0, 0}, (Vector3){20, 0, 0}, RED);
+  DrawLine3D((Vector3){0, 0, 0}, (Vector3){0, 20, 0}, GREEN);
+  DrawLine3D((Vector3){0, 0, 0}, (Vector3){0, 0, 20}, BLUE);
 
-    DrawGrid(20, 1.0f);
+  DrawGrid(20, 1.0f);
 
-    EndMode3D();
+  EndMode3D();
 
-    currier->DrawSelectedNeoInfo();
+  currier->DrawSelectedNeoInfo();
 
-    EndDrawing();
+  EndDrawing();
 }
 
-void get_api_keys(std::string& k, std::string& v) {
+void get_api_keys(std::string &k, std::string &v) {
   std::string outputstr;
   std::ifstream env_file(".env");
   if (env_file.is_open()) {
