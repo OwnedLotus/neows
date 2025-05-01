@@ -1,11 +1,13 @@
 #include "Neo/NeosCurrier.hpp"
-#include "utils/raygui.h"
+#include "Menu/Menu.hpp"
+
 
 #include <fstream>
 #include <raylib.h>
 
-#include <httplib.h>
+
 #include <nlohmann/json.hpp>
+#include <httplib.h>
 #include <string>
 
 void get_api_keys(std::string &k, std::string &v);
@@ -52,11 +54,28 @@ int main(void) {
   SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
-    // Update Cycle
-    UpdateCamera(&camera, CAMERA_FREE);
-    currier->UpdateNeosPosition(GetTime(), startTime, 0.5);
-    currier->ChangeFocusAsteroid();
+    camera = UpdateGame(camera, currier, menu, startTime);
+    DrawGame(camera, currier, menu, earthPosition);
+  }
 
+  CloseWindow();
+  //UnloadModel(earthModel);
+  UnloadModel(asteroidModel);
+
+  delete currier;
+
+  return 0;
+}
+
+Camera3D UpdateGame(Camera3D camera, NeosCurrier* currier, Menu menu, float startTime) {
+  // Update Cycle
+  UpdateCamera(&camera, CAMERA_FREE);
+  currier->UpdateNeosPosition(GetTime(), startTime, 0.5);
+  currier->ChangeFocusAsteroid();
+  return camera;
+}
+
+void DrawGame(Camera3D camera, NeosCurrier* currier, Menu menu, Vector3 earthPosition) {
     // Draw Cycle
     BeginDrawing();
     ClearBackground(BLACK);
@@ -78,18 +97,9 @@ int main(void) {
     currier->DrawSelectedNeoInfo();
 
     EndDrawing();
-  }
-
-  CloseWindow();
-  // UnloadModel(earthModel);
-  UnloadModel(asteroidModel);
-
-  delete currier;
-
-  return 0;
 }
 
-void get_api_keys(std::string &k, std::string &v) {
+void get_api_keys(std::string& k, std::string& v) {
   std::string outputstr;
   std::ifstream env_file(".env");
   if (env_file.is_open()) {

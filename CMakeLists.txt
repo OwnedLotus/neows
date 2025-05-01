@@ -13,7 +13,9 @@ FetchContent_Declare(
   GIT_TAG v0.18.1)
 
 FetchContent_Declare(
-  raylib URL https://github.com/raysan5/raylib/archive/refs/tags/5.5.tar.gz)
+  raylib
+  GIT_REPOSITORY https://github.com/raysan5/raylib.git
+  GIT_TAG master)
 
 FetchContent_Declare(
   catch2
@@ -24,17 +26,19 @@ FetchContent_MakeAvailable(catch2 raylib cpp-httplib json)
 
 set(CMAKE_CXX_STANDARD 23)
 
-set(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Werror")
+set(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Werror -fdiagnostics-color=always")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 
 include_directories(src)
 
 add_executable(Main src/main.cpp src/Neo/Neo.cpp src/Neo/Diameter.cpp
-                    src/Neo/CloseApproach.cpp src/Neo/NeosCurrier.cpp)
+                    src/Neo/CloseApproach.cpp src/Neo/NeosCurrier.cpp
+                    src/Menu/Menu.cpp)
 
 
 add_executable(Tests tests/test.cpp src/Neo/Neo.cpp src/Neo/Diameter.cpp
-                    src/Neo/CloseApproach.cpp src/Neo/NeosCurrier.cpp)
+                    src/Neo/CloseApproach.cpp src/Neo/NeosCurrier.cpp
+                    src/Menu/Menu.cpp)
 
 target_link_libraries(Main PUBLIC raylib nlohmann_json httplib)
 target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json
