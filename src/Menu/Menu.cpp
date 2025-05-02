@@ -5,12 +5,16 @@
 #include <raylib.h>
 #include <string>
 
-Menu::Menu() {
+Menu::Menu(Vector2 windowSize) {
   std::cout << "Menu Created" << '\n';
   this->apiInputBox = (Rectangle){500, 500, 30, 30};
+  this->windowSize = windowSize;
 }
 
-Menu::Menu(Rectangle apiBox) { this->apiInputBox = apiBox; }
+Menu::Menu(Rectangle apiBox, Vector2 windowSize) {
+  this->windowSize = windowSize;
+  this->apiInputBox = apiBox;
+}
 
 Menu::~Menu() {}
 
@@ -45,4 +49,10 @@ void Menu::DisplayAsteroidInfo(Neo *n) {
   // DrawText(approach.c_str(), 40, 40, 10, WHITE);
 }
 
-std::string Menu::GetApi() { return "Hello"; }
+void Menu::DisplayTextInputBox(Vector2 mousePos) {
+  // Change color of menu if mouse hover
+  if (CheckCollisionPointRec(mousePos, this->apiInputBox)) {
+
+    return;
+  }
+}

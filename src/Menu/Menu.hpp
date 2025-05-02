@@ -7,10 +7,11 @@ class Menu {
 private:
   Rectangle apiInputBox;
   std::string textInputBoxBuffer;
+  Vector2 windowSize;
 
 public:
-  Menu();
-  Menu(Rectangle apiBox);
+  Menu(Vector2 windowSize);
+  Menu(Rectangle apiBox, Vector2 windowSize);
   ~Menu();
 
   std::string GetTextBuffer();
