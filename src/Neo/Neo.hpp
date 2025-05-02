@@ -61,7 +61,6 @@ public:
 
   void DisplayNeo();
   void Draw(Model *model);
-  void DrawNeoInfo();
 
 private:
   Vector3 position;

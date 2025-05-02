@@ -1,3 +1,5 @@
+#include "../Neo/Neo.hpp"
+
 #include <raylib.h>
 #include <string>
 
@@ -13,4 +15,5 @@ public:
   void UpdateMenu();
   void DisplayMenu();
   std::string GetApi();
+  void DisplayAsteroidInfo(Neo *n);
 };
