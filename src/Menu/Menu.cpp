@@ -1,4 +1,5 @@
 #include "Menu.hpp"
+#include "../Neo/Neo.hpp"
 
 #include <iostream>
 #include <raylib.h>
@@ -13,9 +14,12 @@ Menu::Menu(Rectangle apiBox) { this->apiInputBox = apiBox; }
 
 Menu::~Menu() {}
 
-void Menu::UpdateMenu() {}
+std::string Menu::GetTextBuffer() { return this->textInputBoxBuffer; }
 
-void Menu::DisplayMenu() {}
+// go through all parts of the menu
+void Menu::DisplayMenu(Neo *currentNeo) {
+  this->DisplayAsteroidInfo(currentNeo);
+}
 
 void Menu::DisplayAsteroidInfo(Neo *n) {
   std::string kilo_max =
