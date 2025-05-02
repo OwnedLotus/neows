@@ -2,6 +2,7 @@
 #include "../Neo/Neo.hpp"
 
 #include <iostream>
+#include <memory>
 #include <raylib.h>
 #include <string>
 
@@ -21,11 +22,11 @@ Menu::~Menu() {}
 std::string Menu::GetTextBuffer() { return this->textInputBoxBuffer; }
 
 // go through all parts of the menu
-void Menu::DisplayMenu(Neo *currentNeo) {
+void Menu::DisplayMenu(std::shared_ptr<Neo> currentNeo) {
   this->DisplayAsteroidInfo(currentNeo);
 }
 
-void Menu::DisplayAsteroidInfo(Neo *n) {
+void Menu::DisplayAsteroidInfo(std::shared_ptr<Neo> n) {
   std::string kilo_max =
       std::to_string(std::get<1>(n->GetDiameter().GetKilo()));
   std::string meter_max =

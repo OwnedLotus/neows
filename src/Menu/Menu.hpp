@@ -1,5 +1,6 @@
 #include "../Neo/Neo.hpp"
 
+#include <memory>
 #include <raylib.h>
 #include <string>
 
@@ -16,8 +17,8 @@ public:
 
   std::string GetTextBuffer();
 
-  void DisplayMenu(Neo *currentNeo);
-  void DisplayAsteroidInfo(Neo *n);
+  void DisplayMenu(std::shared_ptr<Neo> currentNeo);
+  void DisplayAsteroidInfo(std::shared_ptr<Neo> n);
   void DisplayTextInputBox(Vector2 mousePos);
   void Button(Vector2 mousePos);
 };

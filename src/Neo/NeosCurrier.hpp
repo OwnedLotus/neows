@@ -1,6 +1,5 @@
 #pragma once
 #include "Neo.hpp"
-#include <cmath>
 #include <ctime>
 #include <memory>
 #include <raylib.h>
@@ -19,6 +18,9 @@ public:
   NeosCurrier &operator=(const NeosCurrier &) = default;
   ~NeosCurrier();
 
+  std::vector<std::shared_ptr<Neo>> GetNeoCollection();
+  std::shared_ptr<Neo> GetSelectedNeo();
+
   void DeleteAllNeos();
   void DeleteSelectedNeo(std::string id);
 
@@ -28,7 +30,6 @@ public:
   void DisplayNeos();
   void DrawNeos();
   void DrawSelectedNeoPointer();
-  void DrawSelectedNeoInfo();
 
   void UpdateNeosPosition(double time, float startTime, double angleRadians);
   std::vector<double> CalculateLineSpace(double start, double end, int num);

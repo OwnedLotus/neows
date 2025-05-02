@@ -18,6 +18,14 @@ NeosCurrier::NeosCurrier(bool isOffline, Model *model) {
   this->asteroid_model = model;
 }
 
+std::vector<std::shared_ptr<Neo>> NeosCurrier::GetNeoCollection() {
+  return this->neos;
+}
+
+std::shared_ptr<Neo> NeosCurrier::GetSelectedNeo() {
+  return this->neos[this->render_index];
+}
+
 void NeosCurrier::DisplayNeos() {
   for (const auto &neo : this->neos)
     neo->DisplayNeo();
@@ -41,12 +49,6 @@ void NeosCurrier::DrawSelectedNeoPointer() {
       (Vector3){arrow_position.x, arrow_position.y - 3, arrow_position.z};
 
   DrawCylinderEx(arrow_bottom, arrow_position, 0.0, 2.0, 100, RED);
-}
-
-void NeosCurrier::DrawSelectedNeoInfo() {
-  if (this->state == AsteroidState::None)
-    return;
-  this->neos[this->render_index]->DrawNeoInfo();
 }
 
 void NeosCurrier::UpdateNeosPosition(double time, float startTime,

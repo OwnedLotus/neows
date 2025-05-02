@@ -22,11 +22,13 @@ int main(void) {
   std::string key;
   std::string value;
 
+  Vector2 screenDim = (Vector2){1280, 720};
+
+  Menu menu = Menu(screenDim);
+
   get_api_keys(key, value);
 
-  const int screenWidth = 1280;
-  const int screenHeigh = 720;
-  InitWindow(screenWidth, screenHeigh, "NEOws Display");
+  InitWindow(screenDim.x, screenDim.y, "NEOws Display");
 
   Camera3D camera = {0};
   camera.position = (Vector3){20.0f, 20.0f, 20.0f}; // Camera position
@@ -98,7 +100,8 @@ void DrawGame(Camera3D camera, NeosCurrier *currier, Menu menu,
 
   EndMode3D();
 
-  currier->DrawSelectedNeoInfo();
+  // Insert Menu Draw
+  menu.DisplayMenu(currier->GetSelectedNeo());
 
   EndDrawing();
 }
