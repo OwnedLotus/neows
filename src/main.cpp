@@ -2,15 +2,16 @@
 #include "Neo/NeosCurrier.hpp"
 
 #include <fstream>
+#include <memory>
 #include <raylib.h>
 
 #include <httplib.h>
 #include <nlohmann/json.hpp>
 #include <string>
 
-Camera3D UpdateGame(Camera3D camera, NeosCurrier *currier, Menu menu,
+Camera3D UpdateGame(Camera3D camera, NeosCurrier &currier, Menu menu,
                     float startTime);
-void DrawGame(Camera3D camera, NeosCurrier *currier, Menu menu,
+void DrawGame(Camera3D camera, NeosCurrier &currier, Menu menu,
               Vector3 earthPosition);
 void get_api_keys(std::string &k, std::string &v);
 
@@ -43,7 +44,7 @@ int main(void) {
   // Some bug with loading the asteroid
   Model asteroidModel = LoadModel("assets/Asteroid.glb");
 
-  auto currier = new NeosCurrier(true, &asteroidModel);
+  NeosCurrier currier(true, &asteroidModel);
 
 #ifdef DEBUG
   path += "DEMO_KEY";
@@ -65,22 +66,19 @@ int main(void) {
   CloseWindow();
   // UnloadModel(earthModel);
   UnloadModel(asteroidModel);
-
-  delete currier;
-
   return 0;
 }
 
-Camera3D UpdateGame(Camera3D camera, NeosCurrier *currier, Menu menu,
+Camera3D UpdateGame(Camera3D camera, NeosCurrier &currier, Menu menu,
                     float startTime) {
   // Update Cycle
   UpdateCamera(&camera, CAMERA_FREE);
-  currier->UpdateNeosPosition(GetTime(), startTime, 0.5);
-  currier->ChangeFocusAsteroid();
+  currier.UpdateNeosPosition(GetTime(), startTime, 0.5);
+  currier.ChangeFocusAsteroid();
   return camera;
 }
 
-void DrawGame(Camera3D camera, NeosCurrier *currier, Menu menu,
+void DrawGame(Camera3D camera, NeosCurrier &currier, Menu menu,
               Vector3 earthPosition) {
   // Draw Cycle
   BeginDrawing();
@@ -89,19 +87,22 @@ void DrawGame(Camera3D camera, NeosCurrier *currier, Menu menu,
   BeginMode3D(camera);
 
   DrawSphere(earthPosition, 5, GREEN);
-  currier->DrawNeos();
-  currier->DrawSelectedNeoPointer();
+  currier.DrawNeos();
+  currier.DrawSelectedNeoPointer();
 
+  /*
   DrawLine3D((Vector3){0, 0, 0}, (Vector3){20, 0, 0}, RED);
   DrawLine3D((Vector3){0, 0, 0}, (Vector3){0, 20, 0}, GREEN);
   DrawLine3D((Vector3){0, 0, 0}, (Vector3){0, 0, 20}, BLUE);
 
   DrawGrid(20, 1.0f);
 
+  */
+
   EndMode3D();
 
   // Insert Menu Draw
-  menu.DisplayMenu(currier->GetSelectedNeo());
+  menu.DisplayMenu(currier.GetSelectedNeo());
 
   EndDrawing();
 }
