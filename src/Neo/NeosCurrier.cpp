@@ -177,8 +177,6 @@ void NeosCurrier::InjestJsonData(json data) {
 void NeosCurrier::DeleteAllNeos() {
   this->state = AsteroidState::None;
   this->neos.clear();
-  if (this->neos.size() == 0)
-    std::cout << "success" << '\n';
 }
 
 void NeosCurrier::DeleteSelectedNeo(std::string id) {
