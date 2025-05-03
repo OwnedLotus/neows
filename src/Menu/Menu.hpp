@@ -12,13 +12,12 @@ private:
 
 public:
   Menu(Vector2 windowSize);
-  Menu(Rectangle apiBox, Vector2 windowSize);
   ~Menu();
 
   std::string GetTextBuffer();
 
   void DisplayMenu(std::shared_ptr<Neo> currentNeo);
   void DisplayAsteroidInfo(std::shared_ptr<Neo> n);
-  void DisplayTextInputBox(Vector2 mousePos);
-  void Button(Vector2 mousePos);
+  void ClickIntoApiTextBox(Vector2 mousePos);
+  void ApiButton(Vector2 mousePos);
 };

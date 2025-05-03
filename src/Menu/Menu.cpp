@@ -12,11 +12,6 @@ Menu::Menu(Vector2 windowSize) {
   this->windowSize = windowSize;
 }
 
-Menu::Menu(Rectangle apiBox, Vector2 windowSize) {
-  this->windowSize = windowSize;
-  this->apiInputBox = apiBox;
-}
-
 Menu::~Menu() {}
 
 std::string Menu::GetTextBuffer() { return this->textInputBoxBuffer; }
@@ -50,10 +45,16 @@ void Menu::DisplayAsteroidInfo(std::shared_ptr<Neo> n) {
   // DrawText(approach.c_str(), 40, 40, 10, WHITE);
 }
 
-void Menu::DisplayTextInputBox(Vector2 mousePos) {
+void Menu::ClickIntoApiTextBox(Vector2 mousePos) {
   // Change color of menu if mouse hover
   if (CheckCollisionPointRec(mousePos, this->apiInputBox)) {
-
     return;
   }
+}
+
+void Menu::ApiButton(Vector2 mousePos) {
+  // Button not clicked
+  if (!IsKeyDown(MOUSE_BUTTON_LEFT) &&
+      CheckCollisionPointRec(mousePos, this->apiInputBox))
+    return;
 }
