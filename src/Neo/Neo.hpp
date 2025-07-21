@@ -1,5 +1,4 @@
 #pragma once
-#include <nlohmann/json.hpp>
 #include <raylib.h>
 #include <raymath.h>
 #include <string>
@@ -7,8 +6,6 @@
 
 #include "CloseApproach.hpp"
 #include "Diameter.hpp"
-
-using json = nlohmann::json;
 
 class Neo {
 public:
@@ -23,9 +20,9 @@ public:
   static std::vector<Neo *> &GetNeos(std::vector<Neo *> &neos);
   static std::vector<Neo *> &GetNeosDebug(std::vector<Neo *> &neos);
   static std::vector<Neo *> &GetNeosDebugOffline(std::vector<Neo *> &neos);
-  static std::vector<Neo *> &InjestJsonDataOffline(json data,
+  static std::vector<Neo *> &InjestJsonDataOffline(nlohmann::json data,
                                                    std::vector<Neo *> &neos);
-  static std::vector<Neo *> &InjestJsonData(json data,
+  static std::vector<Neo *> &InjestJsonData(nlohmann::json data,
                                             std::vector<Neo *> &neos);
   // getters setters //
 
@@ -38,8 +35,8 @@ public:
   void SetMagnitude(float m);
   void SetDiameter();
   void SetHazardous(bool h);
-  void SetDiameter(json diameter_json);
-  void SetCloseApproach(json close_approach_json);
+  void SetDiameter(nlohmann::json diameter_json);
+  void SetCloseApproach(nlohmann::json close_approach_json);
   void SetRenderPosition(Vector3 position);
   void SetRenderRadius(float r);
   void SetIsSentryObject(bool is_sentry);
@@ -58,6 +55,7 @@ public:
   float GetRenderRadius();
   bool GetIsSentryObject();
   std::string GetDate();
+  std::vector<CloseApproach*>& GetCloseApproach();
 
   void DisplayNeo();
   void Draw(Model *model);

@@ -2,23 +2,22 @@
 #include "Neo/NeosCurrier.hpp"
 
 #include <fstream>
-#include <memory>
 #include <raylib.h>
 
 #include <httplib.h>
 #include <nlohmann/json.hpp>
 #include <string>
 
-Camera3D UpdateGame(Camera3D camera, NeosCurrier &currier, Menu menu,
+void UpdateGame(Camera3D &camera, NeosCurrier &currier, Menu menu,
                     float startTime);
 void DrawGame(Camera3D camera, NeosCurrier &currier, Menu menu,
               Vector3 earthPosition);
 void get_api_keys(std::string &k, std::string &v);
 
 int main(void) {
-  std::string base_url = "https://api.nasa.gov";
-  std::string path =
-      "/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=";
+  std::string base_url("https://api.nasa.gov");
+  std::string path(
+      "/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=");
 
   std::string key;
   std::string value;
@@ -59,7 +58,7 @@ int main(void) {
   SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
-    camera = UpdateGame(camera, currier, menu, startTime);
+    UpdateGame(camera, currier, menu, startTime);
     DrawGame(camera, currier, menu, earthPosition);
   }
 
@@ -69,13 +68,12 @@ int main(void) {
   return 0;
 }
 
-Camera3D UpdateGame(Camera3D camera, NeosCurrier &currier, Menu menu,
+void UpdateGame(Camera3D &camera, NeosCurrier &currier, Menu menu,
                     float startTime) {
   // Update Cycle
   UpdateCamera(&camera, CAMERA_FREE);
   currier.UpdateNeosPosition(GetTime(), startTime, 0.5);
   currier.ChangeFocusAsteroid();
-  return camera;
 }
 
 void DrawGame(Camera3D camera, NeosCurrier &currier, Menu menu,

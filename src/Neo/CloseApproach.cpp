@@ -2,9 +2,7 @@
 #include "nlohmann/json.hpp"
 #include <iostream>
 
-using json = nlohmann::json;
-
-CloseApproach::CloseApproach(json close_approach_json) {
+CloseApproach::CloseApproach(nlohmann::json close_approach_json) {
   this->close_approach_date = close_approach_json["close_approach_date"];
   this->close_approach_date_full =
       close_approach_json["close_approach_date_full"];

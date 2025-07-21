@@ -1,11 +1,9 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-using json = nlohmann::json;
-
 struct CloseApproach {
 public:
-  CloseApproach(json close_approach_json);
+  CloseApproach(nlohmann::json close_approach_json);
   ~CloseApproach();
 
   std::string GetApproachDate() { return close_approach_date; }

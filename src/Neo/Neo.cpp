@@ -1,6 +1,5 @@
 #include "Neo.hpp"
 #include "Diameter.hpp"
-#include "httplib.h"
 #include "raylib.h"
 
 #include <fstream>
@@ -9,7 +8,6 @@
 #include <string>
 #include <vector>
 
-using json = nlohmann::json;
 
 Neo::Neo(std::string _id, std::string _neo_id) {
   id = _id;
@@ -41,7 +39,7 @@ void Neo::SetIsSentryObject(bool is_sentry) {
   this->is_sentry_oject = is_sentry;
 }
 
-void Neo::SetDiameter(json diameter_json) {
+void Neo::SetDiameter( nlohmann::json diameter_json) {
   if (this->diameter == nullptr) {
     this->diameter = new Diameter(diameter_json);
     return;
@@ -51,8 +49,8 @@ void Neo::SetDiameter(json diameter_json) {
   this->diameter = new Diameter(diameter_json);
 }
 
-void Neo::SetCloseApproach(json close_approach_json) {
-  for (json::iterator it = close_approach_json.begin();
+void Neo::SetCloseApproach(nlohmann::json close_approach_json) {
+  for (nlohmann::json::iterator it = close_approach_json.begin();
        it != close_approach_json.end(); it++) {
     this->close_approach.push_back(new CloseApproach(*it));
   }
@@ -71,13 +69,14 @@ float Neo::GetRenderRadius() { return this->render_radius; }
 Vector3 Neo::GetRenderPosition() { return this->position; }
 bool Neo::GetIsSentryObject() { return this->is_sentry_oject; }
 std::string Neo::GetDate() { return this->date; }
+std::vector<CloseApproach*>& Neo::GetCloseApproach() { return this->close_approach; }
 
 // implement httplib get query when I have obtained the key from
 std::vector<Neo *> &Neo::GetNeos(std::vector<Neo *> &neos) { return neos; }
 
 std::vector<Neo *> &Neo::GetNeosDebugOffline(std::vector<Neo *> &neos) {
   std::ifstream f("data/sample.json");
-  json data = json::parse(f);
+	nlohmann::json data = nlohmann::json::parse(f);
   return InjestJsonDataOffline(data, neos);
 }
 
@@ -99,11 +98,11 @@ void Neo::DisplayNeo() {
   std::cout << '\n';
 }
 
-std::vector<Neo *> &Neo::InjestJsonDataOffline(json data,
+std::vector<Neo *> &Neo::InjestJsonDataOffline(nlohmann::json data,
                                                std::vector<Neo *> &neos) {
-  json links = data["links"];
-  json pages = data["page"];
-  json neos_data = data["near_earth_objects"];
+  auto links = data["links"];
+  auto pages = data["page"];
+  auto neos_data = data["near_earth_objects"];
 
   int json_size = pages["size"];
   std::cout << "Size: " << json_size << '\n';
@@ -113,7 +112,7 @@ std::vector<Neo *> &Neo::InjestJsonDataOffline(json data,
   std::cout << "Total Pages: " << total_pages << '\n';
 
   for (int i = 0; i < json_size; i++) {
-    json neo_data = neos_data[i];
+    nlohmann::json neo_data = neos_data[i];
     Neo *n = new Neo(neo_data["id"], neo_data["neo_reference_id"]);
 
     n->date = "";
@@ -135,10 +134,10 @@ std::vector<Neo *> &Neo::InjestJsonDataOffline(json data,
   return neos;
 }
 
-std::vector<Neo *> &InjestJsonData(json data, std::vector<Neo *> &neos) {
-  json links = data["links"];
-  json pages = data["page"];
-  json neos_data = data["near_earth_objects"];
+std::vector<Neo *> &InjestJsonData(nlohmann::json data, std::vector<Neo *> &neos) {
+  auto links = data["links"];
+  auto pages = data["page"];
+  auto neos_data = data["near_earth_objects"];
 
   int json_size = pages["size"];
   std::cout << "Size: " << json_size << '\n';
@@ -148,7 +147,7 @@ std::vector<Neo *> &InjestJsonData(json data, std::vector<Neo *> &neos) {
   std::cout << "Total Pages: " << total_pages << '\n';
 
   for (int i = 0; i < json_size; i++) {
-    json neo_data = neos_data[i];
+    nlohmann::json neo_data = neos_data[i];
     Neo *n = new Neo(neo_data["id"], neo_data["neo_reference_id"]);
 
     n->SetName(neo_data["name"]);

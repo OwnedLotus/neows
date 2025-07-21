@@ -2,11 +2,9 @@
 #include <nlohmann/json.hpp>
 #include <tuple>
 
-using json = nlohmann::json;
-
 class Diameter {
 public:
-  Diameter(json diameter_json);
+  Diameter(nlohmann::json diameter_json);
   Diameter(Diameter &&) = default;
   Diameter(const Diameter &) = default;
   Diameter &operator=(Diameter &&) = default;

@@ -5,8 +5,6 @@
 #include <raylib.h>
 #include <vector>
 
-using json = nlohmann::json;
-
 enum AsteroidState { Active, None };
 
 class NeosCurrier {
@@ -24,8 +22,8 @@ public:
   void DeleteAllNeos();
   void DeleteSelectedNeo(std::string id);
 
-  void InjestJsonDataOffline(json data);
-  void InjestJsonData(json data);
+  void InjestJsonDataOffline(nlohmann::json data);
+  void InjestJsonData(nlohmann::json data);
 
   void DisplayNeos();
   void DrawNeos();
