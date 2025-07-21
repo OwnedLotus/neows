@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-
 Neo::Neo(std::string _id, std::string _neo_id) {
   id = _id;
   neo_ref_id = _neo_id;
@@ -39,7 +38,7 @@ void Neo::SetIsSentryObject(bool is_sentry) {
   this->is_sentry_oject = is_sentry;
 }
 
-void Neo::SetDiameter( nlohmann::json diameter_json) {
+void Neo::SetDiameter(nlohmann::json diameter_json) {
   if (this->diameter == nullptr) {
     this->diameter = new Diameter(diameter_json);
     return;
@@ -69,14 +68,16 @@ float Neo::GetRenderRadius() { return this->render_radius; }
 Vector3 Neo::GetRenderPosition() { return this->position; }
 bool Neo::GetIsSentryObject() { return this->is_sentry_oject; }
 std::string Neo::GetDate() { return this->date; }
-std::vector<CloseApproach*>& Neo::GetCloseApproach() { return this->close_approach; }
+std::vector<CloseApproach *> &Neo::GetCloseApproach() {
+  return this->close_approach;
+}
 
 // implement httplib get query when I have obtained the key from
 std::vector<Neo *> &Neo::GetNeos(std::vector<Neo *> &neos) { return neos; }
 
 std::vector<Neo *> &Neo::GetNeosDebugOffline(std::vector<Neo *> &neos) {
   std::ifstream f("data/sample.json");
-	nlohmann::json data = nlohmann::json::parse(f);
+  nlohmann::json data = nlohmann::json::parse(f);
   return InjestJsonDataOffline(data, neos);
 }
 
@@ -134,7 +135,8 @@ std::vector<Neo *> &Neo::InjestJsonDataOffline(nlohmann::json data,
   return neos;
 }
 
-std::vector<Neo *> &InjestJsonData(nlohmann::json data, std::vector<Neo *> &neos) {
+std::vector<Neo *> &InjestJsonData(nlohmann::json data,
+                                   std::vector<Neo *> &neos) {
   auto links = data["links"];
   auto pages = data["page"];
   auto neos_data = data["near_earth_objects"];
