@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <nlohmann/json_fwd.hpp>
 #include <string>
 #include <vector>
@@ -17,9 +18,9 @@ Neo::~Neo() {
 #ifdef DEBUG
   std::cout << "Deleted Neo: " << this->GetID() << '\n';
 #endif
-  delete this->diameter;
+  this->diameter.reset();
   for (auto approach : this->close_approach) {
-    delete approach;
+    approach.reset();
   }
 }
 
@@ -40,18 +41,18 @@ void Neo::SetIsSentryObject(bool is_sentry) {
 
 void Neo::SetDiameter(nlohmann::json diameter_json) {
   if (this->diameter == nullptr) {
-    this->diameter = new Diameter(diameter_json);
+    this->diameter = std::make_shared<Diameter>(Diameter(diameter_json));
     return;
   }
 
-  delete this->diameter;
-  this->diameter = new Diameter(diameter_json);
+  this->diameter.reset();
+  this->diameter = std::make_shared<Diameter>(Diameter(diameter_json));
 }
 
 void Neo::SetCloseApproach(nlohmann::json close_approach_json) {
   for (nlohmann::json::iterator it = close_approach_json.begin();
        it != close_approach_json.end(); it++) {
-    this->close_approach.push_back(new CloseApproach(*it));
+    this->close_approach.push_back(std::make_shared<CloseApproach>(CloseApproach(*it)));
   }
 }
 
@@ -63,19 +64,19 @@ std::string Neo::GetDesignation() { return designation; }
 std::string Neo::GetLink() { return link; }
 float Neo::GetMagnitude() { return absolute_magnitude_h; }
 bool Neo::GetHazardous() { return is_hazardous; }
-Diameter &Neo::GetDiameter() { return *this->diameter; }
+std::shared_ptr<Diameter> Neo::GetDiameter() { return this->diameter; }
 float Neo::GetRenderRadius() { return this->render_radius; }
 Vector3 Neo::GetRenderPosition() { return this->position; }
 bool Neo::GetIsSentryObject() { return this->is_sentry_oject; }
 std::string Neo::GetDate() { return this->date; }
-std::vector<CloseApproach *> &Neo::GetCloseApproach() {
+std::vector<std::shared_ptr<CloseApproach>> &Neo::GetCloseApproach() {
   return this->close_approach;
 }
 
 // implement httplib get query when I have obtained the key from
-std::vector<Neo *> &Neo::GetNeos(std::vector<Neo *> &neos) { return neos; }
+std::vector<std::shared_ptr<Neo>> &Neo::GetNeos(std::vector<std::shared_ptr<Neo>> &neos) { return neos; }
 
-std::vector<Neo *> &Neo::GetNeosDebugOffline(std::vector<Neo *> &neos) {
+std::vector<std::shared_ptr<Neo>> &Neo::GetNeosDebugOffline(std::vector<std::shared_ptr<Neo>> &neos) {
   std::ifstream f("data/sample.json");
   nlohmann::json data = nlohmann::json::parse(f);
   return InjestJsonDataOffline(data, neos);
@@ -99,8 +100,8 @@ void Neo::DisplayNeo() {
   std::cout << '\n';
 }
 
-std::vector<Neo *> &Neo::InjestJsonDataOffline(nlohmann::json data,
-                                               std::vector<Neo *> &neos) {
+std::vector<std::shared_ptr<Neo>> &Neo::InjestJsonDataOffline(nlohmann::json data,
+                                               std::vector<std::shared_ptr<Neo>> &neos) {
   auto links = data["links"];
   auto pages = data["page"];
   auto neos_data = data["near_earth_objects"];
@@ -135,8 +136,8 @@ std::vector<Neo *> &Neo::InjestJsonDataOffline(nlohmann::json data,
   return neos;
 }
 
-std::vector<Neo *> &InjestJsonData(nlohmann::json data,
-                                   std::vector<Neo *> &neos) {
+std::vector<std::shared_ptr<Neo>> &InjestJsonData(nlohmann::json data,
+                                   std::vector<std::shared_ptr<Neo>> &neos) {
   auto links = data["links"];
   auto pages = data["page"];
   auto neos_data = data["near_earth_objects"];
@@ -150,7 +151,7 @@ std::vector<Neo *> &InjestJsonData(nlohmann::json data,
 
   for (int i = 0; i < json_size; i++) {
     nlohmann::json neo_data = neos_data[i];
-    Neo *n = new Neo(neo_data["id"], neo_data["neo_reference_id"]);
+    auto n = std::make_shared<Neo>(Neo(neo_data["id"], neo_data["neo_reference_id"]));
 
     n->SetName(neo_data["name"]);
     n->SetLimitedName(neo_data["name_limited"]);
@@ -171,9 +172,10 @@ std::vector<Neo *> &InjestJsonData(nlohmann::json data,
   return neos;
 }
 
+// TODO!
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
-void Neo::Draw(Model *model) {
+void Neo::Draw(std::shared_ptr<Model> model) {
   DrawSphere(this->position, this->render_radius, BROWN);
   // It appears that there is some issue with rendering the asteroid model
 } // DrawModel(*model, this->position, 1, BROWN); }

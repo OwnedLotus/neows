@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <raylib.h>
 #include <raymath.h>
 #include <string>
@@ -17,13 +18,13 @@ public:
   Neo &operator=(const Neo &) = default;
   ~Neo();
 
-  static std::vector<Neo *> &GetNeos(std::vector<Neo *> &neos);
-  static std::vector<Neo *> &GetNeosDebug(std::vector<Neo *> &neos);
-  static std::vector<Neo *> &GetNeosDebugOffline(std::vector<Neo *> &neos);
-  static std::vector<Neo *> &InjestJsonDataOffline(nlohmann::json data,
-                                                   std::vector<Neo *> &neos);
-  static std::vector<Neo *> &InjestJsonData(nlohmann::json data,
-                                            std::vector<Neo *> &neos);
+  static std::vector<std::shared_ptr<Neo>> &GetNeos(std::vector<std::shared_ptr<Neo>> &neos);
+  static std::vector<std::shared_ptr<Neo>> &GetNeosDebug(std::vector<std::shared_ptr<Neo>> &neos);
+  static std::vector<std::shared_ptr<Neo>> &GetNeosDebugOffline(std::vector<std::shared_ptr<Neo>> &neos);
+  static std::vector<std::shared_ptr<Neo>> &InjestJsonDataOffline(nlohmann::json data,
+                                                   std::vector<std::shared_ptr<Neo>> &neos);
+  static std::vector<std::shared_ptr<Neo>> &InjestJsonData(nlohmann::json data,
+                                            std::vector<std::shared_ptr<Neo>> &neos);
   // getters setters //
 
   void SetName(std::string n);
@@ -50,15 +51,15 @@ public:
   std::string GetLink();
   float GetMagnitude();
   bool GetHazardous();
-  Diameter &GetDiameter();
+  std::shared_ptr<Diameter> GetDiameter();
   Vector3 GetRenderPosition();
   float GetRenderRadius();
   bool GetIsSentryObject();
   std::string GetDate();
-  std::vector<CloseApproach*>& GetCloseApproach();
+  std::vector<std::shared_ptr<CloseApproach>> &GetCloseApproach();
 
   void DisplayNeo();
-  void Draw(Model *model);
+  void Draw(std::shared_ptr<Model> model);
 
 private:
   Vector3 position;
@@ -73,7 +74,7 @@ private:
   std::string link;
   float absolute_magnitude_h;
   bool is_hazardous;
-  Diameter *diameter = nullptr;
-  std::vector<CloseApproach *> close_approach;
+  std::shared_ptr<Diameter> diameter;
+  std::vector<std::shared_ptr<CloseApproach>> close_approach;
   bool is_sentry_oject;
 };

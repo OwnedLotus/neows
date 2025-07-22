@@ -14,6 +14,10 @@ private:
   MenuState state;
 
 public:
+  Menu(const Menu &) = default;
+  Menu(Menu &&) = delete;
+  Menu &operator=(const Menu &) = default;
+  Menu &operator=(Menu &&) = delete;
   Menu(Vector2 windowSize);
   ~Menu();
 

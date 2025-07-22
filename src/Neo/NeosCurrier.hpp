@@ -9,7 +9,7 @@ enum AsteroidState { Active, None };
 
 class NeosCurrier {
 public:
-  NeosCurrier(bool isDebug, Model *model);
+  NeosCurrier(bool isDebug, std::shared_ptr<Model> model);
   NeosCurrier(NeosCurrier &&) = default;
   NeosCurrier(const NeosCurrier &) = default;
   NeosCurrier &operator=(NeosCurrier &&) = default;
@@ -43,7 +43,7 @@ private:
   std::vector<std::shared_ptr<Neo>> neos;
   bool offline;
   int radius = 15;
-  Model *asteroid_model;
+  std::shared_ptr<Model> asteroid_model;
   int number_elements;
   int number_pages;
   int render_index = 0;

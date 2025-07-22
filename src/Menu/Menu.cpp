@@ -34,13 +34,13 @@ void Menu::DisplayMenu(std::shared_ptr<Neo> currentNeo) {
 
 void Menu::DisplayMinimalMenu(std::shared_ptr<Neo> n) {
   std::string kilo_max =
-      std::to_string(std::get<1>(n->GetDiameter().GetKilo()));
+      std::to_string(std::get<1>(n->GetDiameter()->GetKilo()));
   std::string meter_max =
-      std::to_string(std::get<1>(n->GetDiameter().GetMeter()));
+      std::to_string(std::get<1>(n->GetDiameter()->GetMeter()));
   std::string miles_max =
-      std::to_string(std::get<1>(n->GetDiameter().GetMiles()));
+      std::to_string(std::get<1>(n->GetDiameter()->GetMiles()));
   std::string feet_max =
-      std::to_string(std::get<1>(n->GetDiameter().GetFeet()));
+      std::to_string(std::get<1>(n->GetDiameter()->GetFeet()));
 
   std::string ids = "Neo Id: " + n->GetID() + " Ref Id: " + n->GetNeoID();
   std::string size = "Size (KM) " + kilo_max + " Size (M): " + meter_max;
@@ -57,13 +57,13 @@ void Menu::DisplayMinimalMenu(std::shared_ptr<Neo> n) {
 
 void Menu::DisplayFullMenu(std::shared_ptr<Neo> neo) {
   std::string kilo_max =
-      std::to_string(std::get<1>(neo->GetDiameter().GetKilo()));
+      std::to_string(std::get<1>(neo->GetDiameter()->GetKilo()));
   std::string meter_max =
-      std::to_string(std::get<1>(neo->GetDiameter().GetMeter()));
+      std::to_string(std::get<1>(neo->GetDiameter()->GetMeter()));
   std::string miles_max =
-      std::to_string(std::get<1>(neo->GetDiameter().GetMiles()));
+      std::to_string(std::get<1>(neo->GetDiameter()->GetMiles()));
   std::string feet_max =
-      std::to_string(std::get<1>(neo->GetDiameter().GetFeet()));
+      std::to_string(std::get<1>(neo->GetDiameter()->GetFeet()));
 
   std::string neo_name = neo->GetName();
   std::string neo_limited_name = neo->GetLimitedName();
@@ -71,7 +71,7 @@ void Menu::DisplayFullMenu(std::shared_ptr<Neo> neo) {
   std::string neo_designation = neo->GetDesignation();
   std::string neo_hazard = std::to_string(neo->GetHazardous());
 
-  std::vector<CloseApproach *> &neo_approach = neo->GetCloseApproach();
+  std::vector<std::shared_ptr<CloseApproach>> &neo_approach = neo->GetCloseApproach();
 
   std::string ids = "Neo Id: " + neo->GetID() + " Ref Id: " + neo->GetNeoID();
   std::string name = "Name: " + neo_name + " Limited Name: " + neo_limited_name;

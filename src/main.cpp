@@ -2,6 +2,7 @@
 #include "Neo/NeosCurrier.hpp"
 
 #include <fstream>
+#include <memory>
 #include <raylib.h>
 
 #include <httplib.h>
@@ -41,9 +42,9 @@ int main(void) {
   float startTime = GetTime();
 
   // Some bug with loading the asteroid
-  Model asteroidModel = LoadModel("assets/Asteroid.glb");
+  std::shared_ptr<Model> asteroidModel = std::make_shared<Model>(LoadModel("assets/Asteroid.glb"));
 
-  NeosCurrier currier(true, &asteroidModel);
+  NeosCurrier currier(true, asteroidModel);
 
 #ifdef DEBUG
   path += "DEMO_KEY";
@@ -64,7 +65,7 @@ int main(void) {
 
   CloseWindow();
   // UnloadModel(earthModel);
-  UnloadModel(asteroidModel);
+  UnloadModel(*asteroidModel);
   return 0;
 }
 

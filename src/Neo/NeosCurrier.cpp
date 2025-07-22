@@ -10,7 +10,7 @@
 
 using json = nlohmann::json;
 
-NeosCurrier::NeosCurrier(bool isOffline, Model *model) {
+NeosCurrier::NeosCurrier(bool isOffline, std::shared_ptr<Model> model) {
   this->offline = isOffline;
   if (this->offline) {
     this->GetNeosDebugOffline();
@@ -100,7 +100,7 @@ void NeosCurrier::ReachAPI(std::string url, std::string req) {
 }
 
 void NeosCurrier::GetNeosDebugOffline() {
-  std::ifstream f("data/sample.json");
+  auto f("data/sample.json");
   json data = json::parse(f);
   return InjestJsonDataOffline(data);
 }
