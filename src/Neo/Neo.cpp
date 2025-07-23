@@ -2,11 +2,10 @@
 #include "Diameter.hpp"
 #include "raylib.h"
 
-#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include <nlohmann/json_fwd.hpp>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
 
@@ -179,5 +178,6 @@ std::vector<std::shared_ptr<Neo>> &InjestJsonData(nlohmann::json data,
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
 void Neo::Draw(std::shared_ptr<Model> model) {
+    std::cout << std::to_string(this->position.x) + " " + std::to_string(this->position.y) + " " + std::to_string(this->position.z) << '\n';
  DrawModel(*model, this->position, 1, BROWN);
 }

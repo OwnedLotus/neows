@@ -26,7 +26,7 @@ FetchContent_MakeAvailable(catch2 raylib cpp-httplib json)
 
 set(CMAKE_CXX_STANDARD 23)
 
-set(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Werror -fdiagnostics-color=always")
+set(GCC_COVERAGE_COMPILE_FLAGS "-g -Wall -Werror -fdiagnostics-color=always")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 
 include_directories(src)
@@ -35,10 +35,11 @@ add_executable(Main src/main.cpp src/Neo/Neo.cpp src/Neo/Diameter.cpp
                     src/Neo/CloseApproach.cpp src/Neo/NeosCurrier.cpp
                     src/Menu/Menu.cpp)
 
-
 add_executable(Tests tests/test.cpp src/Neo/Neo.cpp src/Neo/Diameter.cpp
                     src/Neo/CloseApproach.cpp src/Neo/NeosCurrier.cpp
                     src/Menu/Menu.cpp)
+
+
 
 target_link_libraries(Main PUBLIC raylib nlohmann_json httplib)
 target_link_libraries(Tests PRIVATE Catch2::Catch2WithMain raylib nlohmann_json
