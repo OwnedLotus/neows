@@ -1,16 +1,17 @@
 #include "NeosCurrier.hpp"
 #include "Neo.hpp"
 #include <cmath>
+#include <filesystem>
+#include <fstream>
 #include <httplib.h>
 #include <iostream>
 #include <memory>
-#include <nlohmann/json_fwd.hpp>
+#include <nlohmann/json.hpp>
 #include <raylib.h>
 #include <vector>
 
-using json = nlohmann::json;
-
 NeosCurrier::NeosCurrier(bool isOffline, std::shared_ptr<Model> model) {
+    std::cout << "Loading Currier" << '\n';
   this->offline = isOffline;
   if (this->offline) {
     this->GetNeosDebugOffline();
@@ -100,16 +101,18 @@ void NeosCurrier::ReachAPI(std::string url, std::string req) {
 }
 
 void NeosCurrier::GetNeosDebugOffline() {
-  auto f("data/sample.json");
-  json data = json::parse(f);
+    std::cout << "Loading Sample Data from File" << '\n';
+    std::cout << std::filesystem::current_path() << '\n';
+  std::ifstream f("./data/sample.json");
+  nlohmann::json data = nlohmann::json::parse(f);
   return InjestJsonDataOffline(data);
 }
 
-void NeosCurrier::InjestJsonDataOffline(json data) {
+void NeosCurrier::InjestJsonDataOffline(nlohmann::json data) {
   this->state = AsteroidState::Active;
-  json links = data["links"];
-  json pages = data["page"];
-  json neos_data = data["near_earth_objects"];
+  nlohmann::json links = data["links"];
+  nlohmann::json pages = data["page"];
+  nlohmann::json neos_data = data["near_earth_objects"];
 
   int json_size = pages["size"];
   this->number_elements = pages["total_elements"];
@@ -121,7 +124,7 @@ void NeosCurrier::InjestJsonDataOffline(json data) {
 #endif
 
   for (int i = 0; i < json_size; i++) {
-    json neo_data = neos_data[i];
+    nlohmann::json neo_data = neos_data[i];
     auto n = std::make_shared<Neo>();
     n->SetID(neo_data["id"]);
     n->SetNeoID(neo_data["neo_reference_id"]);
@@ -145,15 +148,15 @@ void NeosCurrier::InjestJsonDataOffline(json data) {
   }
 }
 
-void NeosCurrier::InjestJsonData(json data) {
+void NeosCurrier::InjestJsonData(nlohmann::json data) {
   std::cout << data["links"] << '\n';
   this->state = AsteroidState::Active;
   auto element_count = data["element_count"];
-  json neos_data = data["near_earth_objects"];
+  nlohmann::json neos_data = data["near_earth_objects"];
 
   for (int i = 0; i < element_count; i++) {
-    json neo_data = neos_data[i];
-    json date = neos_data["2015-09-08"];
+    nlohmann::json neo_data = neos_data[i];
+    nlohmann::json date = neos_data["2015-09-08"];
     Neo *n = new Neo(date["id"], date["neo_reference_id"]);
 
     n->SetName(date["name"]);

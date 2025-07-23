@@ -4,6 +4,7 @@
 #include <fstream>
 #include <memory>
 #include <raylib.h>
+#include <iostream>
 
 #include <httplib.h>
 #include <nlohmann/json.hpp>
@@ -44,6 +45,7 @@ int main(void) {
   // Some bug with loading the asteroid
   std::shared_ptr<Model> asteroidModel = std::make_shared<Model>(LoadModel("assets/Asteroid.glb"));
 
+  std::cout << "load neos" << "\n";
   NeosCurrier currier(true, asteroidModel);
 
 #ifdef DEBUG

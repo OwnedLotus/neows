@@ -2,6 +2,7 @@
 #include "Diameter.hpp"
 #include "raylib.h"
 
+#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -77,6 +78,7 @@ std::vector<std::shared_ptr<CloseApproach>> &Neo::GetCloseApproach() {
 std::vector<std::shared_ptr<Neo>> &Neo::GetNeos(std::vector<std::shared_ptr<Neo>> &neos) { return neos; }
 
 std::vector<std::shared_ptr<Neo>> &Neo::GetNeosDebugOffline(std::vector<std::shared_ptr<Neo>> &neos) {
+    std::cout << "Start load Sample Data" << '\n';
   std::ifstream f("data/sample.json");
   nlohmann::json data = nlohmann::json::parse(f);
   return InjestJsonDataOffline(data, neos);
@@ -102,6 +104,7 @@ void Neo::DisplayNeo() {
 
 std::vector<std::shared_ptr<Neo>> &Neo::InjestJsonDataOffline(nlohmann::json data,
                                                std::vector<std::shared_ptr<Neo>> &neos) {
+                                                  std::cout <<("Start Injest Json Data offline") << '\n';
   auto links = data["links"];
   auto pages = data["page"];
   auto neos_data = data["near_earth_objects"];
@@ -176,6 +179,5 @@ std::vector<std::shared_ptr<Neo>> &InjestJsonData(nlohmann::json data,
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
 void Neo::Draw(std::shared_ptr<Model> model) {
-  DrawSphere(this->position, this->render_radius, BROWN);
-  // It appears that there is some issue with rendering the asteroid model
-} // DrawModel(*model, this->position, 1, BROWN); }
+ DrawModel(*model, this->position, 1, BROWN);
+}
