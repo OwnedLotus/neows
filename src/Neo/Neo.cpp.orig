@@ -16,16 +16,6 @@ Neo::Neo(std::shared_ptr<Model> neo_model, std::string _id,
   neo_ref_id = _neo_id;
 }
 
-Neo::~Neo() {
-#ifdef DEBUG
-  std::cout << "Deleted Neo: " << this->GetID() << '\n';
-#endif
-  this->diameter.reset();
-  for (auto approach : this->close_approach) {
-    approach.reset();
-  }
-}
-
 void Neo::SetName(std::string n) { this->name = n; }
 void Neo::SetNeoID(std::string id) { this->neo_ref_id = id; }
 void Neo::SetID(std::string id) { this->id = id; }
@@ -98,10 +88,6 @@ void Neo::DisplayNeo() {
   std::cout << "Limited Name: " << this->GetLimitedName() << '\n';
   std::cout << "Link: " << this->GetLink() << '\n';
   this->diameter->DisplayDiameter();
-
-  for (auto n : this->close_approach) {
-    n->PrintCloseApproach();
-  }
 
   std::cout << "Sentry Object: " << (this->is_sentry_oject ? "True" : "False")
             << '\n';
@@ -190,4 +176,11 @@ InjestJsonData(nlohmann::json data, std::vector<std::shared_ptr<Neo>> &neos,
 // TODO!
 // the render radius should be based on the diameter that is recieved from
 // the query from the api
+<<<<<<< HEAD
 void Neo::Draw() { DrawModel(*this->model, this->position, 1, BROWN); }
+=======
+void Neo::Draw(std::shared_ptr<Model> model) {
+    //std::cout << std::to_string(this->position.x) + " " + std::to_string(this->position.y) + " " + std::to_string(this->position.z) << '\n';
+ DrawModel(*model, this->position, 1, BROWN);
+}
+>>>>>>> bdaf9adda965bb0d55b206669aba98839c5a32c4
