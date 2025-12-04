@@ -18,12 +18,11 @@ Menu::~Menu() {}
 std::string Menu::GetTextBuffer() { return this->textInputBoxBuffer; }
 
 // go through all parts of the menu
-void Menu::DisplayMenu(std::shared_ptr<Neo> currentNeo) {
+void Menu::DisplayMenu(std::unique_ptr<Neo> &currentNeo) {
 
-	if (IsKeyDown(KeyboardKey::KEY_F)) {
-		this->state = this->state ? MenuState::Full:MenuState::Minimal;
-	}
-
+  if (IsKeyDown(KeyboardKey::KEY_F)) {
+    this->state = this->state ? MenuState::Full : MenuState::Minimal;
+  }
 
   if (this->state) {
     this->DisplayMinimalMenu(currentNeo);
@@ -32,7 +31,7 @@ void Menu::DisplayMenu(std::shared_ptr<Neo> currentNeo) {
   }
 }
 
-void Menu::DisplayMinimalMenu(std::shared_ptr<Neo> n) {
+void Menu::DisplayMinimalMenu(std::unique_ptr<Neo> &n) {
   std::string kilo_max =
       std::to_string(std::get<1>(n->GetDiameter()->GetKilo()));
   std::string meter_max =
@@ -55,7 +54,7 @@ void Menu::DisplayMinimalMenu(std::shared_ptr<Neo> n) {
   DrawText(size.c_str(), 40, 60, 10, WHITE);
 }
 
-void Menu::DisplayFullMenu(std::shared_ptr<Neo> neo) {
+void Menu::DisplayFullMenu(std::unique_ptr<Neo> &neo) {
   std::string kilo_max =
       std::to_string(std::get<1>(neo->GetDiameter()->GetKilo()));
   std::string meter_max =
@@ -71,7 +70,8 @@ void Menu::DisplayFullMenu(std::shared_ptr<Neo> neo) {
   std::string neo_designation = neo->GetDesignation();
   std::string neo_hazard = std::to_string(neo->GetHazardous());
 
-  std::vector<std::shared_ptr<CloseApproach>> &neo_approach = neo->GetCloseApproach();
+  std::vector<std::unique_ptr<CloseApproach>> &neo_approach =
+      neo->GetCloseApproach();
 
   std::string ids = "Neo Id: " + neo->GetID() + " Ref Id: " + neo->GetNeoID();
   std::string name = "Name: " + neo_name + " Limited Name: " + neo_limited_name;

@@ -17,13 +17,13 @@ public:
   ~NeosCurrier();
 
   std::vector<std::shared_ptr<Neo>> GetNeoCollection();
-  std::shared_ptr<Neo> GetSelectedNeo();
+  std::unique_ptr<Neo>& GetSelectedNeo();
 
   void DeleteAllNeos();
   void DeleteSelectedNeo(std::string id);
 
-  void InjestJsonDataOffline(nlohmann::json data);
-  void InjestJsonData(nlohmann::json data);
+  void InjestJsonDataOffline(nlohmann::json data, std::shared_ptr<Model> neo_model);
+  void InjestJsonData(nlohmann::json data, std::shared_ptr<Model> neo_model);
 
   void DisplayNeos();
   void DrawNeos();
@@ -31,8 +31,8 @@ public:
 
   void UpdateNeosPosition(double time, float startTime, double angleRadians);
   std::vector<double> CalculateLineSpace(double start, double end, int num);
-  void ReachAPI(std::string url, std::string req);
-  void GetNeosDebugOffline();
+  void ReachAPI(std::string url, std::string req, std::shared_ptr<Model> neo_model);
+  void GetNeosDebugOffline(std::shared_ptr<Model> neo_model);
 
   void ChangeFocusAsteroid();
 
@@ -40,10 +40,9 @@ private:
   std::string links;
   std::string pages;
   std::tuple<std::time_t, std::time_t> timespan;
-  std::vector<std::shared_ptr<Neo>> neos;
+  std::vector<std::unique_ptr<Neo>> neos;
   bool offline;
   int radius = 15;
-  std::shared_ptr<Model> asteroid_model;
   int number_elements;
   int number_pages;
   int render_index = 0;

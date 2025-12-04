@@ -23,11 +23,11 @@ public:
 
   std::string GetTextBuffer();
 
-  void DisplayMinimalMenu(std::shared_ptr<Neo> currentNeo);
-  void DisplayFullMenu(std::shared_ptr<Neo> currentNeo);
+  void DisplayMinimalMenu(std::unique_ptr<Neo>& currentNeo);
+  void DisplayFullMenu(std::unique_ptr<Neo>& currentNeo);
 
-  void DisplayMenu(std::shared_ptr<Neo> currentNeo);
-  void DisplayAsteroidInfo(std::shared_ptr<Neo> n);
+  void DisplayMenu(std::unique_ptr<Neo>& currentNeo);
+  void DisplayAsteroidInfo(std::unique_ptr<Neo>& currentNeo);
   void ClickIntoApiTextBox(Vector2 mousePos);
   void ApiButton(Vector2 mousePos);
 };

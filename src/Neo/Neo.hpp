@@ -10,21 +10,27 @@
 
 class Neo {
 public:
-  Neo() {}
-  Neo(std::string _id, std::string _neo_id);
-  Neo(Neo &&) = default;
-  Neo(const Neo &) = default;
-  Neo &operator=(Neo &&) = default;
-  Neo &operator=(const Neo &) = default;
-  ~Neo();
+  Neo(std::shared_ptr<Model> neo_model, std::string _id, std::string _neo_id);
 
-  static std::vector<std::shared_ptr<Neo>> &GetNeos(std::vector<std::shared_ptr<Neo>> &neos);
-  static std::vector<std::shared_ptr<Neo>> &GetNeosDebug(std::vector<std::shared_ptr<Neo>> &neos);
-  static std::vector<std::shared_ptr<Neo>> &GetNeosDebugOffline(std::vector<std::shared_ptr<Neo>> &neos);
-  static std::vector<std::shared_ptr<Neo>> &InjestJsonDataOffline(nlohmann::json data,
-                                                   std::vector<std::shared_ptr<Neo>> &neos);
-  static std::vector<std::shared_ptr<Neo>> &InjestJsonData(nlohmann::json data,
-                                            std::vector<std::shared_ptr<Neo>> &neos);
+  static std::vector<std::unique_ptr<Neo>> &
+  GetNeos(std::vector<std::unique_ptr<Neo>> &neos);
+
+  static std::vector<std::unique_ptr<Neo>> &
+  GetNeosDebug(std::vector<std::unique_ptr<Neo>> &neos);
+
+  static std::vector<std::unique_ptr<Neo>> &
+  GetNeosDebugOffline(std::vector<std::unique_ptr<Neo>> &neos,
+                      std::shared_ptr<Model> neo_model);
+
+  static std::vector<std::unique_ptr<Neo>> &
+  InjestJsonDataOffline(nlohmann::json data,
+                        std::vector<std::unique_ptr<Neo>> &neos,
+                        std::shared_ptr<Model> neo_model);
+
+  static std::vector<std::unique_ptr<Neo>> &
+  InjestJsonData(nlohmann::json data, std::vector<std::unique_ptr<Neo>> &neos,
+                 std::shared_ptr<Model> neo_model);
+
   // getters setters //
 
   void SetName(std::string n);
@@ -51,15 +57,15 @@ public:
   std::string GetLink();
   float GetMagnitude();
   bool GetHazardous();
-  std::shared_ptr<Diameter> GetDiameter();
+  std::unique_ptr<Diameter> &GetDiameter();
   Vector3 GetRenderPosition();
   float GetRenderRadius();
   bool GetIsSentryObject();
   std::string GetDate();
-  std::vector<std::shared_ptr<CloseApproach>> &GetCloseApproach();
+  std::vector<std::unique_ptr<CloseApproach>> &GetCloseApproach();
 
   void DisplayNeo();
-  void Draw(std::shared_ptr<Model> model);
+  void Draw();
 
 private:
   Vector3 position;
@@ -74,7 +80,8 @@ private:
   std::string link;
   float absolute_magnitude_h;
   bool is_hazardous;
-  std::shared_ptr<Diameter> diameter;
-  std::vector<std::shared_ptr<CloseApproach>> close_approach;
+  std::unique_ptr<Diameter> diameter;
+  std::vector<std::unique_ptr<CloseApproach>> close_approach;
   bool is_sentry_oject;
+  std::shared_ptr<Model> model;
 };

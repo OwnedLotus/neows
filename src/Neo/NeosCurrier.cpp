@@ -3,28 +3,28 @@
 #include <cmath>
 #include <filesystem>
 #include <fstream>
-#include <httplib.h>
 #include <iostream>
 #include <memory>
-#include <nlohmann/json.hpp>
-#include <raylib.h>
 #include <vector>
 
+#include <nlohmann/json.hpp>
+#include <raylib.h>
+#include <httplib.h>
+
 NeosCurrier::NeosCurrier(bool isOffline, std::shared_ptr<Model> model) {
-    std::cout << "Loading Currier" << '\n';
+  std::cout << "Loading Currier" << '\n';
   this->offline = isOffline;
   if (this->offline) {
-    this->GetNeosDebugOffline();
+    this->GetNeosDebugOffline(model);
   }
-  this->asteroid_model = model;
 }
 
-std::vector<std::shared_ptr<Neo>> NeosCurrier::GetNeoCollection() {
+std::vector<std::unique_ptr<Neo>> NeosCurrier::GetNeoCollection() {
   return this->neos;
 }
 
-std::shared_ptr<Neo> NeosCurrier::GetSelectedNeo() {
-  return this->neos[this->render_index];
+std::unique_ptr<Neo>& NeosCurrier::GetSelectedNeo() {
+	return this->neos[this->render_index];
 }
 
 void NeosCurrier::DisplayNeos() {
@@ -34,7 +34,7 @@ void NeosCurrier::DisplayNeos() {
 
 void NeosCurrier::DrawNeos() {
   for (const auto &neo : this->neos)
-    neo->Draw(this->asteroid_model);
+    neo->Draw();
 }
 
 void NeosCurrier::DrawSelectedNeoPointer() {
@@ -90,25 +90,25 @@ std::vector<double> NeosCurrier::CalculateLineSpace(double start, double end,
   return linespace;
 }
 
-void NeosCurrier::ReachAPI(std::string url, std::string req) {
+void NeosCurrier::ReachAPI(std::string url, std::string req, std::shared_ptr<Model> neo_model) {
   httplib::Client cli(url);
   auto res = cli.Get(req);
   if (res && res->status == 200) {
-    NeosCurrier::InjestJsonData(res->body);
+    NeosCurrier::InjestJsonData(res->body, neo_model);
   } else {
     std::cerr << "Failed to make request!" << '\n';
   }
 }
 
-void NeosCurrier::GetNeosDebugOffline() {
-    std::cout << "Loading Sample Data from File" << '\n';
-    std::cout << std::filesystem::current_path() << '\n';
+void NeosCurrier::GetNeosDebugOffline(std::shared_ptr<Model> neo_model) {
+  std::cout << "Loading Sample Data from File" << '\n';
+  std::cout << std::filesystem::current_path() << '\n';
   std::ifstream f("./data/sample.json");
   nlohmann::json data = nlohmann::json::parse(f);
-  return InjestJsonDataOffline(data);
+  return InjestJsonDataOffline(data, neo_model);
 }
 
-void NeosCurrier::InjestJsonDataOffline(nlohmann::json data) {
+void NeosCurrier::InjestJsonDataOffline(nlohmann::json data, std::shared_ptr<Model> neo_model) {
   this->state = AsteroidState::Active;
   nlohmann::json links = data["links"];
   nlohmann::json pages = data["page"];
@@ -125,7 +125,7 @@ void NeosCurrier::InjestJsonDataOffline(nlohmann::json data) {
 
   for (int i = 0; i < json_size; i++) {
     nlohmann::json neo_data = neos_data[i];
-    auto n = std::make_shared<Neo>();
+    auto n = std::unique_ptr<Neo>(new Neo(neo_model, neo_data["id"], neo_data["neo_reference_id"]));
     n->SetID(neo_data["id"]);
     n->SetNeoID(neo_data["neo_reference_id"]);
 
@@ -144,11 +144,11 @@ void NeosCurrier::InjestJsonDataOffline(nlohmann::json data) {
 
     n->SetRenderRadius(1);
 
-    this->neos.emplace_back(n);
+    this->neos.emplace_back(std::move(n));
   }
 }
 
-void NeosCurrier::InjestJsonData(nlohmann::json data) {
+void NeosCurrier::InjestJsonData(nlohmann::json data, std::shared_ptr<Model> neo_model) {
   std::cout << data["links"] << '\n';
   this->state = AsteroidState::Active;
   auto element_count = data["element_count"];
@@ -157,7 +157,7 @@ void NeosCurrier::InjestJsonData(nlohmann::json data) {
   for (int i = 0; i < element_count; i++) {
     nlohmann::json neo_data = neos_data[i];
     nlohmann::json date = neos_data["2015-09-08"];
-    Neo *n = new Neo(date["id"], date["neo_reference_id"]);
+		auto n = std::unique_ptr<Neo>(new Neo(neo_model, date["id"], date["neo_reference_id"]));
 
     n->SetName(date["name"]);
     n->SetLimitedName(date["name_limited"]);
@@ -173,7 +173,7 @@ void NeosCurrier::InjestJsonData(nlohmann::json data) {
     // default radius
     n->SetRenderRadius(1);
 
-    this->neos.emplace_back(n);
+    this->neos.emplace_back(std::move(n));
   }
 }
 
@@ -182,14 +182,9 @@ void NeosCurrier::DeleteAllNeos() {
   this->neos.clear();
 }
 
+//TODO: Fix implementation of delete
 void NeosCurrier::DeleteSelectedNeo(std::string id) {
   std::shared_ptr<Neo> neoToBeDeleted = nullptr;
-
-  for (auto neo : this->neos) {
-    if (neo->GetID() == id) {
-      neoToBeDeleted = neo;
-    }
-  }
 
   if (neoToBeDeleted != nullptr) {
 #ifdef DEGUB
