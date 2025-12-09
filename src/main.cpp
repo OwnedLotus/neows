@@ -43,10 +43,10 @@ int main(void) {
   float startTime = GetTime();
 
   // Some bug with loading the asteroid
-  std::shared_ptr<Model> asteroidModel = std::make_shared<Model>(LoadModel("assets/Asteroid.glb"));
+  Model asteroidModel = LoadModel("assets/Asteroid.glb");
 
   std::cout << "load neos" << "\n";
-  NeosCurrier currier(true, asteroidModel);
+  NeosCurrier currier(&asteroidModel);
 
 #ifdef DEBUG
   path += "DEMO_KEY";
@@ -67,7 +67,7 @@ int main(void) {
 
   CloseWindow();
   // UnloadModel(earthModel);
-  UnloadModel(*asteroidModel);
+  UnloadModel(asteroidModel);
   return 0;
 }
 

@@ -30,17 +30,16 @@ public:
   int64_t GetID();
   const std::string &GetNeoID();
   const std::string &GetName();
-  const std::string &GetLimitedName();
   const std::string &GetLink();
   float GetMagnitude();
   bool GetHazardous();
-  const std::unique_ptr<const Diameter> &GetDiameter();
+  const std::unique_ptr<Diameter> &GetDiameter();
   const Vector3 &GetRenderPosition();
   float GetRenderRadius();
   bool GetIsSentryObject();
-  const std::vector<std::unique_ptr<const CloseApproach>> &GetCloseApproach();
+  std::vector<std::unique_ptr<CloseApproach>> &GetCloseApproach();
 
-  void Draw();
+  void Draw(Model* model);
 
 private:
   Vector3 position;
@@ -52,8 +51,8 @@ private:
   std::string name;
   std::string nasa_jpl_url;
   float absolute_magnitude_h;
-  std::unique_ptr<const Diameter> diameter;
+  std::unique_ptr<Diameter> diameter;
   bool is_potentially_hazardous_asteroid;
-  std::vector<std::unique_ptr<const CloseApproach>> close_approach;
+  std::vector<std::unique_ptr<CloseApproach>> close_approach;
   bool is_sentry_oject;
 };

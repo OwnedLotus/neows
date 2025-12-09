@@ -31,7 +31,8 @@ void Menu::DisplayMenu(std::unique_ptr<Neo> &currentNeo) {
   }
 }
 
-void Menu::DisplayMinimalMenu(std::unique_ptr<Neo> &n) {
+const void Menu::DisplayMinimalMenu(const std::unique_ptr<Neo> &n) {
+
   std::string kilo_max =
       std::to_string(std::get<1>(n->GetDiameter()->GetKilo()));
   std::string meter_max =
@@ -41,7 +42,10 @@ void Menu::DisplayMinimalMenu(std::unique_ptr<Neo> &n) {
   std::string feet_max =
       std::to_string(std::get<1>(n->GetDiameter()->GetFeet()));
 
-  std::string ids = "Neo Id: " + n->GetID() + " Ref Id: " + n->GetNeoID();
+	std::string id = std::to_string(n->GetID());
+	std::string ref_id = n->GetNeoID();
+
+  std::string ids = "Neo Id: " + id + " Ref Id: " + ref_id;
   std::string size = "Size (KM) " + kilo_max + " Size (M): " + meter_max;
   std::string altSize = "Size (Mi) " + miles_max + " Size (ft): " + feet_max;
   // std::string approach = "Approach Distance (KM) " + n->
@@ -65,25 +69,24 @@ void Menu::DisplayFullMenu(std::unique_ptr<Neo> &neo) {
       std::to_string(std::get<1>(neo->GetDiameter()->GetFeet()));
 
   std::string neo_name = neo->GetName();
-  std::string neo_limited_name = neo->GetLimitedName();
 
-  std::string neo_designation = neo->GetDesignation();
   std::string neo_hazard = std::to_string(neo->GetHazardous());
 
   std::vector<std::unique_ptr<CloseApproach>> &neo_approach =
       neo->GetCloseApproach();
 
-  std::string ids = "Neo Id: " + neo->GetID() + " Ref Id: " + neo->GetNeoID();
-  std::string name = "Name: " + neo_name + " Limited Name: " + neo_limited_name;
+	std::string id = std::to_string(neo->GetID());
+	std::string ref_id = neo->GetNeoID();
+  std::string ids = "Neo Id: " + id + " Ref Id: " + ref_id;
+  std::string name = "Name: " + neo_name ;
 
-  std::string designation =
-      "Neo Designation: " + neo_designation + " Hazardous: " + neo_hazard;
+  std::string hazardous = "Hazardous: " + neo_hazard;
   std::string size = "Size (KM) " + kilo_max + " Size (M): " + meter_max;
   std::string altSize = "Size (Mi) " + miles_max + " Size (ft): " + feet_max;
 
   std::string kps = "First Approach KPH: " + neo_approach[0]->GetRelativeKPH() +
                     " KPS: " + neo_approach[0]->GetRelativeKPS();
-  std::string mps = "First Approach MPH: " + neo_approach[0]->getRelativeMPH();
+  std::string mps = "First Approach MPH: " + neo_approach[0]->GetRelativeMPH();
   std::string miss_miles =
       "First Approach Miss KM: " + neo_approach[0]->GetMissKilo() +
       "Approach Miss Mi: " + neo_approach[0]->GetMissMiles();
@@ -96,7 +99,6 @@ void Menu::DisplayFullMenu(std::unique_ptr<Neo> &neo) {
   DrawText(name.c_str(), 40, 60, 10, WHITE);
   DrawText(size.c_str(), 40, 80, 10, WHITE);
   DrawText(altSize.c_str(), 40, 100, 10, WHITE);
-  DrawText(designation.c_str(), 40, 120, 10, WHITE);
   DrawText(kps.c_str(), 40, 140, 10, WHITE);
   DrawText(mps.c_str(), 40, 160, 10, WHITE);
   DrawText(miss_miles.c_str(), 40, 180, 10, WHITE);

@@ -7,13 +7,13 @@
 
 class NeosCurrier {
 public:
-	NeosCurrier() = default;
+  NeosCurrier(Model *asteroidModel);
 
   void SetLink(nlohmann::json &link_json);
   void SetPages(nlohmann::json &pages_json);
 
   std::vector<std::shared_ptr<Neo>> GetNeoCollection();
-  std::unique_ptr<Neo>& GetSelectedNeo();
+  std::unique_ptr<Neo> &GetSelectedNeo();
 
   void AddNeo(std::unique_ptr<Neo> neo);
 
@@ -38,4 +38,6 @@ private:
   int number_elements;
   int number_pages;
   int render_index = 0;
+
+  Model *asteroidModel;
 };

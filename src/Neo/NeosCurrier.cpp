@@ -1,8 +1,6 @@
 #include "NeosCurrier.hpp"
 #include "Neo.hpp"
 #include <cmath>
-#include <filesystem>
-#include <fstream>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -11,12 +9,16 @@
 #include <nlohmann/json.hpp>
 #include <raylib.h>
 
+NeosCurrier::NeosCurrier(Model *asteroidModel) {
+  this->asteroidModel = asteroidModel;
+}
+
 std::unique_ptr<Neo> &NeosCurrier::GetSelectedNeo() {
   return this->neos[this->render_index];
 }
 void NeosCurrier::DrawNeos() {
   for (const auto &neo : this->neos)
-    neo->Draw();
+    neo->Draw(this->asteroidModel);
 }
 
 void NeosCurrier::DrawSelectedNeoPointer() {

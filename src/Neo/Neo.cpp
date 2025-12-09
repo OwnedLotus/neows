@@ -71,7 +71,7 @@ const std::string &Neo::GetName() { return name; }
 const std::string &Neo::GetLink() { return link; }
 float Neo::GetMagnitude() { return absolute_magnitude_h; }
 bool Neo::GetHazardous() { return is_potentially_hazardous_asteroid; }
-const std::unique_ptr<const Diameter> &Neo::GetDiameter() {
+const std::unique_ptr<Diameter> &Neo::GetDiameter() {
   return this->diameter;
 }
 bool Neo::GetIsSentryObject() { return this->is_sentry_oject; }
@@ -80,10 +80,8 @@ float Neo::GetRenderRadius() { return this->render_radius; }
 const Vector3 &Neo::GetRenderPosition() { return this->position; }
 
 
-const std::vector<std::unique_ptr<const CloseApproach>> &Neo::GetCloseApproach() {
+std::vector<std::unique_ptr<CloseApproach>> &Neo::GetCloseApproach() {
   return this->close_approach;
 }
-// TODO!
-// the render radius should be based on the diameter that is recieved from
-// the query from the api
-void Neo::Draw() { DrawModel(*this->model, this->position, 1, BROWN); }
+
+void Neo::Draw(Model* model) { DrawModel(*model, this->position, 1, BROWN); }
